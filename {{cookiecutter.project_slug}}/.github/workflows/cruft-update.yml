@@ -51,8 +51,8 @@ jobs:
       - name: Run update if available
         if: steps.check.outputs.has_changes == '1'
         run: |
-          git config --global user.email "you@example.com"
-          git config --global user.name "GitHub"
+          git config --global user.email "automated@example.com"
+          git config --global user.name "Automated [Cruft]"
 
           cruft update --skip-apply-ask --refresh-private-variables
           git restore --staged .
