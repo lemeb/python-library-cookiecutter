@@ -1,0 +1,4 @@
+{
+  "project_name": "Python Library",
+  "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}"
+}
