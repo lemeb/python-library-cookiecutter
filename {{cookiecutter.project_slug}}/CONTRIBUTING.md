@@ -4,8 +4,8 @@
 
 ### Prerequisites
 
-* [`uv`](https://docs.astral.sh/uv/)
-* [`cruft`](https://cruft.readthedocs.io/en/latest/)
+- [`uv`](https://docs.astral.sh/uv/)
+- [`cruft`](https://cruft.readthedocs.io/en/latest/)
 
 ### Installation
 
@@ -42,16 +42,18 @@ make doc                  # Tests then builds the documentation
 
 ## 📦 Project Structure
 
-* `src/{{cookiecutter.project_slug}}/`: Main library code.
-* `tests/`: Tests.
-* `docs/`: Documentation.
-* `scratch/`: Scratchpad directory. Ignored by git.
+- `src/{{cookiecutter.project_slug}}/`: Main library code.
+- `tests/`: Tests.
+- `docs/`: Documentation.
+- `scratch/`: Scratchpad directory. Ignored by git.
 
 ## 💻 Developer experience
 
 ### Dependencies and building
 
-We use [`uv`](https://docs.astral.sh/uv/) for dependency management, running tasks, and package building. `uv` will be installed automatically by the `Makefile` if it's not found.
+We use [`uv`](https://docs.astral.sh/uv/) for dependency management, running
+tasks, and package building. `uv` will be installed automatically by the
+`Makefile` if it's not found.
 
 #### Adding dependencies
 
@@ -62,7 +64,10 @@ uv add --dev <dependency> # Adds a dev dependency to the project
 
 #### Versioning
 
-Note that the version is declared in the `pyproject.toml` file. Don't forget to update it when you make a new release. We might move to dynamic versioning in the future if and when [`uv_build` supports it](https://github.com/astral-sh/uv/issues/11718#issuecomment-2678446245).
+Note that the version is declared in the `pyproject.toml` file. Don't forget to
+update it when you make a new release. We might move to dynamic versioning in
+the future if and when
+[`uv_build` supports it](https://github.com/astral-sh/uv/issues/11718#issuecomment-2678446245).
 
 ### Documentation
 
@@ -84,8 +89,8 @@ We use:
 
 The settings of `coverage.py` are such that:
 
-* You should see which tests covered which lines of code.
-* Type checking-specific code is excluded from coverage.
+- You should see which tests covered which lines of code.
+- Type checking-specific code is excluded from coverage.
 
 ### Linting and type-checking
 
@@ -93,21 +98,24 @@ We use:
 
 - [`ruff`](https://docs.astral.sh/ruff/) for linting.
 - [`mypy`](https://mypy.readthedocs.io/en/stable/) for type-checking.
-- [`basedpyright`](https://github.com/basedpyright/basedpyright) for type-checking.
+- [`basedpyright`](https://github.com/basedpyright/basedpyright) for
+  type-checking.
 
 By default:
-* We use `ruff` with the strictest settings, and some specific ignores that are available in the `pyproject.toml` file.
-* We use `mypy` with strict settings but ignoring missing imports.
-* We do not use `basedpyright`.
+- We use `ruff` with the strictest settings, and some specific ignores that are
+  available in the `pyproject.toml` file.
+- We use `mypy` with strict settings but ignoring missing imports.
+- We do not use `basedpyright`.
 
 We have a "strict" mode that uses more restrictive settings:
-* `ruff` with preview rules (preview-mode specific ignores should be put in the `ruff-strict.toml` file)
-* `mypy` with strict settings and no missing imports ignored.
-* `basedpyright` with strict settings.
+- `ruff` with preview rules (preview-mode specific ignores should be put in the `ruff-strict.toml` file)
+- `mypy` with strict settings and no missing imports ignored.
+- `basedpyright` with strict settings.
 
 ### Pre-commit hooks
 
-We use [`pre-commit`](https://pre-commit.com/) to run the linters and type-checkers before committing.
+We use [`pre-commit`](https://pre-commit.com/) to run the linters and
+type-checkers before committing.
 
-The configuration is in the `.pre-commit-config.yaml` file. Note that we
-use `pyright` and not `basedpyright`.
+The configuration is in the `.pre-commit-config.yaml` file. Note that we use
+`pyright` and not `basedpyright`.

@@ -26,4 +26,6 @@ make doc-serve            # Serves the documentation locally for preview
 
 ## Contributing
 
-If you're a developer, you should read the [CONTRIBUTING.md](CONTRIBUTING.md) file. It includes information on how to use this repository and how to contribute to it.
+If you're a developer, you should read the [CONTRIBUTING.md](CONTRIBUTING.md)
+file. It includes information on how to use this repository and how to
+contribute to it.
