@@ -1,4 +1,4 @@
-<!-- markdownlint-disable MD033 -->
+<!-- markdownlint-disable MD033 MD041 -->
 <div align="center">
     <!-- You can add an image here -->
     <h1 align="center">{{cookiecutter.project_name}}</h1>
