@@ -1,6 +1,6 @@
 name: CI
 
-{% raw %} 
+{% raw %}
 # Run on pushes to the main branch and on pull requests
 on:
   push:

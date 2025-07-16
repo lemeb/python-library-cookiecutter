@@ -119,7 +119,7 @@ warn_no_return = true
 [tool.pyright]
 venvPath = "."
 venv = ".venv"
-# This setting ("all") is only available with 
+# This setting ("all") is only available with
 # basedpyright; otherwise, choose strict
 typeCheckingMode = "all"
 
