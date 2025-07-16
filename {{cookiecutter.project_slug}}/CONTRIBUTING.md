@@ -72,13 +72,14 @@ the future if and when
 ### Documentation
 
 For documentation, we use:
+
 - [`mkdocs`](https://www.mkdocs.org/) as the main tool
 - [`mkdocs-material`](https://squidfunk.github.io/mkdocs-material/) as the theme
 - [`mkdocstrings`](https://mkdocstrings.github.io/) to automatically generate
   documentation from the docstrings.
 
-You can build the documentation locally with `make doc-serve` and preview it
-at `http://localhost:8000`. To test and build the documentation, run `make doc`.
+You can build the documentation locally with `make doc-serve` and preview it at
+`http://localhost:8000`. To test and build the documentation, run `make doc`.
 
 ### Testing
 
@@ -104,13 +105,16 @@ We use:
   type-checking.
 
 By default:
+
 - We use `ruff` with the strictest settings, and some specific ignores that are
   available in the `pyproject.toml` file.
 - We use `mypy` with strict settings but ignoring missing imports.
 - We do not use `basedpyright`.
 
 We have a "strict" mode that uses more restrictive settings:
-- `ruff` with preview rules (preview-mode specific ignores should be put in the `ruff-strict.toml` file)
+
+- `ruff` with preview rules (preview-mode specific ignores should be put in the
+  `ruff-strict.toml` file)
 - `mypy` with strict settings and no missing imports ignored.
 - `basedpyright` with strict settings.
 
