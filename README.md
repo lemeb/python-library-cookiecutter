@@ -46,6 +46,9 @@ Once generated, your repository will look like this:
 ├── scratch/                # Scratchpad directory (ignored by git)
 ├── src/                    
 │   └── {{project_slug}}    # Where your code will live
-├── tests/                  # Tests
+│       ├── ...
+│       └── __init__.py
+├── __tests/                  # Tests
+├── ...
 └── README.md
 ```
