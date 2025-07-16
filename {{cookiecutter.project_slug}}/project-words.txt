@@ -1,0 +1,6 @@
+venv
+pyproject
+basedpyright
+pytest
+pyright
+mkdocs
