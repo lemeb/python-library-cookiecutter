@@ -4,9 +4,35 @@ requires = ["uv_build"]
 build-backend = "uv_build"
 
 [project]
+requires-python = ">= {{ cookiecutter.python_min_version }}"
 name = "{{cookiecutter.project_slug}}"
 version = "{{cookiecutter.version}}"
 description = "{{cookiecutter.project_short_description}}"
+license = { text = "{{ cookiecutter.project_license }}" }
 readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Typing :: Typed",
+    {% if cookiecutter.project_license == "MIT License" -%}
+    "License :: OSI Approved :: MIT License",
+    {% elif cookiecutter.project_license == "GNU General Public License v3" -%}
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    {% elif cookiecutter.project_license == "BSD license" -%}
+    "License :: OSI Approved :: BSD License",
+    {% elif cookiecutter.project_license == "ISC license" -%}
+    "License :: OSI Approved :: ISC License",
+    {% elif cookiecutter.project_license == "Apache Software License 2.0" -%}
+    "License :: OSI Approved :: Apache Software License",
+    {% endif %}
+]
+authors = [
+    { name = "{{ cookiecutter.full_name }}", email = "{{ cookiecutter.email }}" }
+]
+
+[project.urls]
+"Homepage" = "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}"
+"Bug Tracker" = "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}/issues"
+
 [tool.uv.build-backend]
 module-root = "src"
