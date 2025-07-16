@@ -1,5 +1,6 @@
 from {{cookiecutter.project_slug}} import {{cookiecutter.project_slug}}
 
+
 def test_assert_true() -> None:
     assert True
 
