@@ -272,7 +272,7 @@ playwright-install: check-venv ## Install Playwright and its dependencies
 	$(UV) add playwright && \
 	$(UV) run playwright install --with-deps || \
 		(echo "Playwright installation failed. Automated dependencies only available for Ubuntu." && exit 1)
-		
+
 maybe-playwright-install: ## Install Playwright if needed
 	@if [ "$(INCLUDES_PLAYWRIGHT)" = "True" ]; then \
 		make playwright-install; \

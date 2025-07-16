@@ -4,3 +4,6 @@ basedpyright
 pytest
 pyright
 mkdocs
+mkdocstrings
+mypy
+docstrings
