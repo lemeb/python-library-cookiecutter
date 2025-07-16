@@ -124,7 +124,7 @@ ruff-format: ## Run ruff formatter
 	@$(UV) run ruff format .
 
 mypy-check: ## Run mypy checks
-	@$(UV) run mypy --check-untyped-defs --strict $(SLUG) tests/ --ignore-missing-imports
+	@$(UV) run mypy --check-untyped-defs --strict src/$(SLUG) tests/ --ignore-missing-imports
 
 check: ruff-check ruff-format mypy-check ## Run basic code quality checks in parallel
 
@@ -158,7 +158,7 @@ check-strict-file: check-strict-file-prep ## Run strict checks on a single file 
 	@rm scratch/pyproject.toml
 
 check-strict-all: ## Run strict checks on all files
-	$(eval FILE := "${SLUG}/ tests/ docs/")
+	$(eval FILE := "src/$(SLUG)/ tests/ docs/")
 	@$(MAKE) check-strict-file-prep FILE=$(FILE)
 	@$(MAKE) -j3 -k check-strict-file-ruff FILE=$(FILE) check-strict-file-mypy check-strict-file-pyright FILE=$(FILE)
 	@rm scratch/pyproject.toml
