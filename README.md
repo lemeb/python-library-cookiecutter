@@ -43,12 +43,20 @@ Once generated, your repository will look like this:
 
 ```
 .
+├── .github/                
+│   └── workflows/          
+│       └── cruft-update.yaml # GH workflow to update to latest template version
+├── docs/                   # Documentation
+│   ├── api/                # API documentation
+│   └── index.md            # Homepage
 ├── scratch/                # Scratchpad directory (ignored by git)
 ├── src/                    
 │   └── {{project_slug}}    # Where your code will live
 │       ├── ...
-│       └── __init__.py
-├── __tests/                  # Tests
-├── ...
+│       ├── __init__.py
+│       └── {{project_slug}}.py
+├── tests/                  # Tests
+├── LICENSE          
+├── pyproject.toml          
 └── README.md
 ```

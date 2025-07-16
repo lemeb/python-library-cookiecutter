@@ -7,14 +7,21 @@
     {{cookiecutter.project_short_description}}
 </p>
 
-## Stack
+## Usage
 
-* **[Pytest](https://docs.pytest.org/en/stable/)** for testing. The tests live in the `tests/` directory.
-* **[Uv](https://docs.astral.sh/uv/)** for managing dependencies and building the package.
-* **[Ruff](https://beta.ruff.rs/)** for linting.
-* **[Pre-commit](https://pre-commit.com/)** for running linting and formatting before committing.
-* **[GitHub Actions](https://docs.github.com/en/actions)** for CI/CD.
+### Installation
 
-## Developer
+```bash
+make install              # Installs the dependencies for the project
+source .venv/bin/activate # Activate the virtual environment
+```
 
-* The version is declared in the `pyproject.toml` file. Don't forget to update it when you make a new release!
+### Documentation
+
+```bash
+make doc-serve            # Serves the documentation locally for preview
+```
+
+## Contributing
+
+If you're a developer, you should read the [CONTRIBUTING.md](CONTRIBUTING.md) file. It includes information on how to use this repository and how to contribute to it.

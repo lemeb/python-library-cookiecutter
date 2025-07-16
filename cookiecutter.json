@@ -3,9 +3,11 @@
   "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
   "project_short_description": "A library with Python.",
   "version": "0.0.1",
-  "python_min_version": "3.13",
+  "python_min_version": "3.12",
   "full_name": "John Doe",
   "github_username": "johndoe",
   "email": "{{cookiecutter.github_username}}@users.noreply.github.com",
-  "project_license": ["MIT License", "GNU General Public License v3", "BSD license", "ISC license", "Apache Software License 2.0"]
+  "project_license": ["MIT License", "GNU General Public License v3", "BSD license", "ISC license", "Apache Software License 2.0"],
+  "includes_playwright": ["yes", "no"],
+  "__gh_slug": "{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}"
 }
