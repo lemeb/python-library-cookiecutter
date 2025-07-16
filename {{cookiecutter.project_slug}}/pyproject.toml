@@ -16,16 +16,17 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
     "Typing :: Typed",
-    {% if cookiecutter.project_license == "MIT License" -%}
+    {%- if cookiecutter.project_license == "MIT License" -%}
     "License :: OSI Approved :: MIT License",
-    {% elif cookiecutter.project_license == "GNU General Public License v3" -%}
+    {%- elif cookiecutter.project_license == "GNU General Public License v3" -%}
     "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
-    {% elif cookiecutter.project_license == "BSD license" -%}
+    {%- elif cookiecutter.project_license == "BSD license" -%}
     "License :: OSI Approved :: BSD License",
-    {% elif cookiecutter.project_license == "ISC license" -%}
+    {%- elif cookiecutter.project_license == "ISC license" -%}
     "License :: OSI Approved :: ISC License",
-    {% elif cookiecutter.project_license == "Apache Software License 2.0" -%}
-    "License :: OSI Approved :: Apache Software License",{% endif %}
+    {%- elif cookiecutter.project_license == "Apache Software License 2.0" -%}
+    "License :: OSI Approved :: Apache Software License",
+    {%- endif -%}
 ]
 authors = [
     { name = "{{ cookiecutter.full_name }}", email = "{{ cookiecutter.email }}" }
