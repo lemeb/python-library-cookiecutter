@@ -1,5 +1,5 @@
 <div align="center">
-    <img alt="Python Cookiecutter template." src="logo.png" style="width: 30%;">
+    <img alt="Python Cookiecutter template." src="logo.png" height="150">
     <h1 align="center">Python Cookiecutter template</h1>
 </div>
 
