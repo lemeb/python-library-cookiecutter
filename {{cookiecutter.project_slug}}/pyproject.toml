@@ -25,8 +25,7 @@ classifiers = [
     {% elif cookiecutter.project_license == "ISC license" -%}
     "License :: OSI Approved :: ISC License",
     {% elif cookiecutter.project_license == "Apache Software License 2.0" -%}
-    "License :: OSI Approved :: Apache Software License",
-    {% endif %}
+    "License :: OSI Approved :: Apache Software License",{% endif %}
 ]
 authors = [
     { name = "{{ cookiecutter.full_name }}", email = "{{ cookiecutter.email }}" }

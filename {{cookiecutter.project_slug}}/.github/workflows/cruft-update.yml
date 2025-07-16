@@ -62,7 +62,7 @@ jobs:
         uses: peter-evans/create-pull-request@v4
         with:
           token: {% raw %}${{ secrets.GITHUB_TOKEN }}{% endraw %}
-          add-paths: {% raw %}${{ matrix.add-paths }} {% endraw %}
+          add-paths: {% raw %}${{ matrix.add-paths }}{% endraw %}
           commit-message: {% raw %}${{ matrix.commit-message }}{% endraw %}
           branch: {% raw %}${{ matrix.branch }}{% endraw %}
           delete-branch: true

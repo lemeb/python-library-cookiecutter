@@ -106,6 +106,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report-${{ matrix.python-version }}
-          path: htmlcov/
-
-{% endraw %}
+          path: htmlcov/{% endraw %}
