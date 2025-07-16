@@ -74,9 +74,11 @@ the future if and when
 For documentation, we use:
 - [`mkdocs`](https://www.mkdocs.org/) as the main tool
 - [`mkdocs-material`](https://squidfunk.github.io/mkdocs-material/) as the theme
-- [`mkdocstrings`](https://mkdocstrings.github.io/) to automatically generate documentation from the docstrings.
+- [`mkdocstrings`](https://mkdocstrings.github.io/) to automatically generate
+  documentation from the docstrings.
 
-You can build the documentation locally with `make doc-serve` and preview it at `http://localhost:8000`. To test and build the documentation, run `make doc`.
+You can build the documentation locally with `make doc-serve` and preview it
+at `http://localhost:8000`. To test and build the documentation, run `make doc`.
 
 ### Testing
 
