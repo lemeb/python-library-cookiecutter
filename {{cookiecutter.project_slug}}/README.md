@@ -24,8 +24,8 @@ source .venv/bin/activate # Activates the virtual environment
 make doc-serve            # Serves the documentation locally for preview
 ```
 
-## Contributing
+## Development
 
-If you're a developer, you should read the [CONTRIBUTING.md](CONTRIBUTING.md)
+If you're a developer, you should read the [DEVELOP.md](DEVELOP.md)
 file. It includes information on how to use this repository and how to
 contribute to it.
