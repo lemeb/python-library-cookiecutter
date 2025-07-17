@@ -1,4 +1,4 @@
-# Contributing
+# Developer Guide for {{cookiecutter.project_name}}
 
 ## ✨ Getting started
 
