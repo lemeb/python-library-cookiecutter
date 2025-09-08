@@ -1,0 +1,64 @@
+# Coding agent instructions for `{{ cookiecutter.project_name }}`
+
+## Good practices
+
+- **Checking code**:
+  - Use `uv run ruff format . && uv run ruff check . --fix`, then
+    `make check-strict-all` to check your code.
+  - One quirk of `make check-strict-all` is that it will run `ruff`'s preview
+    rules. If you want to comment such rule out, you cannot do it in the file;
+    it will be removed by `ruff format`. Instead, you should update the
+    `ruff-strict.toml` file where these exceptions are documented. YOU SHOULD
+    DOCUMENT THE RULE PER FILE, NOT FOR THE ENTIRE CODEBASE. And every
+    exception should be documented with a comment explaining why the rule is
+    not applied in that file.
+  - If you're wondering if a rule is in preview: if it appears during
+    `make check-strict-all`, but not during `make check`, then it is a preview
+    rule.
+
+- **Code practices**:
+  - Check `pyproject.toml` to know what is the minimum Python version that is
+    supported. Write constructs accordingly (e.g. no `Union` if Python 3.10+ is
+    supported).
+  - Try not to use `print` statements. Use your best judgment instead: if it's
+    for logging, use `logging`. If it's for user-facing interaction, use
+    the `rich` library (such as `print` or `Console`).
+  - You can use `# type: ignore[error-code]` (`mypy`),
+    `# pyright: ignore[ErrorCode]` (`pyright`), and `# noqa: <ERROR_CODE>`
+    (`ruff`). If multiple go on the same line, they should go with `mypy` first.
+    Use them only as last resort, when no better solution is available. (An
+    example where this is warranted is if `Any` is really the only type that
+    works, or if you need to use a third-party library that is not typed.)
+    Some pointers on which errors to just comment out are specified below.
+  - IMPORTANT! Don't hesitate to over-document. Please ensure that when you
+    modify a function, you also update the docstring. If you add a new
+    parameter, please document it. Don't forget to put "args", "returns", and
+    "raises" in the docstring. THIS IS ONE VERY COMMON LINTING MISTAKE!
+  - Check `pyproject.toml` for the max line length. It's probably 80. Yes, the
+    formatter will sometimes just reformat the code, but some lines (e.g.
+    docstrings) will need to be modified accordingly.
+  - The right way to pass a message to an exception is to define a `msg`
+    variable, and then pass it to the exception.
+  - Put `@final` whenever needed. Helps for type-checking.
+  - Put `@override` whenever needed (and it's generally more often than you
+    think). Helps for type-checking.
+  - Any time you define an empty list, try to type-hint it (e.g.
+    `my_list: list[str] = []`).
+  - Be mindful of class methods that don't use the `self` parameter. If you
+    don't use it, you should make it static.
+
+- **Documentation practices**:
+  - Whenever possible, any references to a file or library (or really any piece
+    of code) should be surrounded with backticks. Don't say ("we detect uv.lock",
+    say "we detect `uv.lock`").
+
+- **Handling linting and type-checking errors** (these are misc notes):
+  - In general, if we're dealing with operations that inherently deal with `Any`
+    or `Unknown` (e.g. because you're parsing JSON, because you're dealing with
+    a third-party library that is not typed, etc.), you can safely put ignore
+    comments for: `reportUnknownArgumentType`, `reportUnknownMemberType`,
+    `reportUnknownVariableType`, `reportUnknownParameterType`,
+    `reportUnknownType`, `reportAny`, `reportExplicitAny`, etc. (`pyright`), and
+    `ANN401` (`ruff`).
+  - In some cases, you can put `object` as the type, but this is not
+    recommended. If you do so, please document why you did it.
