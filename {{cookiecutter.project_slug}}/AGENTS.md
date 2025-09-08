@@ -9,9 +9,9 @@
     rules. If you want to comment such rule out, you cannot do it in the file;
     it will be removed by `ruff format`. Instead, you should update the
     `ruff-strict.toml` file where these exceptions are documented. YOU SHOULD
-    DOCUMENT THE RULE PER FILE, NOT FOR THE ENTIRE CODEBASE. And every
-    exception should be documented with a comment explaining why the rule is
-    not applied in that file.
+    DOCUMENT THE RULE PER FILE, NOT FOR THE ENTIRE CODEBASE. And every exception
+    should be documented with a comment explaining why the rule is not applied
+    in that file.
   - If you're wondering if a rule is in preview: if it appears during
     `make check-strict-all`, but not during `make check`, then it is a preview
     rule.
@@ -21,15 +21,15 @@
     supported. Write constructs accordingly (e.g. no `Union` if Python 3.10+ is
     supported).
   - Try not to use `print` statements. Use your best judgment instead: if it's
-    for logging, use `logging`. If it's for user-facing interaction, use
-    the `rich` library (such as `print` or `Console`).
+    for logging, use `logging`. If it's for user-facing interaction, use the
+    `rich` library (such as `print` or `Console`).
   - You can use `# type: ignore[error-code]` (`mypy`),
     `# pyright: ignore[ErrorCode]` (`pyright`), and `# noqa: <ERROR_CODE>`
     (`ruff`). If multiple go on the same line, they should go with `mypy` first.
     Use them only as last resort, when no better solution is available. (An
     example where this is warranted is if `Any` is really the only type that
-    works, or if you need to use a third-party library that is not typed.)
-    Some pointers on which errors to just comment out are specified below.
+    works, or if you need to use a third-party library that is not typed.) Some
+    pointers on which errors to just comment out are specified below.
   - IMPORTANT! Don't hesitate to over-document. Please ensure that when you
     modify a function, you also update the docstring. If you add a new
     parameter, please document it. Don't forget to put "args", "returns", and
@@ -49,8 +49,8 @@
 
 - **Documentation practices**:
   - Whenever possible, any references to a file or library (or really any piece
-    of code) should be surrounded with backticks. Don't say ("we detect uv.lock",
-    say "we detect `uv.lock`").
+    of code) should be surrounded with backticks. Don't say ("we detect
+    uv.lock", say "we detect `uv.lock`").
 
 - **Handling linting and type-checking errors** (these are misc notes):
   - In general, if we're dealing with operations that inherently deal with `Any`
