@@ -7,3 +7,4 @@ mkdocs
 mkdocstrings
 mypy
 docstrings
+noqa
