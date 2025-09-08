@@ -37,9 +37,13 @@ SPELLCHECK_EXCLUDE_PATTERNS := site/ scratch/
 PYTEST_EXCLUDE_PATTERNS := ""
 
 # Markdownlint exclude patterns
-# Needs to be written in a way that markdownlint understands
-# (e.g. "\#.venv" "\#scratch" "\#runs")
-MDLINT_EXCLUDE_PATTERNS := "\#.venv" "\#scratch"
+# These are shell patterns, not markdownlint ones anymore
+MDLINT_EXCLUDE_DIRS := ".venv" "scratch" "runs" "node_modules"
+
+# Build the list of Markdown files, excluding symlinks and excluded dirs
+MD_FILES := $(shell find . \
+	-type d \( $(foreach dir,$(MDLINT_EXCLUDE_DIRS),-name $(dir) -o) -false \) -prune \
+	-o -name '*.md' ! -type l -print)
 
 # Default target
 .DEFAULT_GOAL := help
@@ -218,12 +222,10 @@ spell-check: spell-check-py spell-check-md ## Run all spell checks in parallel
 .PHONY: prettier-md markdownlint-md md-check
 prettier-md: check-npx ## Format markdown files
 	@$(NPX) prettier --write --prose-wrap always --print-width 80 \
-		$(shell find docs . -name '*.md' ! -type l)
+		$(MD_FILES)
 
 markdownlint-md: check-npx ## Lint markdown files
-	@$(NPX) markdownlint-cli2 \
-		$(shell find . -name '*.md' ! -type l) \
-		$(MDLINT_EXCLUDE_PATTERNS)
+	@$(NPX) markdownlint-cli2 $(MD_FILES)
 
 md-check: prettier-md markdownlint-md ## Check markdown files in parallel
 
