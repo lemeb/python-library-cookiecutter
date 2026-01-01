@@ -44,6 +44,11 @@
   - If you're wondering if a rule is in preview: if it appears during
     `make check-strict-all`, but not during `make check`, then it is a preview
     rule.
+  - Be **really** weary before adding any `# type: ignore`, `# pyright: ignore`,
+    or `# noqa` comments. These should be used only as last resort, when no
+    better solution is available. Don't hesitate to ask questions to the user on
+    whether further code changes are made to avoid these comments, or whether
+    the ignore comments are acceptable.
 
 - **Code practices**:
   - Check `pyproject.toml` to know what is the minimum Python version that is
