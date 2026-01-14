@@ -5,9 +5,12 @@ name: CI
 on:
   push:
     branches: [ "main" ]
+    # __MONOREPO_PATHS__
   pull_request:
     branches: [ "main" ]
+    # __MONOREPO_PATHS__
 
+# __MONOREPO_DEFAULTS__
 jobs:
   generate-matrix:
     runs-on: ubuntu-latest
