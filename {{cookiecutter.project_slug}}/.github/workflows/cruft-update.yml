@@ -25,7 +25,7 @@ jobs:
           # will need to specify a personal access token (PAT) in the
           # secrets of this repository. You can find reference code that
           # alludes to this possibility later in the file.
-          # To include workflow files, delete the "!.github/workflows/" line and use a PAT
+          # To include workflow files, delete the ":!.github/workflows/" line and use a PAT
           - add-paths: |
               __CRUFT_PROJECT_DIR__
               __CRUFT_MAYBE_EXCLUDE_WORKFLOWS__

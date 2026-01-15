@@ -71,7 +71,7 @@ with open('.github/workflows/cruft-update.yml', 'r') as f:
     content = f.read()
 
 content = content.replace('__CRUFT_PROJECT_DIR__', '.')
-content = content.replace('__CRUFT_MAYBE_EXCLUDE_WORKFLOWS__', '!.github/workflows/')
+content = content.replace('__CRUFT_MAYBE_EXCLUDE_WORKFLOWS__', ':!.github/workflows/')
 content = content.replace('__CRUFT_CD__\\n', '')  # Remove the line entirely
 
 with open('.github/workflows/cruft-update.yml', 'w') as f:
