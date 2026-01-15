@@ -1,5 +1,5 @@
 site_name: {{cookiecutter.project_name}}
-site_url: "https://github.com/{{cookiecutter.__gh_slug}}"
+site_url: "https://github.com/{{cookiecutter.github_repo}}"
 strict: true
 
 theme:
@@ -14,8 +14,8 @@ theme:
     - navigation.sections
     - content.code.annotate
 
-repo_name: {{cookiecutter.__gh_slug}}
-repo_url: "https://github.com/{{cookiecutter.__gh_slug}}"
+repo_name: {{cookiecutter.github_repo}}
+repo_url: "https://github.com/{{cookiecutter.github_repo}}"
 edit_uri: edit/main/docs/
 
 # https://www.mkdocs.org/user-guide/configuration/#validation

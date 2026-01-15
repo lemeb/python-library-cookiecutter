@@ -57,8 +57,8 @@ dev = [
 
 
 [project.urls]
-"Homepage" = "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}"
-"Bug Tracker" = "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}/issues"
+"Homepage" = "https://github.com/{{ cookiecutter.github_repo }}"
+"Bug Tracker" = "https://github.com/{{ cookiecutter.github_repo }}/issues"
 
 [tool.uv.build-backend]
 module-root = "src"
