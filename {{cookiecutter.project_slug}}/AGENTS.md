@@ -65,7 +65,8 @@
     in that file.
   - If you're wondering if a rule is in preview: if it appears during
     `make check-strict-all`, but not during `make check`, then it is a preview
-    rule.
+    rule. This means that you need to comment it out in `ruff-strict.toml` if
+    you want to ignore it.
   - Be **really** weary before adding any `# type: ignore`, `# pyright: ignore`,
     or `# noqa` comments. These should be used only as last resort, when no
     better solution is available. Don't hesitate to ask questions to the user on
