@@ -9,3 +9,5 @@ mypy
 docstrings
 noqa
 pydantic
+
+# Insert yours underneath
