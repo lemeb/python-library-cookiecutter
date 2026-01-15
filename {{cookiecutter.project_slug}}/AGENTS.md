@@ -34,13 +34,16 @@
        type-checking errors.
     10. Document the feature (and ONLY that documentation, although you might to
         update / refactor other documentation as needed.). If you create a new
-        file, you probably will need to create a file or update something within
-        `docs/api`. Exert your best judgment here. Don't forget to run
-        `make doc`! Also, if you think documentation would be improved by adding
-        things like tutorials, guides, etc, please propose them to the user. If
-        you see that one of the existing guides or tutorials needs to be
-        updated, please do so proactively and properly.
-    11. Propose a git commit with a clear message explaining what you did. DO
+        module, you MUST create a corresponding file in `docs/api/` AND update
+        the `nav` section in `mkdocs.yml` to include it. Don't forget to run
+        `make doc`! This will catch spelling errors - add any new technical
+        terms to `project-words.txt`. Also, if you think documentation would be
+        improved by adding things like tutorials, guides, etc, please propose
+        them to the user. If you see that one of the existing guides or
+        tutorials needs to be updated, please do so proactively and properly.
+    11. **Final verification**: Run `make test && make check-strict-all &&
+        make doc` to ensure everything passes before proposing commits.
+    12. Propose a git commit with a clear message explaining what you did. DO
         NOT COMMIT directly. Oftentimes, it makes sense to split the work into
         multiple commits. In this case, propose multiple commits with clear
         messages.
