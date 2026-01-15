@@ -5,8 +5,8 @@
 # Consistent shell behavior
 SHELL := $(shell which bash)
 
-# Enable parallel execution
-MAKEFLAGS += --jobs
+# Enable parallel execution and keep going on errors to show all failures
+MAKEFLAGS += --jobs -k
 .NOTPARALLEL: install install-all update update-all  # These targets shouldn't run in parallel
 
 # Variables
@@ -120,17 +120,24 @@ clean: ## Remove generated files
 # BASIC CODE QUALITY CHECKS
 #########################################################################
 
-.PHONY: ruff-check ruff-format mypy-check check
+.PHONY: ruff-check ruff-format ruff-format-check mypy-check check check-fix
 ruff-check: ## Run ruff checks
 	@$(UV) run ruff check .
 
-ruff-format: ## Run ruff formatter
+ruff-format: ## Run ruff formatter (modifies files)
 	@$(UV) run ruff format .
+
+ruff-format-check: ## Verify ruff formatting without modifying files
+	@$(UV) run ruff format --check .
 
 mypy-check: ## Run mypy checks
 	@$(UV) run mypy --check-untyped-defs --strict src/$(SLUG) tests/ --ignore-missing-imports
 
-check: ruff-check ruff-format mypy-check ## Run basic code quality checks in parallel
+check-fix: ## Format code and auto-fix lint errors
+	@$(UV) run ruff format .
+	@$(UV) run ruff check . --fix
+
+check: ruff-check ruff-format-check mypy-check ## Run code quality checks in parallel (read-only)
 
 #########################################################################
 # STRICT CHECKS
@@ -229,21 +236,20 @@ prettier-md: check-npx ## Format markdown files
 	@$(NPX) prettier --write --prose-wrap always --print-width 80 \
 		$(MD_FILES)
 
-markdownlint-md: check-npx ## Lint markdown files
+markdownlint-md: prettier-md ## Lint markdown files (runs after prettier)
 	@$(NPX) markdownlint-cli2 $(MD_FILES)
 
-md-check: prettier-md markdownlint-md ## Check markdown files in parallel
+md-check: markdownlint-md ## Format and lint markdown files (sequential: prettier then markdownlint)
 
 #########################################################################
 # DOCUMENTATION
 #########################################################################
 
-.PHONY: doc doc-serve
-doc: check-npx ## Build documentation
-	make md-check & \
-	make spell-check & \
-	wait && \
+.PHONY: doc doc-serve doc-build
+doc-build: md-check spell-check ## Run all doc checks then build
 	$(UV) run mkdocs build
+
+doc: doc-build ## Build documentation (md-check and spell-check run in parallel first)
 
 doc-serve: ## Serve documentation locally
 	@$(UV) run mkdocs serve

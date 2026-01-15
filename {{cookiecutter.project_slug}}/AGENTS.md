@@ -53,9 +53,10 @@
     that some packages will need to be added later. Well, wait until later then.
 
 - **Checking code**:
-  - Use `uv run ruff format . && uv run ruff check . --fix`, then
-    `make check-strict-all` to check your code. Please refer to the earlier
-    instructions on what is appropriate when.
+  - Use `make check-fix` to format code and auto-fix lint errors, then
+    `make check` to run all linting and type checks in parallel. All errors
+    will be shown (the Makefile uses `-k` to keep going on failures). For
+    stricter checks, use `make check-strict-all`.
   - One quirk of `make check-strict-all` is that it will run `ruff`'s preview
     rules. If you want to comment such rule out, you cannot do it in the file;
     it will be removed by `ruff format`. Instead, you should update the
