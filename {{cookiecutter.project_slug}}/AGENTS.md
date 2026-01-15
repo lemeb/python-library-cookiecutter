@@ -47,8 +47,8 @@
   - Always add new dependencies using `uv add <package>`. This will ensure
     proper locking of the dependencies.
   - If you need to add a dev dependency, use `uv add --dev <package>`.
-  - Corollary: never modify `pyproject.toml` or `uv.lock` directly. Always use
-    `uv` commands.
+  - Corollary: never modify `pyproject.toml` or `uv.lock` directly as far as
+    dependencies are concerned. Always use `uv` commands.
   - Only add dependencies that are strictly necessary. Yes, you might think
     that some packages will need to be added later. Well, wait until later then.
 
