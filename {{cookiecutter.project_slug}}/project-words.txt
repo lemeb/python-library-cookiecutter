@@ -8,3 +8,4 @@ mkdocstrings
 mypy
 docstrings
 noqa
+pydantic

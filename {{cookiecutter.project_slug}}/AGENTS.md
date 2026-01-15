@@ -34,12 +34,12 @@
        type-checking errors.
     10. Document the feature (and ONLY that documentation, although you might to
         update / refactor other documentation as needed.). If you create a new
-        file, you probably will need to create a file or update something
-        within `docs/api`. Exert your best judgment here. Don't forget to run
-        `make doc`! Also, if you think documentation would be improved by
-        adding things like tutorials, guides, etc, please propose them to the
-        user. If you see that one of the existing guides or tutorials needs to
-        be updated, please do so proactively and properly.
+        file, you probably will need to create a file or update something within
+        `docs/api`. Exert your best judgment here. Don't forget to run
+        `make doc`! Also, if you think documentation would be improved by adding
+        things like tutorials, guides, etc, please propose them to the user. If
+        you see that one of the existing guides or tutorials needs to be
+        updated, please do so proactively and properly.
     11. Propose a git commit with a clear message explaining what you did. DO
         NOT COMMIT directly. Oftentimes, it makes sense to split the work into
         multiple commits. In this case, propose multiple commits with clear
@@ -129,12 +129,12 @@
       syntax is `[`display text`][module.function]`. For example:
       `Uses [`lru_cache`][functools.lru_cache] to ensure...`
     - Available inventories are configured in `mkdocs.yml` under `inventories`.
-      Add new ones as needed (e.g., `https://example.com/objects.inv`). Only
-      use cross-references if either (1) the function or object is part of the
+      Add new ones as needed (e.g., `https://example.com/objects.inv`). Only use
+      cross-references if either (1) the function or object is part of the
       standard library, (2) the function or object is part of the current
-      library, or (3) is part of an external library but the inventory is in
-      the `inventories` section of `mkdocs.yml` or another plugin takes care of
-      it (like a `griffe-pydantic` plugin for Pydantic objects.)
+      library, or (3) is part of an external library but the inventory is in the
+      `inventories` section of `mkdocs.yml` or another plugin takes care of it
+      (like a `griffe-pydantic` plugin for Pydantic objects.)
 
   - **Before committing**, run `make doc` to verify spell check passes and docs
     build correctly. Add any new technical terms to `project-words.txt`.
