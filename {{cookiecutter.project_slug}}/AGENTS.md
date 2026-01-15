@@ -152,3 +152,22 @@
     `ANN401` (`ruff`).
   - In some cases, you can put `object` as the type, but this is not
     recommended. If you do so, please document why you did it.
+  - **Test files and pyright strict mode**: Test files often need file-level
+    pyright configuration when they use mocks and JSON responses that inherently
+    involve `Any` types. Add at the top of the file:
+    ```python
+    # pyright: reportAny=false, reportExplicitAny=false
+    ```
+    Add `reportPrivateUsage=false` if tests need to access private module state,
+    and `reportUnknownArgumentType=false` for JSON parsing.
+  - **Pyright ignore placement**: The `# pyright: ignore[rule]` comment MUST be
+    on the exact line with the error. Putting it on an adjacent line won't work.
+  - **Comment wording pitfall**: Any comment starting with `# pyright:` is
+    parsed as a directive. If explaining why a pyright ignore is needed, start
+    with `# Pyright ignore needed...` (capital P) or rephrase to avoid the
+    prefix.
+  - **Unused parameters**: Use `_paramname` prefix (e.g., `_request`) for
+    intentionally unused parameters. This satisfies both ruff's `ARG001` and
+    pyright's `reportUnusedParameter` without needing ignore comments.
+  - **Unused call results**: For `reportUnusedCallResult` errors, assign the
+    result to `_`, e.g., `_ = await db.execute(...)`.
