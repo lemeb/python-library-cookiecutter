@@ -61,12 +61,16 @@
     dependencies are concerned. Always use `uv` commands.
   - Only add dependencies that are strictly necessary. Yes, you might think that
     some packages will need to be added later. Well, wait until later then.
+  - **Note**: Don't bother modifying `scratch/pyproject.toml` - it's not tracked
+    by git and exists only for local experimentation.
 
 - **Checking code**:
-  - Use `make check-fix` to format code and auto-fix lint errors, then
-    `make check` to run all linting and type checks in parallel. All errors will
-    be shown (the Makefile uses `-k` to keep going on failures). For stricter
-    checks, use `make check-strict-all`.
+  - **Always run `make check-fix` first** before running `make check` or
+    `make check-strict-all`. Many errors (formatting, import sorting, simple
+    lint issues) will be auto-fixed, saving you time. Then run `make check` for
+    all linting and type checks in parallel. All errors will be shown (the
+    Makefile uses `-k` to keep going on failures). For stricter checks, use
+    `make check-strict-all`.
   - One quirk of `make check-strict-all` is that it will run `ruff`'s preview
     rules. If you want to comment such rule out, you cannot do it in the file;
     it will be removed by `ruff format`. Instead, you should update the
