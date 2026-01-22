@@ -41,8 +41,9 @@
         improved by adding things like tutorials, guides, etc, please propose
         them to the user. If you see that one of the existing guides or
         tutorials needs to be updated, please do so proactively and properly.
-    11. **Final verification**: Run `make test && make check-strict-all &&
-        make doc` to ensure everything passes before proposing commits.
+    11. **CI/CD gate**: Before pushing, you MUST run `make test`, `make check`,
+        `make check-strict-all`, and `make doc` locally and ensure they all pass.
+        CI will run the same checks and will fail the build if any of them fail.
     12. Propose a git commit with a clear message explaining what you did. DO
         NOT COMMIT directly. Oftentimes, it makes sense to split the work into
         multiple commits. In this case, propose multiple commits with clear
@@ -114,33 +115,33 @@
   - Be mindful of class methods that don't use the `self` parameter. If you
     don't use it, you should make it static.
 
-- **Documentation practices**:
-  - Whenever possible, any references to a file or library (or really any piece
-    of code) should be surrounded with backticks. Don't say ("we detect
-    uv.lock", say "we detect `uv.lock`").
-  - **Docstring formatting (Google style)**:
-    - In `Returns:` sections, continuation lines must be indented to show they
-      belong to the same return description. For example:
-
-      ```python
-      Returns:
-          The URL with async driver if it was a postgres URL,
-              otherwise the original value unchanged.
-      ```
-
-    - Use cross-references to link to standard library or third-party docs. The
-      syntax is `[`display text`][module.function]`. For example:
+  - **Documentation practices**:
+    - Whenever possible, any references to a file or library (or really any
+      piece of code) should be surrounded with backticks. Don't say ("we detect
+      uv.lock", say "we detect `uv.lock`").
+    - Cross-references are strongly encouraged and should be used whenever
+      possible. Use the format `[`display text`][module.function]`. Example:
       `Uses [`lru_cache`][functools.lru_cache] to ensure...`
-    - Available inventories are configured in `mkdocs.yml` under `inventories`.
-      Add new ones as needed (e.g., `https://example.com/objects.inv`). Only use
-      cross-references if either (1) the function or object is part of the
-      standard library, (2) the function or object is part of the current
-      library, or (3) is part of an external library but the inventory is in the
-      `inventories` section of `mkdocs.yml` or another plugin takes care of it
-      (like a `griffe-pydantic` plugin for Pydantic objects.)
+      - Available inventories are configured in `mkdocs.yml` under
+        `inventories`. Add new ones as needed (e.g.,
+        `https://example.com/objects.inv`). Only use cross-references if either
+        (1) the function or object is part of the standard library, (2) the
+        function or object is part of the current library, or (3) is part of an
+        external library but the inventory is in the `inventories` section of
+        `mkdocs.yml` or another plugin takes care of it (like a
+        `griffe-pydantic` plugin for Pydantic objects.)
+    - **Docstring formatting (Google style)**:
+      - In `Returns:` sections, continuation lines must be indented to show they
+        belong to the same return description. For example:
 
-  - **Before committing**, run `make doc` to verify spell check passes and docs
-    build correctly. Add any new technical terms to `project-words.txt`.
+        ```python
+        Returns:
+            The URL with async driver if it was a postgres URL,
+                otherwise the original value unchanged.
+        ```
+
+    - **Before committing**, run `make doc` to verify spell check passes and
+      docs build correctly. Add any new technical terms to `project-words.txt`.
 
 - **Handling linting and type-checking errors** (these are misc notes):
   - In general, if we're dealing with operations that inherently deal with `Any`
