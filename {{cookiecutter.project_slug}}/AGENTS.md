@@ -120,8 +120,11 @@
       piece of code) should be surrounded with backticks. Don't say ("we detect
       uv.lock", say "we detect `uv.lock`").
     - Cross-references are strongly encouraged and should be used whenever
-      possible. Use the format `[`display text`][module.function]`. Example:
-      `Uses [`lru_cache`][functools.lru_cache] to ensure...`
+      possible. Use the format "[`function`][module.function]". Example:
+      `Uses [`lru_cache`][functools.lru_cache] to ensure...`.
+      - Yes, this means using _both_ backticks and square brackets. This is so
+        that the generated documentation shows the function name in a code font
+        while linking to the right place.
       - Available inventories are configured in `mkdocs.yml` under
         `inventories`. Add new ones as needed (e.g.,
         `https://example.com/objects.inv`). Only use cross-references if either
@@ -130,6 +133,8 @@
         external library but the inventory is in the `inventories` section of
         `mkdocs.yml` or another plugin takes care of it (like a
         `griffe-pydantic` plugin for Pydantic objects.)
+      - If you reference something that is not in an inventory, you can still
+        use backticks, but don't use the square brackets.
     - **Docstring formatting (Google style)**:
       - In `Returns:` sections, continuation lines must be indented to show they
         belong to the same return description. For example:
