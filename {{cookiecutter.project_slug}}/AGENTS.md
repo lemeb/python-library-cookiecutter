@@ -120,12 +120,34 @@
     don't use it, you should make it static.
 
   - **Documentation practices**:
+    - **Blank line before lists**: In markdown and docstrings, always insert a
+      blank line between a paragraph and a list. Without it, the list may not
+      render correctly.
+
+      ```markdown
+      <!-- Correct -->
+      List header:
+
+      - first element
+      - second element
+
+      <!-- Incorrect - no blank line -->
+      List header:
+      - first element
+      - second element
+      ```
+
+    - **Two newlines between paragraphs**: Separate paragraphs with two newlines
+      (i.e., a blank line). A single newline will render as one continuous
+      paragraph.
     - Whenever possible, any references to a file or library (or really any
       piece of code) should be surrounded with backticks. Don't say ("we detect
       uv.lock", say "we detect `uv.lock`").
-    - Cross-references are strongly encouraged and should be used whenever
-      possible. Use the format "[`function`][module.function]". Example:
-      `Uses [`lru_cache`][functools.lru_cache] to ensure...`.
+    - **Cross-references**: Use the format "[`function`][module.function]" to
+      create clickable links in the generated documentation. Example:
+      `Uses [`lru_cache`][functools.lru_cache] to ensure...`. This works for
+      the standard library, our own library, and external libraries (thanks to
+      mkdocs/griffe).
       - Yes, this means using _both_ backticks and square brackets. This is so
         that the generated documentation shows the function name in a code font
         while linking to the right place.
@@ -139,6 +161,8 @@
         `griffe-pydantic` plugin for Pydantic objects.)
       - If you reference something that is not in an inventory, you can still
         use backticks, but don't use the square brackets.
+      - **Exception**: You don't need cross-references in `Args:`, `Returns:`,
+        or `Raises:` sections of docstrings - griffe handles those automatically.
     - **Docstring formatting (Google style)**:
       - In `Returns:` sections, continuation lines must be indented to show they
         belong to the same return description. For example:
