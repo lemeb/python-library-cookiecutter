@@ -102,6 +102,15 @@
     example where this is warranted is if `Any` is really the only type that
     works, or if you need to use a third-party library that is not typed.) Some
     pointers on which errors to just comment out are specified below.
+  - In general, do NOT put file-level ignore comments. Instead, try to
+    address the issues on a line-by-line basis. Exceptions to this rule include:
+      - Test files that inherently need to use `Any` types (e.g. because of
+        mocking, JSON parsing, etc.)
+      - Test files with regards to private module state access or docstring-
+        related issues.
+      - Errors or warnings that are really pervasive throughout the file, and
+        addressing them individually would be too cumbersome. In this case,
+        however, you MUST document why you're putting a file-level ignore.
   - IMPORTANT! Don't hesitate to over-document. Please ensure that when you
     modify a function, you also update the docstring. If you add a new
     parameter, please document it. Don't forget to put "args", "returns", and
@@ -163,6 +172,9 @@
         use backticks, but don't use the square brackets.
       - **Exception**: You don't need cross-references in `Args:`, `Returns:`,
         or `Raises:` sections of docstrings - griffe handles those automatically.
+    - **Don't state the obvious**: If a class explicitly subclasses something
+      (e.g., `class A(B, C):`), don't write "Inherits from B and C" in the
+      docstring - the auto-generated documentation already shows this.
     - **Docstring formatting (Google style)**:
       - In `Returns:` sections, continuation lines must be indented to show they
         belong to the same return description. For example:
