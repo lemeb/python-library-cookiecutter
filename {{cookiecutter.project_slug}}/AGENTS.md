@@ -217,3 +217,15 @@
     pyright's `reportUnusedParameter` without needing ignore comments.
   - **Unused call results**: For `reportUnusedCallResult` errors, assign the
     result to `_`, e.g., `_ = await db.execute(...)`.
+  - If you get an error saying that there are too many arguments in a method
+    signature, you should consider the following options, in order of
+    preference:
+    1. Refactor the code to reduce the number of parameters (e.g., group related
+       parameters into a dataclass or dictionary). But if this is not feasible,
+       or clearly idiotic, or decreases code readability, then...
+    2. Use a noqa comment.
+    3. Really avoid using solutions relying on `kwargs` or `args` unless
+       absolutely necessary. We like type-checking!
+  - Don't hesitate to fix the `unusedCallResult` errors by assigning the result
+    to `_` if the result is not needed. This is easy to write and is better than
+    an ignore comment.
