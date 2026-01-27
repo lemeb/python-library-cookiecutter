@@ -42,8 +42,9 @@
         them to the user. If you see that one of the existing guides or
         tutorials needs to be updated, please do so proactively and properly.
     11. **CI/CD gate**: Before pushing, you MUST run `make test`, `make check`,
-        `make check-strict-all`, and `make doc` locally and ensure they all pass.
-        CI will run the same checks and will fail the build if any of them fail.
+        `make check-strict-all`, and `make doc` locally and ensure they all
+        pass. CI will run the same checks and will fail the build if any of them
+        fail.
     12. Propose a git commit with a clear message explaining what you did. DO
         NOT COMMIT directly. Oftentimes, it makes sense to split the work into
         multiple commits. In this case, propose multiple commits with clear
@@ -102,15 +103,15 @@
     example where this is warranted is if `Any` is really the only type that
     works, or if you need to use a third-party library that is not typed.) Some
     pointers on which errors to just comment out are specified below.
-  - In general, do NOT put file-level ignore comments. Instead, try to
-    address the issues on a line-by-line basis. Exceptions to this rule include:
-      - Test files that inherently need to use `Any` types (e.g. because of
-        mocking, JSON parsing, etc.)
-      - Test files with regards to private module state access or docstring-
-        related issues.
-      - Errors or warnings that are really pervasive throughout the file, and
-        addressing them individually would be too cumbersome. In this case,
-        however, you MUST document why you're putting a file-level ignore.
+  - In general, do NOT put file-level ignore comments. Instead, try to address
+    the issues on a line-by-line basis. Exceptions to this rule include:
+    - Test files that inherently need to use `Any` types (e.g. because of
+      mocking, JSON parsing, etc.)
+    - Test files with regards to private module state access or docstring-
+      related issues.
+    - Errors or warnings that are really pervasive throughout the file, and
+      addressing them individually would be too cumbersome. In this case,
+      however, you MUST document why you're putting a file-level ignore.
   - IMPORTANT! Don't hesitate to over-document. Please ensure that when you
     modify a function, you also update the docstring. If you add a new
     parameter, please document it. Don't forget to put "args", "returns", and
@@ -135,13 +136,16 @@
 
       ```markdown
       <!-- Correct -->
+
       List header:
 
       - first element
       - second element
 
       <!-- Incorrect - no blank line -->
+
       List header:
+
       - first element
       - second element
       ```
@@ -154,8 +158,8 @@
       uv.lock", say "we detect `uv.lock`").
     - **Cross-references**: Use the format "[`function`][module.function]" to
       create clickable links in the generated documentation. Example:
-      `Uses [`lru_cache`][functools.lru_cache] to ensure...`. This works for
-      the standard library, our own library, and external libraries (thanks to
+      `Uses [`lru_cache`][functools.lru_cache] to ensure...`. This works for the
+      standard library, our own library, and external libraries (thanks to
       mkdocs/griffe).
       - Yes, this means using _both_ backticks and square brackets. This is so
         that the generated documentation shows the function name in a code font
@@ -171,7 +175,8 @@
       - If you reference something that is not in an inventory, you can still
         use backticks, but don't use the square brackets.
       - **Exception**: You don't need cross-references in `Args:`, `Returns:`,
-        or `Raises:` sections of docstrings - griffe handles those automatically.
+        or `Raises:` sections of docstrings - griffe handles those
+        automatically.
     - **Don't state the obvious**: If a class explicitly subclasses something
       (e.g., `class A(B, C):`), don't write "Inherits from B and C" in the
       docstring - the auto-generated documentation already shows this.
