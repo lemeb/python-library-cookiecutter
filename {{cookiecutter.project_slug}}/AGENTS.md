@@ -115,7 +115,9 @@
   - IMPORTANT! Don't hesitate to over-document. Please ensure that when you
     modify a function, you also update the docstring. If you add a new
     parameter, please document it. Don't forget to put "args", "returns", and
-    "raises" in the docstring. THIS IS ONE VERY COMMON LINTING MISTAKE!
+    "raises" in the docstring. THIS IS ONE VERY COMMON LINTING MISTAKE! The
+    exception here are helper functions that are private to a module and are
+    self-explanatory.
   - Check `pyproject.toml` for the max line length. It's probably 80. Yes, the
     formatter will sometimes just reformat the code, but some lines (e.g.
     docstrings) will need to be modified accordingly.
