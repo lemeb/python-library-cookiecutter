@@ -198,6 +198,17 @@
     - **Before committing**, run `make doc` to verify spell check passes and
       docs build correctly. Add any new technical terms to `project-words.txt`.
 
+  - **Docstring nitpicks**:
+    - Make sure there is an exact 1:1 correspondence between the errors
+      EXPLICITLY raised in the body of the function and the errors listed in the
+      `Raises:` section of the docstring. If an error is raised but not
+      documented, or documented but not raised, fix the docstring or the code
+      accordingly.
+    - Always strive to include a `Returns:` section in docstrings of functions
+      that return a value. (Don't bother for abstract methods or functions that
+      only return `None`, or for "stub functions": functions where the body only
+      consists of `pass`, `...`, `raise NotImplementedError`, or similar)
+
 - **Handling linting and type-checking errors** (these are misc notes):
   - In general, if we're dealing with operations that inherently deal with `Any`
     or `Unknown` (e.g. because you're parsing JSON, because you're dealing with
