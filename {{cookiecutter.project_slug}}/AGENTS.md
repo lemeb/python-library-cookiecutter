@@ -5,6 +5,12 @@ _NOTE_: This file normally resides at `AGENTS.md` but should be symlinked at
 `AGENTS.md` in this file, it references this very file even if you see it under
 a different name.
 
+<!-- You can fill in repository-specific information in tags like this.
+     This includes information such as Linear best practices, company-specific
+     guidelines, or anything else that is relevant to your context.
+     Do NOT remove these tags because they will make updating from the template
+     much much harder. -->
+
 ## The anatomy of a feature implementation
 
 Implementing a new feature typically involves the following steps:
@@ -17,7 +23,7 @@ to the user to clarify any doubts_, and _researching any relevant information_
 feature requirements and constraints. The goal of this step is to produce a
 spec.
 
-<!-- Expand here if needed with repository-specific information -->
+<!-- Expand here with repo-specific information. Do NOT remove this tag. -->
 
 ### 2. Planning the implementation
 
@@ -40,7 +46,7 @@ of lines of code, it will make the context window unmanageable.
 If you have to add dependencies for a feature, try to make adding them a
 separate task. This will make it easier to review and test.
 
-<!-- Expand here if needed with repository-specific information -->
+<!-- Expand here with repo-specific information. Do NOT remove this tag. -->
 
 ### 3. Executing the implementation
 
@@ -57,7 +63,7 @@ the base branch. Make sure to rebase the feature branch regularly to keep it up 
 date with the base branch. (Rebase is the default strategy; but if specified
 otherwise, follow the specified strategy.)
 
-<!-- Expand here if needed with repository-specific information -->
+<!-- Expand here with repo-specific information. Do NOT remove this tag. -->
 
 ### 4. Ensuring code quality before committing
 
@@ -84,7 +90,7 @@ There are three quality gates that MUST be passed before committing any code:
    `project-words.txt`. Please do NOT use `sort` on `project-words.txt`.
    `make doc` HAS to pass before committing any code.
 
-<!-- Expand here if needed with repository-specific information -->
+<!-- Expand here with repo-specific information. Do NOT remove this tag. -->
 
 ### 5. Committing and creating a PR
 
@@ -111,21 +117,21 @@ Once commits are done and pushed, you should create a PR. The PR description sho
 It is preferable to create PRs through the `gh` CLI tool using here-docs to avoid
 issues with markdown formatting.
 
-<!-- Expand here if needed with repository-specific information -->
+<!-- Expand here with repo-specific information. Do NOT remove this tag. -->
 
 ### 6. Addressing PR feedback
 
 Feedback about the PR can come from different places and should be addressed
 in further commits to the same PR.
 
-<!-- Expand here if needed with repository-specific information -->
+<!-- Expand here with repo-specific information. Do NOT remove this tag. -->
 
 ### 7. Cleaning up after the feature is merged
 
 Once the feature is merged, there might be some cleanup tasks to do, such as
 removing any temporary code or branches, updating documentation, etc.
 
-<!-- Expand here if needed with repository-specific information -->
+<!-- Expand here with repo-specific information. Do NOT remove this tag. -->
 
 Note that a conversation between you and me can happen at any time during this
 process. It is your job, before doing anything, to figure out at which stage we
