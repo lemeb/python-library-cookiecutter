@@ -7,7 +7,7 @@ a different name.
 
 ## The anatomy of a feature implementation
 
-Implementing a new feature typically involves the following steps
+Implementing a new feature typically involves the following steps:
 
 ### 1. Fully understanding the feature
 
