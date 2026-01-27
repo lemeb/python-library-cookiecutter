@@ -52,6 +52,11 @@ As you implement the feature, make sure to (1) write unit tests for each task,
 (2) update `.gitignore` if needed, (3) update documentation (both inline and
 external) as needed.
 
+Note that the implementation should be made in a feature branch, not directly in
+the base branch. Make sure to rebase the feature branch regularly to keep it up to
+date with the base branch. (Rebase is the default strategy; but if specified
+otherwise, follow the specified strategy.)
+
 <!-- Expand here if needed with repository-specific information -->
 
 ### 4. Ensuring code quality before committing
