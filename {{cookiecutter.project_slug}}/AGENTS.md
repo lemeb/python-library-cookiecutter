@@ -59,8 +59,8 @@ As you implement the feature, make sure to (1) write unit tests for each task,
 external) as needed.
 
 Note that the implementation should be made in a feature branch, not directly in
-the base branch. Make sure to rebase the feature branch regularly to keep it up to
-date with the base branch. (Rebase is the default strategy; but if specified
+the base branch. Make sure to rebase the feature branch regularly to keep it up
+to date with the base branch. (Rebase is the default strategy; but if specified
 otherwise, follow the specified strategy.)
 
 <!-- Expand here with repo-specific information. Do NOT remove this tag. -->
@@ -98,13 +98,14 @@ In general, we want git commits to be small and self-contained. As a rule of
 thumb, there should be a rough 1:1 correspondence between tasks and git commits.
 However, sometimes it makes sense to split a task into multiple commits. Use
 your best judgment. The important thing is that each commit should be easy to
-review and understand on its own. And ideally, the quality gates should pass
-for each commit. Check `DEVELOP.md` for more details on how to write commits.
+review and understand on its own. And ideally, the quality gates should pass for
+each commit. Check `DEVELOP.md` for more details on how to write commits.
 
 Unless specified otherwise, you should NOT commit directly without asking for
 user review first.
 
-Once commits are done and pushed, you should create a PR. The PR description should include the following sections:
+Once commits are done and pushed, you should create a PR. The PR description
+should include the following sections:
 
 - References to any relevant issues, tasks, or discussions, and ideally the spec
   and implementation plan.
@@ -114,15 +115,15 @@ Once commits are done and pushed, you should create a PR. The PR description sho
   documentation).
 - Any additional context or information that reviewers might find useful.
 
-It is preferable to create PRs through the `gh` CLI tool using here-docs to avoid
-issues with markdown formatting.
+It is preferable to create PRs through the `gh` CLI tool using here-docs to
+avoid issues with markdown formatting.
 
 <!-- Expand here with repo-specific information. Do NOT remove this tag. -->
 
 ### 6. Addressing PR feedback
 
-Feedback about the PR can come from different places and should be addressed
-in further commits to the same PR.
+Feedback about the PR can come from different places and should be addressed in
+further commits to the same PR.
 
 <!-- Expand here with repo-specific information. Do NOT remove this tag. -->
 
@@ -135,9 +136,8 @@ removing any temporary code or branches, updating documentation, etc.
 
 Note that a conversation between you and me can happen at any time during this
 process. It is your job, before doing anything, to figure out at which stage we
-are, and potentially ask questions. (Figuring this out might be very easy if
-you are, say, a sub-agent.)
-
+are, and potentially ask questions. (Figuring this out might be very easy if you
+are, say, a sub-agent.)
 
 ## Good Python practices
 

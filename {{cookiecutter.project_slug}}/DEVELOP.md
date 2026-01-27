@@ -157,8 +157,8 @@ Allowed prefixes are:
 - `refactor`: A code change that neither fixes a bug nor adds a feature
 - `perf`: A code change that improves performance
 - `test`: Adding missing tests or correcting existing tests
-- `chore`: Changes to the build process or auxiliary tools and libraries such
-  as documentation generation
+- `chore`: Changes to the build process or auxiliary tools and libraries such as
+  documentation generation
 - `ci`: Changes to our CI configuration files and scripts
 - `build`: Changes that affect the build system or external dependencies
 - `revert`: Reverts a previous commit
@@ -175,7 +175,8 @@ Scopes include:
 
 <!-- Please add repository-specific scopes here -->
 
-In general, it is frowned upon for the body of the commit to be empty, especially for big commits, but you can use your judgment on this.
+In general, it is frowned upon for the body of the commit to be empty,
+especially for big commits, but you can use your judgment on this.
 
 AI tools are allowed to be co-authors on commits, but they should represent
 themselves accurately.
