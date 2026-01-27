@@ -228,4 +228,6 @@
        absolutely necessary. We like type-checking!
   - Don't hesitate to fix the `unusedCallResult` errors by assigning the result
     to `_` if the result is not needed. This is easy to write and is better than
-    an ignore comment.
+    an ignore comment. **NOTE**: If you import i18n in the file, `_` might be
+    shadowed. In this case, you can use something like `_unused` or `__`
+    instead.
