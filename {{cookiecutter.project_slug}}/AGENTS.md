@@ -103,6 +103,9 @@ Once commits are done and pushed, you should create a PR. The PR description sho
   documentation).
 - Any additional context or information that reviewers might find useful.
 
+It is preferable to create PRs through the `gh` CLI tool using here-docs to avoid
+issues with markdown formatting.
+
 <!-- Expand here if needed with repository-specific information -->
 
 ### 6. Addressing PR feedback
