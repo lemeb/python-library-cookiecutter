@@ -136,7 +136,8 @@
   - **Documentation practices**:
     - **Blank line before lists**: In markdown and docstrings, always insert a
       blank line between a paragraph and a list. Without it, the list may not
-      render correctly.
+      render correctly. (This doesn't apply to `Raises:` or `Args:` sections in
+      docstrings, where the list is part of the same section.)
 
       ```markdown
       <!-- Correct -->
