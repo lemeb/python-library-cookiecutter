@@ -130,6 +130,8 @@
     `my_list: list[str] = []`).
   - Be mindful of class methods that don't use the `self` parameter. If you
     don't use it, you should make it static.
+  - If you use `cast(...)`, make sure that the name of the new type is put
+    within double quotes (e.g., `cast("MyType", obj)`).
 
   - **Documentation practices**:
     - **Blank line before lists**: In markdown and docstrings, always insert a
