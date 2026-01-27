@@ -1,56 +1,129 @@
 # Coding agent instructions for `{{ cookiecutter.project_name }}`
 
-## Good coding practices
+_NOTE_: This file normally resides at `AGENTS.md` but should be symlinked at
+`GEMINI.md` and `CLAUDE.md`. In other words, if you see a reference to
+`AGENTS.md` in this file, it references this very file even if you see it under
+a different name.
 
-- **Step-by-step**:
-  - When coding a feature, try to break it down into smaller steps. This will
-    help you focus on one thing at a time, and will make it easier to debug
-    issues.
-  - In practice, it means that you should operate roughly thusly:
-    1. Create the directory and files needed for the feature (and ONLY those
-       files.) Maybe update `.gitignore` if needed.
-    2. Add the dependencies needed for the feature (and ONLY those
-       dependencies.)
-    3. Write the code for the feature (and ONLY that code.)
-    4. Run the tests with `make test-all` and make sure they pass.
-    5. Run `make test-with-coverage` to see which parts of the code are not
-       covered by unit tests (without overwriting `make test-all` coverage).
-       Then...
-    6. Write the tests for the feature (and ONLY those tests.) As a general
-       rule, we want 100% coverage WITHOUT any internet / latency request. These
-       tests should be triggered with `make test`. HOWEVER, if the feature
-       actually requires internet access or latency (e.g. because it is a LLM
-       call), then add a test in the `tests/integration` folder that will be
-       triggered with `make test-all`. In this case, you should still aim for
-       two tests: one that mocks the internet / latency request (so that it can
-       be run with `make test`), and one that actually does the internet /
-       latency request (so that it can be run with `make test-all`.)
-    7. Run the tests and make sure they pass. Note that, for now, `make test`
-       does not run coverage; use `make test-with-coverage` to track unit test
-       coverage without rerunning integration tests.
-    8. Run again `make test-with-coverage` until you reach 100% coverage. If you
-       want to make an exception to that rule, you HAVE to ask the user.
-    9. Run `make check-strict-all` to make sure there are no linting or
-       type-checking errors.
-    10. Document the feature (and ONLY that documentation, although you might to
-        update / refactor other documentation as needed.). If you create a new
-        module, you MUST create a corresponding file in `docs/api/` AND update
-        the `nav` section in `mkdocs.yml` to include it. Don't forget to run
-        `make doc`! This will catch spelling errors - add any new technical
-        terms to `project-words.txt`. Also, if you think documentation would be
-        improved by adding things like tutorials, guides, etc, please propose
-        them to the user. If you see that one of the existing guides or
-        tutorials needs to be updated, please do so proactively and properly.
-    11. **CI/CD gate**: Before pushing, you MUST run `make test`, `make check`,
-        `make check-strict-all`, and `make doc` locally and ensure they all
-        pass. CI will run the same checks and will fail the build if any of them
-        fail.
-    12. Propose a git commit with a clear message explaining what you did. DO
-        NOT COMMIT directly. Oftentimes, it makes sense to split the work into
-        multiple commits. In this case, propose multiple commits with clear
-        messages.
-  - This is only a guideline, not a strict rule. Use your best judgment. But in
-    general, we want git commits to be clean and self-contained.
+## The anatomy of a feature implementation
+
+Implementing a new feature typically involves the following steps
+
+### 1. Fully understanding the feature
+
+This includes _exploring the current state of the codebase_, _asking questions
+to the user to clarify any doubts_, and _researching any relevant information_
+(whether third-party libraries, roadmaps, old PRs, etc.) to fully grasp the
+feature requirements and constraints. The goal of this step is to produce a
+spec.
+
+<!-- Expand here if needed with repository-specific information -->
+
+### 2. Planning the implementation
+
+This involves _deciding on the architecture and design patterns to use_,
+_identifying any potential challenges or dependencies_, and _breaking down the
+feature into smaller, manageable tasks_. The goal of this step is to produce a
+clear implementation plan. Please check that the spec and the implementation
+plan are aligned with each other.
+
+In general, a task should be small enough that it can be implemented, tested,
+documented, and committed in one go. It should also be small enough to be done
+fully within one agent session. A good rule of thumb is something like 2 human
+hours. It can be much smaller, however. In fact, if your feature demands
+multiple small tasks that are very similar (e.g. adding multiple API routes), it
+is a good idea to keep the first task small, and then use it as a template for
+the other tasks. Another reason to keep tasks small is that it makes it easier
+to review and test; if you run linting and type-checking commands on thousands
+of lines of code, it will make the context window unmanageable.
+
+If you have to add dependencies for a feature, try to make adding them a
+separate task. This will make it easier to review and test.
+
+<!-- Expand here if needed with repository-specific information -->
+
+### 3. Executing the implementation
+
+This is the actual coding part. Please follow the best practices and coding
+standards specified in your context window; and don't hesitate to look at the
+existing codebase for reference.
+
+As you implement the feature, make sure to (1) write unit tests for each task,
+(2) update `.gitignore` if needed, (3) update documentation (both inline and
+external) as needed.
+
+<!-- Expand here if needed with repository-specific information -->
+
+### 4. Ensuring code quality before committing
+
+There are three quality gates that MUST be passed before committing any code:
+
+1. _Linting and type-checking_. First, run `make check-fix` to auto-fix any
+   formatting issues. Then run `make check` to ensure that there are no linting
+   or type-checking errors. For stricter checks, run `make check-strict-all`.
+   All of the three commands MUST pass before committing any code, because CI/CD
+   will run the same commands and will fail the build if any of them fail.
+2. _Unit tests_. Run `make test` to ensure that all unit tests pass. If your
+   feature requires internet access or latency (e.g. because it is a LLM call),
+   also run `make test-all` to ensure that all integration tests pass. You
+   should aim for 100% unit test coverage for the new code you write. Use
+   `make test-with-coverage` to track unit test coverage without rerunning
+   integration tests. `make test` HAS to pass before committing any code.
+3. _Documentation_. If you create a new module, you MUST create a corresponding
+   file in `docs/api/` AND update the `nav` section in `mkdocs.yml` to include
+   it. Also, if you think documentation would be improved by adding things like
+   tutorials, guides, etc, please propose them to the user. If you see that one
+   of the existing guides or tutorials needs to be updated, please do so
+   proactively and properly.Run `make doc` to ensure that the documentation
+   builds correctly and that spell check passes. Add any new technical terms to
+   `project-words.txt`. Please do NOT use `sort` on `project-words.txt`.
+   `make doc` HAS to pass before committing any code.
+
+<!-- Expand here if needed with repository-specific information -->
+
+### 5. Committing and creating a PR
+
+In general, we want git commits to be small and self-contained. As a rule of
+thumb, there should be a rough 1:1 correspondence between tasks and git commits.
+However, sometimes it makes sense to split a task into multiple commits. Use
+your best judgment. The important thing is that each commit should be easy to
+review and understand on its own. And ideally, the quality gates should pass
+for each commit. Check `DEVELOP.md` for more details on how to write commits.
+
+Unless specified otherwise, you should NOT commit directly without asking for
+user review first.
+
+Once commits are done and pushed, you should create a PR. The PR description should include the following sections:
+
+- References to any relevant issues, tasks, or discussions, and ideally the spec
+  and implementation plan.
+- A clear and concise description of the changes made in the PR.
+- Instructions on how to test the changes, if applicable.
+- Checklist of the quality gates passed (linting, type-checking, unit tests,
+  documentation).
+- Any additional context or information that reviewers might find useful.
+
+<!-- Expand here if needed with repository-specific information -->
+
+### 6. Addressing PR feedback
+
+Feedback about the PR can come from different places and should be addressed
+in further commits to the same PR.
+
+<!-- Expand here if needed with repository-specific information -->
+
+### 7. Cleaning up after the feature is merged
+
+Once the feature is merged, there might be some cleanup tasks to do, such as
+removing any temporary code or branches, updating documentation, etc.
+
+<!-- Expand here if needed with repository-specific information -->
+
+Note that a conversation between you and me can happen at any time during this
+process. It is your job, before doing anything, to figure out at which stage we
+are, and potentially ask questions. (Figuring this out might be very easy if
+you are, say, a sub-agent.)
+
 
 ## Good Python practices
 
@@ -222,11 +295,15 @@
   - **Test files and pyright strict mode**: Test files often need file-level
     pyright configuration when they use mocks and JSON responses that inherently
     involve `Any` types. Add at the top of the file:
+    <!-- markdownlint-disable MD031 -->
+
     ```python
     # pyright: reportAny=false, reportExplicitAny=false
     ```
+
     Add `reportPrivateUsage=false` if tests need to access private module state,
     and `reportUnknownArgumentType=false` for JSON parsing.
+
   - **Pyright ignore placement**: The `# pyright: ignore[rule]` comment MUST be
     on the exact line with the error. Putting it on an adjacent line won't work.
   - **Comment wording pitfall**: Any comment starting with `# pyright:` is
