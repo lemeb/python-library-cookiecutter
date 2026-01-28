@@ -6,7 +6,9 @@
 SHELL := $(shell which bash)
 
 # Enable parallel execution and keep going on errors to show all failures
-MAKEFLAGS += --jobs -k
+# Use a portable -j value since BSD make doesn't support --jobs without a count.
+JOBS ?= $(shell getconf _NPROCESSORS_ONLN 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || nproc 2>/dev/null || echo 4)
+MAKEFLAGS += -j$(JOBS) -k
 .NOTPARALLEL: install install-all update update-all  # These targets shouldn't run in parallel
 
 # Variables
@@ -231,15 +233,19 @@ spell-check: spell-check-py spell-check-md ## Run all spell checks in parallel
 # MARKDOWN CHECKS
 #########################################################################
 
-.PHONY: prettier-md markdownlint-md md-check
+.PHONY: prettier-md prettier-md-check markdownlint-md md-check
 prettier-md: check-npx ## Format markdown files
 	@$(NPX) prettier --write --prose-wrap always --print-width 80 \
 		$(MD_FILES)
 
-markdownlint-md: prettier-md ## Lint markdown files (runs after prettier)
+prettier-md-check: check-npx ## Check markdown formatting without modifying files
+	@$(NPX) prettier --check --prose-wrap always --print-width 80 \
+		$(MD_FILES)
+
+markdownlint-md: ## Lint markdown files
 	@$(NPX) markdownlint-cli2 $(MD_FILES)
 
-md-check: markdownlint-md ## Format and lint markdown files (sequential: prettier then markdownlint)
+md-check: prettier-md-check markdownlint-md ## Check markdown formatting and lint in parallel
 
 #########################################################################
 # DOCUMENTATION
