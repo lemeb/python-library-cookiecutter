@@ -1,20 +1,28 @@
 ---
 name: quality
-description: Run all quality gates (linting, type-checking, tests, documentation). Use before committing to ensure code is ready.
+description: Run all quality gates and report detailed status. Use as final verification after parallel sub-agents, or as all-in-one check.
 ---
 
 # All Quality Gates
 
+## When to Use
+
+- **After parallel sub-agents**: Run this to verify nothing was missed due to
+  concurrent edits
+- **As all-in-one check**: If not using parallel sub-agents, this runs everything
+
 ## Procedure
 
-1. Run `/check`, `/test`, `/doc` (can be parallel if supported)
-
-2. After all complete, re-run all commands to verify nothing was missed due to concurrent edits:
+1. Run all quality gate commands sequentially:
    ```
-   make check-fix && make check && make check-strict-all
+   make check-fix
+   make check
+   make check-strict-all
    make test-with-coverage
    make doc
    ```
+
+2. If any fail, fix the issues and re-run from step 1
 
 3. Report detailed status summary:
 
@@ -42,11 +50,7 @@ description: Run all quality gates (linting, type-checking, tests, documentation
    ### Overall: PASS/FAIL
    ```
 
-## Why Re-run?
-
-Parallel execution can cause concurrent edits. The final sequential run ensures all gates pass on the final state.
-
 ## Exit Conditions
 
-- **Success**: All gates pass in final verification
+- **Success**: All gates pass
 - **Failure**: Report which gates failed with specific errors/uncovered lines
