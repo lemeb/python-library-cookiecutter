@@ -300,6 +300,13 @@ control) to run `/check`, `/test`, and `/doc` in parallel. Each sub-agent will
 run checks and fix issues. Tell each sub-agent they are running in parallel, so
 they shouldn't be alarmed if files change under their feet.
 
+**Sub-agent command guidance**: Sub-agents should prefer `make` targets over raw
+commands (e.g., `make test-with-coverage` not `pytest`), because Makefile
+targets include project-specific options that raw commands lack. Raw commands
+are OK sparingly for targeted checks (e.g., `pytest tests/test_foo.py` to verify
+a single file), but sub-agents should be aware they may encounter permission
+issues or produce different results than the full make targets.
+
 After the sub-agents complete, run `/quality` yourself to verify nothing was
 missed due to concurrent edits.
 
@@ -384,3 +391,5 @@ removing any temporary code or branches, updating documentation, etc.
 | Implementing entire feature at once                 | Implement ONE task at a time                  |
 | Forgetting to re-run quality gates after sub-agents | Run all commands yourself after parallel work |
 | Not running `make test-with-coverage`               | Always run with coverage before committing    |
+| Using raw commands (npx, pytest, ruff) naively      | Prefer `make` targets; raw OK sparingly       |
+| Committing all uncommitted code as one big commit   | Split into logical commits per task, or ask   |
