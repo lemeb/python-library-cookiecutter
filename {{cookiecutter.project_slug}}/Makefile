@@ -149,10 +149,11 @@ check: ruff-check ruff-format-check mypy-check ## Run code quality checks in par
 .PHONY: check-strict-file-ruff check-strict-file-pyright check-strict-file-mypy
 .PHONY: check-strict-file check-strict-all
 STRICT_CONFIG := scratch/pyproject.toml
+FILES ?= $(FILE)
 
 check-strict-file-guard: ## Ensure FILE is provided for strict checks
-	@if [ -z "$(FILE)" ]; then \
-		echo "Error: FILE parameter is required (e.g., make check-strict-file FILE=path/to/file)"; \
+	@if [ -z "$(strip $(FILES))" ]; then \
+		echo "Error: FILES parameter is required (e.g., make check-strict-file FILES=path/to/file)"; \
 		exit 1; \
 	fi
 
@@ -162,18 +163,18 @@ $(STRICT_CONFIG): pyproject.toml ruff-strict.toml
 	@cat ruff-strict.toml >> $(STRICT_CONFIG)
 
 check-strict-file-ruff: check-strict-file-guard $(STRICT_CONFIG) ## Run ruff on single file
-	$(UV) run ruff check --preview $(FILE) --config $(STRICT_CONFIG)
+	$(UV) run ruff check --preview $(FILES) --config $(STRICT_CONFIG)
 
 check-strict-file-pyright: check-strict-file-guard $(STRICT_CONFIG) ## Run pyright on single file
-	@$(UV) tool run basedpyright $(FILE)
+	@$(UV) tool run basedpyright $(FILES)
 
 check-strict-file-mypy: check-strict-file-guard $(STRICT_CONFIG) ## Run mypy on single file
-	@$(UV) run mypy --strict $(FILE)
+	@$(UV) run mypy --strict $(FILES)
 
 check-strict-file: check-strict-file-guard $(STRICT_CONFIG) check-strict-file-ruff check-strict-file-pyright check-strict-file-mypy ## Run strict checks on a single file in parallel
 	@rm -f $(STRICT_CONFIG)
 
-check-strict-all: FILE := "src/$(SLUG)/ tests/ docs/"
+check-strict-all: FILES := src/$(SLUG)/ tests/ docs/
 check-strict-all: check-strict-file-ruff check-strict-file-mypy check-strict-file-pyright ## Run strict checks on all files
 	@rm -f $(STRICT_CONFIG)
 
