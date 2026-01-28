@@ -144,6 +144,14 @@ tasks small is that it makes it easier to review and test; if you run linting
 and type-checking commands on thousands of lines of code, it will make the
 context window unmanageable.
 
+If you have to write the description of a task, try to keep it relatively
+concise but specific enough so that the implementation is clear and the agent
+will not spend an unreasonable amount of time exploring the codebase. For
+instance, references to relevant files or modules are very helpful. Don't let
+your previous exploration go to waste. Do not hesitate to mention blocking
+tasks so that we can represent tasks as a DAG. A good title for the first task
+of, say, XYZ-999 could be "XYZ-999(1): <short description of task>".
+
 If you have to add dependencies for a feature, try to make adding them a
 separate task. This will make it easier to review and test.
 
