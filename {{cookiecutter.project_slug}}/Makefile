@@ -145,36 +145,39 @@ check: ruff-check ruff-format-check mypy-check ## Run code quality checks in par
 # STRICT CHECKS
 #########################################################################
 
-.PHONY: check-strict-file-prep
+.PHONY: check-strict-file-guard
 .PHONY: check-strict-file-ruff check-strict-file-pyright check-strict-file-mypy
 .PHONY: check-strict-file check-strict-all
-check-strict-file-prep: ## Prepare config for strict file check
+STRICT_CONFIG := scratch/pyproject.toml
+
+check-strict-file-guard: ## Ensure FILE is provided for strict checks
 	@if [ -z "$(FILE)" ]; then \
 		echo "Error: FILE parameter is required (e.g., make check-strict-file FILE=path/to/file)"; \
 		exit 1; \
 	fi
+
+$(STRICT_CONFIG): pyproject.toml ruff-strict.toml
 	@mkdir -p scratch
-	@cp pyproject.toml scratch/pyproject.toml
-	@cat ruff-strict.toml >> scratch/pyproject.toml
+	@cp pyproject.toml $(STRICT_CONFIG)
+	@cat ruff-strict.toml >> $(STRICT_CONFIG)
 
-check-strict-file-ruff: check-strict-file-prep ## Run ruff on single file
-	$(UV) run ruff check --preview $(FILE) --config scratch/pyproject.toml
+check-strict-file-ruff: check-strict-file-guard $(STRICT_CONFIG) ## Run ruff on single file
+	$(UV) run ruff check --preview $(FILE) --config $(STRICT_CONFIG)
 
-check-strict-file-pyright: check-strict-file-prep ## Run pyright on single file
+check-strict-file-pyright: check-strict-file-guard $(STRICT_CONFIG) ## Run pyright on single file
 	@$(UV) tool run basedpyright $(FILE)
 
-check-strict-file-mypy: check-strict-file-prep ## Run mypy on single file
+check-strict-file-mypy: check-strict-file-guard $(STRICT_CONFIG) ## Run mypy on single file
 	@$(UV) run mypy --strict $(FILE)
 
-check-strict-file: check-strict-file-prep ## Run strict checks on a single file in parallel
+check-strict-file: check-strict-file-guard $(STRICT_CONFIG) ## Run strict checks on a single file in parallel
 	@$(MAKE) -k -j3 check-strict-file-ruff check-strict-file-pyright check-strict-file-mypy
-	@rm scratch/pyproject.toml
+	@rm -f $(STRICT_CONFIG)
 
 check-strict-all: ## Run strict checks on all files
 	$(eval FILE := "src/$(SLUG)/ tests/ docs/")
-	@$(MAKE) check-strict-file-prep FILE=$(FILE)
-	@$(MAKE) -j3 -k check-strict-file-ruff FILE=$(FILE) check-strict-file-mypy check-strict-file-pyright FILE=$(FILE)
-	@rm scratch/pyproject.toml
+	@$(MAKE) -j3 -k check-strict-file-ruff FILE=$(FILE) check-strict-file-mypy FILE=$(FILE) check-strict-file-pyright FILE=$(FILE)
+	@rm -f $(STRICT_CONFIG)
 
 ###############################################################################
 # TESTING
