@@ -234,6 +234,39 @@ otherwise, follow the specified strategy.)
      - How to track progress (e.g., mark sub-issues done as you complete them)
      Do NOT remove this comment. -->
 
+### Claude-specific notes (ignore if Codex or Gemini)
+
+**Task tracking**: When working on a feature with multiple tasks, use the Tasks
+construct (`TaskCreate`, `TaskUpdate`, `TaskList`) to track your progress:
+
+1. **At the start of step 3**: Create a task for each item in your
+   implementation plan using `TaskCreate`. Include a clear subject (imperative
+   form, e.g., "Add user authentication endpoint") and description with enough
+   context for another agent to pick it up if needed.
+
+2. **Before starting work on a task**: Mark it as `in_progress` using
+   `TaskUpdate`.
+
+3. **After completing a task**: Mark it as `completed` using `TaskUpdate`. If
+   you discover follow-up work during implementation, create new tasks for it.
+
+4. **Set up dependencies**: Use `TaskUpdate` with `addBlockedBy` to represent
+   task dependencies from your implementation plan.
+
+This provides visibility into progress and allows seamless hand-off if a session
+ends mid-implementation.
+
+**Parallel task execution**: If multiple tasks have no dependencies between them
+(e.g., implementing independent endpoints), you can work on them in parallel by
+spawning sub-agents for each task. Keep it reasonable—2-3 parallel tasks is
+fine, but don't be overly ambitious. Each sub-agent should handle a complete
+task including its tests and quality checks.
+
+**Quality checks during implementation**: When you need to run quality checks
+(even mid-implementation), spawn sub-agents for `/check`, `/test`, `/doc` in
+parallel rather than running make commands directly. This preserves your context
+window for the actual implementation work. See step 4 for details.
+
 ### 4. Ensuring code quality before committing
 
 There are three quality gates that MUST be passed before committing any code:
