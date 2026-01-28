@@ -27,10 +27,12 @@ conventions.
    | No plan/tasks                       | Write plan, present to user, wait for approval, EXIT        |
    | Plan approved but tasks not tracked | Create task entries, EXIT                                   |
    | Incomplete task exists              | Implement ONE task, run `/quality`, commit, mark done, EXIT |
+   | Task in progress, quality failing   | Fix errors until `/quality` passes, then commit, EXIT       |
+   | Code ready but not committed        | Run `/quality`, commit, mark task done, EXIT                |
    | All tasks done, no PR               | Create PR, EXIT                                             |
    | PR exists                           | Report completion, EXIT                                     |
 
-3. **Execute that ONE action**
+3. **Execute that ONE action** — do NOT ask for permission, just do it
 
 4. **Update tracking** (issue tracker, git, task list)
 
