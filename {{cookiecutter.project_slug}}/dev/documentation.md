@@ -25,6 +25,7 @@
   <!-- Incorrect - no blank line -->
 
   List header:
+
   - first element
   - second element
   ```
@@ -46,7 +47,7 @@ The purpose of backticks is twofold:
 
 ### Cross-References
 
-Use the format `` [`function`][module.function] `` to create clickable links in
+Use the format ``[`function`][module.function]`` to create clickable links in
 the generated documentation. Example:
 
 ```markdown
@@ -75,10 +76,10 @@ backticks, but don't use the square brackets.
 
 ### Commands
 
-| Command | Purpose |
-|---------|---------|
-| `make doc` | Build docs + spell check. **Must pass before committing.** |
-| `make doc-serve` | Live preview at localhost:8000 |
+| Command          | Purpose                                                    |
+| ---------------- | ---------------------------------------------------------- |
+| `make doc`       | Build docs + spell check. **Must pass before committing.** |
+| `make doc-serve` | Live preview at localhost:8000                             |
 
 ### New Modules
 

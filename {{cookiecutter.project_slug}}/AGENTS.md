@@ -46,21 +46,22 @@ Do NOT remove this comment. -->
 
 ## Quick Reference
 
-| Action | Command |
-|--------|---------|
-| Auto-fix formatting | `make check-fix` |
-| Lint + type-check | `make check` |
-| Strict checks | `make check-strict-all` |
-| Run tests | `make test` |
-| Tests + coverage | `make test-with-coverage` |
-| All tests (incl. integration) | `make test-all` |
-| Build docs | `make doc` |
-| Serve docs locally | `make doc-serve` |
-| Add dependency | `uv add <package>` |
-| Add dev dependency | `uv add --dev <package>` |
+| Action                        | Command                   |
+| ----------------------------- | ------------------------- |
+| Auto-fix formatting           | `make check-fix`          |
+| Lint + type-check             | `make check`              |
+| Strict checks                 | `make check-strict-all`   |
+| Run tests                     | `make test`               |
+| Tests + coverage              | `make test-with-coverage` |
+| All tests (incl. integration) | `make test-all`           |
+| Build docs                    | `make doc`                |
+| Serve docs locally            | `make doc-serve`          |
+| Add dependency                | `uv add <package>`        |
+| Add dev dependency            | `uv add --dev <package>`  |
 
 **Before committing**: `make check`, `make check-strict-all`, `make test` (or
-`make test-with-coverage`), and `make doc` must all pass. Or just run `/quality`.
+`make test-with-coverage`), and `make doc` must all pass. Or just run
+`/quality`.
 
 ---
 
@@ -68,13 +69,13 @@ Do NOT remove this comment. -->
 
 Skills automate common workflows. Use them instead of running commands manually.
 
-| Skill | When to Use |
-|-------|-------------|
-| `/check` | Runs linting and type-checking, fixes errors |
-| `/test` | Runs tests, writes more if coverage < 100% on new code |
-| `/doc` | Builds docs, fixes spell check, updates nav |
-| `/quality` | Runs all three gates above, reports detailed status |
-| `/go-on` | Assesses workflow state and executes ONE next step |
+| Skill      | When to Use                                            |
+| ---------- | ------------------------------------------------------ |
+| `/check`   | Runs linting and type-checking, fixes errors           |
+| `/test`    | Runs tests, writes more if coverage < 100% on new code |
+| `/doc`     | Builds docs, fixes spell check, updates nav            |
+| `/quality` | Runs all three gates above, reports detailed status    |
+| `/go-on`   | Assesses workflow state and executes ONE next step     |
 
 **Recommended workflow**:
 
@@ -89,15 +90,15 @@ makes incremental progress.
 
 ## Where to Find Information
 
-| Topic | File | When to Load |
-|-------|------|--------------|
-| Commands, tooling, commit format | `DEVELOP.md` | Before committing |
-| Linting, type-checking, fixing errors | `dev/checking.md` | Before writing code, when fixing errors |
-| Testing practices, coverage | `dev/testing.md` | Before writing tests |
-| Documentation, docstrings | `dev/documentation.md` | Before writing code, when writing docs |
-| Python coding practices, dependencies | `dev/python.md` | Before writing code |
-| Project structure, usage | `README.md` | When exploring codebase |
-| Python version, line length, deps | `pyproject.toml` | Before writing code |
+| Topic                                 | File                   | When to Load                            |
+| ------------------------------------- | ---------------------- | --------------------------------------- |
+| Commands, tooling, commit format      | `DEVELOP.md`           | Before committing                       |
+| Linting, type-checking, fixing errors | `dev/checking.md`      | Before writing code, when fixing errors |
+| Testing practices, coverage           | `dev/testing.md`       | Before writing tests                    |
+| Documentation, docstrings             | `dev/documentation.md` | Before writing code, when writing docs  |
+| Python coding practices, dependencies | `dev/python.md`        | Before writing code                     |
+| Project structure, usage              | `README.md`            | When exploring codebase                 |
+| Python version, line length, deps     | `pyproject.toml`       | Before writing code                     |
 
 **For implementation tasks**: Load `dev/checking.md`, `dev/testing.md`,
 `dev/documentation.md`, and `dev/python.md` before writing code.
@@ -108,12 +109,12 @@ makes incremental progress.
 
 Before starting, classify the request:
 
-| Type | Examples | Action |
-|------|----------|--------|
-| **Exploration** | "How does X work?", "Where is Y?", "Explain this" | Answer directly |
-| **Quick fix** | "Fix this typo", "Rename this variable" | Fix, run `/quality`, commit |
-| **Implementation** | "Add feature X", "Implement Y", "Build Z" | **STOP. Follow workflow from step 1. Do NOT skip to coding.** |
-| **Ambiguous** | "Help me with X", "I need to do Y" | **Ask which type** |
+| Type               | Examples                                          | Action                                                        |
+| ------------------ | ------------------------------------------------- | ------------------------------------------------------------- |
+| **Exploration**    | "How does X work?", "Where is Y?", "Explain this" | Answer directly                                               |
+| **Quick fix**      | "Fix this typo", "Rename this variable"           | Fix, run `/quality`, commit                                   |
+| **Implementation** | "Add feature X", "Implement Y", "Build Z"         | **STOP. Follow workflow from step 1. Do NOT skip to coding.** |
+| **Ambiguous**      | "Help me with X", "I need to do Y"                | **Ask which type**                                            |
 
 ---
 
@@ -171,9 +172,9 @@ If you have to write the description of a task, try to keep it relatively
 concise but specific enough so that the implementation is clear and the agent
 will not spend an unreasonable amount of time exploring the codebase. For
 instance, references to relevant files or modules are very helpful. Don't let
-your previous exploration go to waste. Do not hesitate to mention blocking
-tasks so that we can represent tasks as a DAG. A good title for the first task
-of, say, XYZ-999 could be "XYZ-999(1): <short description of task>".
+your previous exploration go to waste. Do not hesitate to mention blocking tasks
+so that we can represent tasks as a DAG. A good title for the first task of,
+say, XYZ-999 could be "XYZ-999(1): `<brief task description>`".
 
 If you have to add dependencies for a feature, try to make adding them a
 separate task. This will make it easier to review and test.
@@ -218,8 +219,8 @@ standards specified in your context window; and don't hesitate to look at the
 existing codebase for reference. **Load `dev/checking.md`, `dev/testing.md`,
 `dev/documentation.md`, and `dev/python.md` before writing code.**
 
-As you implement each task, make sure to (1) write unit tests for that task,
-(2) update `.gitignore` if needed, (3) update documentation (both inline and
+As you implement each task, make sure to (1) write unit tests for that task, (2)
+update `.gitignore` if needed, (3) update documentation (both inline and
 external) as needed. Then run `/quality` before moving to the next task.
 
 Note that the implementation should be made in a feature branch, not directly in
@@ -330,23 +331,23 @@ removing any temporary code or branches, updating documentation, etc.
 
 ## Checkpoints
 
-| Before... | Verify... |
-|-----------|-----------|
-| Step 2 (Planning) | Spec exists and is clear |
-| Step 3 (Execution) | Plan approved by user, tasks are broken down |
-| `git commit` | `/quality` passes (or: `make check`, `make check-strict-all`, `make test-with-coverage`, `make doc`) |
-| `git push` | All quality gates pass, branch rebased on base branch |
-| Creating PR | PR description complete with all sections including lessons learned |
+| Before...          | Verify...                                                                                            |
+| ------------------ | ---------------------------------------------------------------------------------------------------- |
+| Step 2 (Planning)  | Spec exists and is clear                                                                             |
+| Step 3 (Execution) | Plan approved by user, tasks are broken down                                                         |
+| `git commit`       | `/quality` passes (or: `make check`, `make check-strict-all`, `make test-with-coverage`, `make doc`) |
+| `git push`         | All quality gates pass, branch rebased on base branch                                                |
+| Creating PR        | PR description complete with all sections including lessons learned                                  |
 
 ---
 
 ## Common Mistakes to Avoid
 
-| Mistake | What You Should Do Instead |
-|---------|---------------------------|
-| Skipping to implementation without a plan | Complete step 2, get user approval FIRST |
-| Not breaking down tasks | Each task should be small and self-contained |
-| Structuring as "code, then tests, then docs" | Each task includes its own tests and docs |
-| Implementing entire feature at once | Implement ONE task at a time |
+| Mistake                                             | What You Should Do Instead                    |
+| --------------------------------------------------- | --------------------------------------------- |
+| Skipping to implementation without a plan           | Complete step 2, get user approval FIRST      |
+| Not breaking down tasks                             | Each task should be small and self-contained  |
+| Structuring as "code, then tests, then docs"        | Each task includes its own tests and docs     |
+| Implementing entire feature at once                 | Implement ONE task at a time                  |
 | Forgetting to re-run quality gates after sub-agents | Run all commands yourself after parallel work |
-| Not running `make test-with-coverage` | Always run with coverage before committing |
+| Not running `make test-with-coverage`               | Always run with coverage before committing    |

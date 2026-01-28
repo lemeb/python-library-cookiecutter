@@ -6,12 +6,12 @@
 
 ## Commands
 
-| Command | Purpose |
-|---------|---------|
-| `make test` | Run unit tests. **Must pass before committing.** |
-| `make test-all` | Run all tests including integration tests. |
-| `make test-with-coverage` | Unit tests + coverage report. |
-| `make test-all-versions` | Tests across all supported Python versions. |
+| Command                   | Purpose                                          |
+| ------------------------- | ------------------------------------------------ |
+| `make test`               | Run unit tests. **Must pass before committing.** |
+| `make test-all`           | Run all tests including integration tests.       |
+| `make test-with-coverage` | Unit tests + coverage report.                    |
+| `make test-all-versions`  | Tests across all supported Python versions.      |
 
 ## Procedure
 
@@ -37,8 +37,8 @@ JSON responses that inherently involve `Any` types. Add at the top of the file:
 # pyright: reportAny=false, reportExplicitAny=false
 ```
 
-Add `reportPrivateUsage=false` if tests need to access private module state.
-Add `reportUnknownArgumentType=false` for JSON parsing.
+Add `reportPrivateUsage=false` if tests need to access private module state. Add
+`reportUnknownArgumentType=false` for JSON parsing.
 
 See `dev/checking.md` for more details on handling type-checking in tests.
 

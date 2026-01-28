@@ -1,6 +1,8 @@
 ---
 name: quality
-description: Run all quality gates and report detailed status. Use as final verification after parallel sub-agents, or as all-in-one check.
+description:
+  Run all quality gates and report detailed status. Use as final verification
+  after parallel sub-agents, or as all-in-one check.
 ---
 
 # All Quality Gates
@@ -9,12 +11,14 @@ description: Run all quality gates and report detailed status. Use as final veri
 
 - **After parallel sub-agents**: Run this to verify nothing was missed due to
   concurrent edits
-- **As all-in-one check**: If not using parallel sub-agents, this runs everything
+- **As all-in-one check**: If not using parallel sub-agents, this runs
+  everything
 
 ## Procedure
 
 1. Run all quality gate commands sequentially:
-   ```
+
+   ```bash
    make check-fix
    make check
    make check-strict-all
@@ -26,7 +30,7 @@ description: Run all quality gates and report detailed status. Use as final veri
 
 3. Report detailed status summary:
 
-   ```
+   ```text
    ## Quality Gates Summary
 
    ### Linting & Type-Checking

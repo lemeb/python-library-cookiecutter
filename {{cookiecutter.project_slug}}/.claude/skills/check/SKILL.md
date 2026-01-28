@@ -1,6 +1,8 @@
 ---
 name: check
-description: Run linting and type-checking quality gates, fixing any errors found. Use after writing code, before committing.
+description:
+  Run linting and type-checking quality gates, fixing any errors found. Use
+  after writing code, before committing.
 ---
 
 # Linting and Type-Checking

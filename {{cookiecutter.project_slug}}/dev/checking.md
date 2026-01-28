@@ -10,11 +10,11 @@ errors) and when **fixing errors** (to know how to resolve them).
 
 ## Commands
 
-| Command | Purpose |
-|---------|---------|
-| `make check-fix` | Auto-fix formatting, import sorting, simple lint issues. Run this first. |
-| `make check` | Linting + type-checking in parallel. **Must pass.** |
-| `make check-strict-all` | Strict mode: ruff preview rules, basedpyright. **Must pass.** |
+| Command                 | Purpose                                                                  |
+| ----------------------- | ------------------------------------------------------------------------ |
+| `make check-fix`        | Auto-fix formatting, import sorting, simple lint issues. Run this first. |
+| `make check`            | Linting + type-checking in parallel. **Must pass.**                      |
+| `make check-strict-all` | Strict mode: ruff preview rules, basedpyright. **Must pass.**            |
 
 ## Procedure
 
@@ -120,11 +120,11 @@ a third-party library that is not typed.)
 
 ### Alternatives to Ignore Comments
 
-| Error Type | Try This Instead |
-|------------|------------------|
-| Unused parameter | Prefix with `_` (e.g., `_request`) |
+| Error Type         | Try This Instead                                  |
+| ------------------ | ------------------------------------------------- |
+| Unused parameter   | Prefix with `_` (e.g., `_request`)                |
 | Unused call result | Assign to `_` (e.g., `_ = await db.execute(...)`) |
-| Too many arguments | See below |
+| Too many arguments | See below                                         |
 
 **Too many arguments**: If you get an error saying that there are too many
 arguments in a method signature, you should consider the following options, in
