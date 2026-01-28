@@ -1,19 +1,72 @@
-# Coding agent instructions for `{{ cookiecutter.project_name }}`
+# Coding Agent Instructions for {{ cookiecutter.project_name }}
 
 _NOTE_: This file normally resides at `AGENTS.md` but should be symlinked at
-`GEMINI.md` and `CLAUDE.md`. In other words, if you see a reference to
-`AGENTS.md` in this file, it references this very file even if you see it under
-a different name.
+`GEMINI.md` and `CLAUDE.md`. If you see a reference to `AGENTS.md` in this file,
+it references this very file even if you see it under a different name.
 
 <!-- You can fill in repository-specific information in tags like this.
-     This includes information such as Linear best practices, company-specific
-     guidelines, or anything else that is relevant to your context.
+     This includes information such as issue tracker details, team conventions,
+     or anything else that is relevant to your context.
      Do NOT remove these tags because they will make updating from the template
      much much harder. -->
 
-## The anatomy of a feature implementation
+---
 
-Implementing a new feature typically involves the following steps:
+## Quick Reference
+
+| Action | Command |
+|--------|---------|
+| Auto-fix formatting | `make check-fix` |
+| Lint + type-check | `make check` |
+| Strict checks | `make check-strict-all` |
+| Run tests | `make test` |
+| Tests + coverage | `make test-with-coverage` |
+| Build docs | `make doc` |
+| Add dependency | `uv add <package>` |
+| Add dev dependency | `uv add --dev <package>` |
+
+**Before committing**, both `make check` and `make check-strict-all` must pass,
+along with `make test` and `make doc`.
+
+---
+
+## Where to Find Information
+
+| Topic | File |
+|-------|------|
+| Commands, tooling, commit format | `DEVELOP.md` |
+| Linting, type-checking, fixing errors | `dev/checking.md` |
+| Testing practices, coverage | `dev/testing.md` |
+| Documentation, docstrings | `dev/documentation.md` |
+| Python coding practices, dependencies | `dev/python.md` |
+| Project structure, usage | `README.md` |
+| Python version, line length, deps | `pyproject.toml` |
+
+**For implementation tasks**: Load `dev/checking.md`, `dev/testing.md`,
+`dev/documentation.md`, and `dev/python.md` before writing code.
+
+---
+
+## Determining Request Type
+
+Before starting, classify the request:
+
+| Type | Examples | Action |
+|------|----------|--------|
+| **Exploration** | "How does X work?", "Where is Y?", "Explain this" | Answer directly |
+| **Quick fix** | "Fix this typo", "Rename this variable" | Fix, run quality gates, commit |
+| **Implementation** | "Add feature X", "Implement Y", "Build Z" | Follow workflow below |
+| **Ambiguous** | "Help me with X", "I need to do Y" | **Ask which type** |
+
+---
+
+## The Anatomy of a Feature Implementation
+
+Implementing a new feature typically involves the following steps. Note that a
+conversation between you and the user can happen at any time during this
+process. It is your job, before doing anything, to figure out at which stage you
+are, and potentially ask questions. (Figuring this out might be very easy if you
+are, say, a sub-agent.)
 
 ### 1. Fully understanding the feature
 
@@ -23,7 +76,10 @@ to the user to clarify any doubts_, and _researching any relevant information_
 feature requirements and constraints. The goal of this step is to produce a
 spec.
 
-<!-- Expand here with repo-specific information. Do NOT remove this tag. -->
+<!-- Expand here with repo-specific information. For example:
+     - Where should specs be recorded? (Linear issue, GitHub issue, etc.)
+     - Are there specific templates or formats for specs?
+     Do NOT remove this comment. -->
 
 ### 2. Planning the implementation
 
@@ -46,13 +102,17 @@ of lines of code, it will make the context window unmanageable.
 If you have to add dependencies for a feature, try to make adding them a
 separate task. This will make it easier to review and test.
 
-<!-- Expand here with repo-specific information. Do NOT remove this tag. -->
+<!-- Expand here with repo-specific information. For example:
+     - Where should plans/tasks be tracked?
+     - Are there specific formats for implementation plans?
+     Do NOT remove this comment. -->
 
 ### 3. Executing the implementation
 
 This is the actual coding part. Please follow the best practices and coding
 standards specified in your context window; and don't hesitate to look at the
-existing codebase for reference.
+existing codebase for reference. Load `dev/checking.md`, `dev/testing.md`,
+`dev/documentation.md`, and `dev/python.md` before writing code.
 
 As you implement the feature, make sure to (1) write unit tests for each task,
 (2) update `.gitignore` if needed, (3) update documentation (both inline and
@@ -63,7 +123,10 @@ the base branch. Make sure to rebase the feature branch regularly to keep it up
 to date with the base branch. (Rebase is the default strategy; but if specified
 otherwise, follow the specified strategy.)
 
-<!-- Expand here with repo-specific information. Do NOT remove this tag. -->
+<!-- Expand here with repo-specific information. For example:
+     - Branch naming conventions?
+     - Any specific patterns or conventions to follow?
+     Do NOT remove this comment. -->
 
 ### 4. Ensuring code quality before committing
 
@@ -72,8 +135,9 @@ There are three quality gates that MUST be passed before committing any code:
 1. _Linting and type-checking_. First, run `make check-fix` to auto-fix any
    formatting issues. Then run `make check` to ensure that there are no linting
    or type-checking errors. For stricter checks, run `make check-strict-all`.
-   All of the three commands MUST pass before committing any code, because CI/CD
-   will run the same commands and will fail the build if any of them fail.
+   Both `make check` and `make check-strict-all` MUST pass before committing any
+   code, because CI/CD will run the same commands and will fail the build if any
+   of them fail.
 2. _Unit tests_. Run `make test` to ensure that all unit tests pass. If your
    feature requires internet access or latency (e.g. because it is a LLM call),
    also run `make test-all` to ensure that all integration tests pass. You
@@ -85,12 +149,15 @@ There are three quality gates that MUST be passed before committing any code:
    it. Also, if you think documentation would be improved by adding things like
    tutorials, guides, etc, please propose them to the user. If you see that one
    of the existing guides or tutorials needs to be updated, please do so
-   proactively and properly.Run `make doc` to ensure that the documentation
+   proactively and properly. Run `make doc` to ensure that the documentation
    builds correctly and that spell check passes. Add any new technical terms to
    `project-words.txt`. Please do NOT use `sort` on `project-words.txt`.
    `make doc` HAS to pass before committing any code.
 
-<!-- Expand here with repo-specific information. Do NOT remove this tag. -->
+<!-- Expand here with repo-specific information. For example:
+     - Additional quality gates?
+     - Specific coverage requirements?
+     Do NOT remove this comment. -->
 
 ### 5. Committing and creating a PR
 
@@ -118,228 +185,47 @@ should include the following sections:
 It is preferable to create PRs through the `gh` CLI tool using here-docs to
 avoid issues with markdown formatting.
 
-<!-- Expand here with repo-specific information. Do NOT remove this tag. -->
+<!-- Expand here with repo-specific information. For example:
+     - PR template requirements?
+     - Issue linking format?
+     - Required reviewers?
+     Do NOT remove this comment. -->
 
 ### 6. Addressing PR feedback
 
 Feedback about the PR can come from different places and should be addressed in
 further commits to the same PR.
 
-<!-- Expand here with repo-specific information. Do NOT remove this tag. -->
+<!-- Expand here with repo-specific information. For example:
+     - How to handle feedback from different sources?
+     - Any specific conventions for addressing feedback?
+     Do NOT remove this comment. -->
 
 ### 7. Cleaning up after the feature is merged
 
 Once the feature is merged, there might be some cleanup tasks to do, such as
 removing any temporary code or branches, updating documentation, etc.
 
-<!-- Expand here with repo-specific information. Do NOT remove this tag. -->
+<!-- Expand here with repo-specific information. For example:
+     - Post-merge cleanup checklist?
+     - Any notifications or updates to make?
+     Do NOT remove this comment. -->
 
-Note that a conversation between you and me can happen at any time during this
-process. It is your job, before doing anything, to figure out at which stage we
-are, and potentially ask questions. (Figuring this out might be very easy if you
-are, say, a sub-agent.)
+---
 
-## Good Python practices
+## Checkpoints
 
-- **Adding dependencies**:
-  - Always add new dependencies using `uv add <package>`. This will ensure
-    proper locking of the dependencies.
-  - If you need to add a dev dependency, use `uv add --dev <package>`.
-  - Corollary: never modify `pyproject.toml` or `uv.lock` directly as far as
-    dependencies are concerned. Always use `uv` commands.
-  - Only add dependencies that are strictly necessary. Yes, you might think that
-    some packages will need to be added later. Well, wait until later then.
-  - **Note**: Don't bother modifying `scratch/pyproject.toml` - it's not tracked
-    by git and exists only for local experimentation.
+| Before... | Verify... |
+|-----------|-----------|
+| `git commit` | `make check`, `make check-strict-all`, `make test`, `make doc` all pass |
+| `git push` | All quality gates pass, branch rebased on base branch |
+| `gh pr create` | PR description complete with all sections |
 
-- **Checking code**:
-  - **Always run `make check-fix` first** before running `make check` or
-    `make check-strict-all`. Many errors (formatting, import sorting, simple
-    lint issues) will be auto-fixed, saving you time. Then run `make check` for
-    all linting and type checks in parallel. All errors will be shown (the
-    Makefile uses `-k` to keep going on failures). For stricter checks, use
-    `make check-strict-all`.
-  - One quirk of `make check-strict-all` is that it will run `ruff`'s preview
-    rules. If you want to comment such rule out, you cannot do it in the file;
-    it will be removed by `ruff format`. Instead, you should update the
-    `ruff-strict.toml` file where these exceptions are documented. YOU SHOULD
-    DOCUMENT THE RULE PER FILE, NOT FOR THE ENTIRE CODEBASE. And every exception
-    should be documented with a comment explaining why the rule is not applied
-    in that file.
-  - If you're wondering if a rule is in preview: if it appears during
-    `make check-strict-all`, but not during `make check`, then it is a preview
-    rule. This means that you need to comment it out in `ruff-strict.toml` if
-    you want to ignore it.
-  - Be **really** weary before adding any `# type: ignore`, `# pyright: ignore`,
-    or `# noqa` comments. These should be used only as last resort, when no
-    better solution is available. Don't hesitate to ask questions to the user on
-    whether further code changes are made to avoid these comments, or whether
-    the ignore comments are acceptable.
+---
 
-- **Code practices**:
-  - Check `pyproject.toml` to know what is the minimum Python version that is
-    supported. Write constructs accordingly (e.g. no `Union` if Python 3.10+ is
-    supported).
-  - Try not to use `print` statements. Use your best judgment instead: if it's
-    for logging, use `logging`. If it's for user-facing interaction, use the
-    `rich` library (such as `print` or `Console`).
-  - You can use `# type: ignore[error-code]` (`mypy`),
-    `# pyright: ignore[ErrorCode]` (`pyright`), and `# noqa: <ERROR_CODE>`
-    (`ruff`). If multiple go on the same line, they should go with `mypy` first.
-    Use them only as last resort, when no better solution is available. (An
-    example where this is warranted is if `Any` is really the only type that
-    works, or if you need to use a third-party library that is not typed.) Some
-    pointers on which errors to just comment out are specified below.
-  - In general, do NOT put file-level ignore comments. Instead, try to address
-    the issues on a line-by-line basis. Exceptions to this rule include:
-    - Test files that inherently need to use `Any` types (e.g. because of
-      mocking, JSON parsing, etc.)
-    - Test files with regards to private module state access or docstring-
-      related issues.
-    - Errors or warnings that are really pervasive throughout the file, and
-      addressing them individually would be too cumbersome. In this case,
-      however, you MUST document why you're putting a file-level ignore.
-  - IMPORTANT! Don't hesitate to over-document. Please ensure that when you
-    modify a function, you also update the docstring. If you add a new
-    parameter, please document it. Don't forget to put "args", "returns", and
-    "raises" in the docstring. THIS IS ONE VERY COMMON LINTING MISTAKE! The
-    exception here are helper functions that are private to a module and are
-    self-explanatory.
-  - Check `pyproject.toml` for the max line length. It's probably 80. Yes, the
-    formatter will sometimes just reformat the code, but some lines (e.g.
-    docstrings) will need to be modified accordingly.
-  - The right way to pass a message to an exception is to define a `msg`
-    variable, and then pass it to the exception.
-  - Put `@final` whenever needed. Helps for type-checking.
-  - Put `@override` whenever needed (and it's generally more often than you
-    think). Helps for type-checking.
-  - Any time you define an empty list, try to type-hint it (e.g.
-    `my_list: list[str] = []`).
-  - Be mindful of class methods that don't use the `self` parameter. If you
-    don't use it, you should make it static.
-  - If you use `cast(...)`, make sure that the name of the new type is put
-    within double quotes (e.g., `cast("MyType", obj)`).
+## Recording Lessons Learned
 
-  - **Documentation practices**:
-    - **Blank line before lists**: In markdown and docstrings, always insert a
-      blank line between a paragraph and a list. Without it, the list may not
-      render correctly. (This doesn't apply to `Raises:` or `Args:` sections in
-      docstrings, where the list is part of the same section.)
-
-      ```markdown
-      <!-- Correct -->
-
-      List header:
-
-      - first element
-      - second element
-
-      <!-- Incorrect - no blank line -->
-
-      List header:
-
-      - first element
-      - second element
-      ```
-
-    - **Two newlines between paragraphs**: Separate paragraphs with two newlines
-      (i.e., a blank line). A single newline will render as one continuous
-      paragraph.
-    - Whenever possible, any references to a file or library (or really any
-      piece of code) should be surrounded with backticks. Don't say ("we detect
-      uv.lock", say "we detect `uv.lock`").
-    - **Cross-references**: Use the format "[`function`][module.function]" to
-      create clickable links in the generated documentation. Example:
-      `Uses [`lru_cache`][functools.lru_cache] to ensure...`. This works for the
-      standard library, our own library, and external libraries (thanks to
-      mkdocs/griffe).
-      - Yes, this means using _both_ backticks and square brackets. This is so
-        that the generated documentation shows the function name in a code font
-        while linking to the right place.
-      - Available inventories are configured in `mkdocs.yml` under
-        `inventories`. Add new ones as needed (e.g.,
-        `https://example.com/objects.inv`). Only use cross-references if either
-        (1) the function or object is part of the standard library, (2) the
-        function or object is part of the current library, or (3) is part of an
-        external library but the inventory is in the `inventories` section of
-        `mkdocs.yml` or another plugin takes care of it (like a
-        `griffe-pydantic` plugin for Pydantic objects.)
-      - If you reference something that is not in an inventory, you can still
-        use backticks, but don't use the square brackets.
-      - **Exception**: You don't need cross-references in `Args:`, `Returns:`,
-        or `Raises:` sections of docstrings - griffe handles those
-        automatically.
-    - **Don't state the obvious**: If a class explicitly subclasses something
-      (e.g., `class A(B, C):`), don't write "Inherits from B and C" in the
-      docstring - the auto-generated documentation already shows this.
-    - **Docstring formatting (Google style)**:
-      - In `Returns:` sections, continuation lines must be indented to show they
-        belong to the same return description. For example:
-
-        ```python
-        Returns:
-            The URL with async driver if it was a postgres URL,
-                otherwise the original value unchanged.
-        ```
-
-    - **Before committing**, run `make doc` to verify spell check passes and
-      docs build correctly. Add any new technical terms to `project-words.txt`.
-
-  - **Docstring nitpicks**:
-    - Make sure there is an exact 1:1 correspondence between the errors
-      EXPLICITLY raised in the body of the function and the errors listed in the
-      `Raises:` section of the docstring. If an error is raised but not
-      documented, or documented but not raised, fix the docstring or the code
-      accordingly.
-    - Always strive to include a `Returns:` section in docstrings of functions
-      that return a value. (Don't bother for abstract methods or functions that
-      only return `None`, or for "stub functions": functions where the body only
-      consists of `pass`, `...`, `raise NotImplementedError`, or similar)
-
-- **Handling linting and type-checking errors** (these are misc notes):
-  - In general, if we're dealing with operations that inherently deal with `Any`
-    or `Unknown` (e.g. because you're parsing JSON, because you're dealing with
-    a third-party library that is not typed, etc.), you can safely put ignore
-    comments for: `reportUnknownArgumentType`, `reportUnknownMemberType`,
-    `reportUnknownVariableType`, `reportUnknownParameterType`,
-    `reportUnknownType`, `reportAny`, `reportExplicitAny`, etc. (`pyright`), and
-    `ANN401` (`ruff`).
-  - In some cases, you can put `object` as the type, but this is not
-    recommended. If you do so, please document why you did it.
-  - **Test files and pyright strict mode**: Test files often need file-level
-    pyright configuration when they use mocks and JSON responses that inherently
-    involve `Any` types. Add at the top of the file:
-    <!-- markdownlint-disable MD031 -->
-
-    ```python
-    # pyright: reportAny=false, reportExplicitAny=false
-    ```
-
-    Add `reportPrivateUsage=false` if tests need to access private module state,
-    and `reportUnknownArgumentType=false` for JSON parsing.
-
-  - **Pyright ignore placement**: The `# pyright: ignore[rule]` comment MUST be
-    on the exact line with the error. Putting it on an adjacent line won't work.
-  - **Comment wording pitfall**: Any comment starting with `# pyright:` is
-    parsed as a directive. If explaining why a pyright ignore is needed, start
-    with `# Pyright ignore needed...` (capital P) or rephrase to avoid the
-    prefix.
-  - **Unused parameters**: Use `_paramname` prefix (e.g., `_request`) for
-    intentionally unused parameters. This satisfies both ruff's `ARG001` and
-    pyright's `reportUnusedParameter` without needing ignore comments.
-  - **Unused call results**: For `reportUnusedCallResult` errors, assign the
-    result to `_`, e.g., `_ = await db.execute(...)`.
-  - If you get an error saying that there are too many arguments in a method
-    signature, you should consider the following options, in order of
-    preference:
-    1. Refactor the code to reduce the number of parameters (e.g., group related
-       parameters into a dataclass or dictionary). But if this is not feasible,
-       or clearly idiotic, or decreases code readability, then...
-    2. Use a noqa comment.
-    3. Really avoid using solutions relying on `kwargs` or `args` unless
-       absolutely necessary. We like type-checking!
-  - Don't hesitate to fix the `unusedCallResult` errors by assigning the result
-    to `_` if the result is not needed. This is easy to write and is better than
-    an ignore comment. **NOTE**: If you import i18n in the file, `_` might be
-    shadowed. In this case, you can use something like `_unused` or `__`
-    instead.
+After fixing errors, if you discover something that would have helped you avoid
+the problem, note it in the PR description under a "Lessons Learned" section.
+Maintainers will periodically incorporate useful lessons into the `dev/*.md`
+files.
