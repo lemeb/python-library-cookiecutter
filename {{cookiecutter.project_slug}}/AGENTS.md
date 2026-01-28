@@ -25,6 +25,23 @@ If you're starting fresh or after a context reset, read this file and determine:
 2. If implementation: which step of the workflow are you in?
 3. What files do you need to load for context?
 
+<!-- Expand here with repo-specific triggers. For example, if using Linear:
+
+## When Given an Issue (e.g., "let's do PROJ-98")
+
+When the user gives you an issue to work on:
+
+1. **Fetch the issue** from your issue tracker
+2. **Check blockers** — if blocked, report to user and STOP
+3. **Assess the issue state** by checking:
+   - Does it have a spec? → If no, you're at step 1
+   - Does it have an implementation plan? → If no, you're at step 2
+   - Does it have sub-issues for each task? → If no, you're at step 2
+   - Is there an incomplete sub-issue? → You're at step 3
+4. **Resume at the correct step** — do NOT skip ahead
+
+Do NOT remove this comment. -->
+
 ---
 
 ## Quick Reference
@@ -72,14 +89,16 @@ Before starting, classify the request:
 |------|----------|--------|
 | **Exploration** | "How does X work?", "Where is Y?", "Explain this" | Answer directly |
 | **Quick fix** | "Fix this typo", "Rename this variable" | Fix, run quality gates, commit |
-| **Implementation** | "Add feature X", "Implement Y", "Build Z" | Follow workflow below |
+| **Implementation** | "Add feature X", "Implement Y", "Build Z" | **STOP. Follow workflow from step 1. Do NOT skip to coding.** |
 | **Ambiguous** | "Help me with X", "I need to do Y" | **Ask which type** |
 
 ---
 
 ## The Anatomy of a Feature Implementation
 
-Implementing a new feature typically involves the following steps.
+Implementing a new feature typically involves the following steps. **Each step
+has required outputs and gates. Do NOT proceed to the next step until the gate
+conditions are met.**
 
 ### 1. Fully understanding the feature
 
@@ -90,8 +109,15 @@ feature requirements and constraints. The goal of this step is to produce a
 spec.
 
 <!-- Expand here with repo-specific information. For example:
-     - Where should specs be recorded? (Linear issue, GitHub issue, etc.)
+     - Where should specs be recorded? (issue tracker, design doc, etc.)
      - Are there specific templates or formats for specs?
+
+     You can add REQUIRED OUTPUT and GATE markers like this:
+
+     **REQUIRED OUTPUT**: Spec written in the issue description.
+
+     **GATE**: Do NOT proceed to step 2 until the spec is recorded.
+
      Do NOT remove this comment. -->
 
 ### 2. Planning the implementation
@@ -103,14 +129,20 @@ clear implementation plan. Please check that the spec and the implementation
 plan are aligned with each other.
 
 In general, a task should be small enough that it can be implemented, tested,
-documented, and committed in one go. It should also be small enough to be done
-fully within one agent session. A good rule of thumb is something like 2 human
-hours. It can be much smaller, however. In fact, if your feature demands
-multiple small tasks that are very similar (e.g. adding multiple API routes), it
-is a good idea to keep the first task small, and then use it as a template for
-the other tasks. Another reason to keep tasks small is that it makes it easier
-to review and test; if you run linting and type-checking commands on thousands
-of lines of code, it will make the context window unmanageable.
+documented, and committed in one go. **Each task should be self-contained: it
+includes writing the code, writing tests for that code, updating documentation
+if needed, and running quality gates.** Do NOT structure tasks as "implement
+features" followed by "write all tests" followed by "run quality gates" — each
+task should include its own tests and pass quality gates independently.
+
+It should also be small enough to be done fully within one agent session. A good
+rule of thumb is something like 2 human hours. It can be much smaller, however.
+In fact, if your feature demands multiple small tasks that are very similar
+(e.g. adding multiple API routes), it is a good idea to keep the first task
+small, and then use it as a template for the other tasks. Another reason to keep
+tasks small is that it makes it easier to review and test; if you run linting
+and type-checking commands on thousands of lines of code, it will make the
+context window unmanageable.
 
 If you have to add dependencies for a feature, try to make adding them a
 separate task. This will make it easier to review and test.
@@ -118,18 +150,37 @@ separate task. This will make it easier to review and test.
 <!-- Expand here with repo-specific information. For example:
      - Where should plans/tasks be tracked?
      - Are there specific formats for implementation plans?
+
+     You can add REQUIRED OUTPUTS and GATE markers like this:
+
+     **REQUIRED OUTPUTS**:
+     - Implementation plan written in the issue description
+     - Sub-issues created for each task
+
+     **GATE**: Do NOT proceed to step 3 until:
+     - [ ] Implementation plan is presented to the user
+     - [ ] User explicitly approves the plan
+     - [ ] Sub-issues exist for each task
+
      Do NOT remove this comment. -->
 
 ### 3. Executing the implementation
+
+**PREREQUISITE CHECK**: Before writing any code, verify:
+
+- [ ] There is a clear implementation plan
+- [ ] Tasks are broken down (in your issue tracker or in this conversation)
+- [ ] You are implementing ONE specific task, not the whole feature at once
+- [ ] That task is self-contained (includes its own tests and docs if needed)
 
 This is the actual coding part. Please follow the best practices and coding
 standards specified in your context window; and don't hesitate to look at the
 existing codebase for reference. **Load `dev/checking.md`, `dev/testing.md`,
 `dev/documentation.md`, and `dev/python.md` before writing code.**
 
-As you implement the feature, make sure to (1) write unit tests for each task,
+As you implement each task, make sure to (1) write unit tests for that task,
 (2) update `.gitignore` if needed, (3) update documentation (both inline and
-external) as needed.
+external) as needed. Then run quality gates before moving to the next task.
 
 Note that the implementation should be made in a feature branch, not directly in
 the base branch. Make sure to rebase the feature branch regularly to keep it up
@@ -139,6 +190,7 @@ otherwise, follow the specified strategy.)
 <!-- Expand here with repo-specific information. For example:
      - Branch naming conventions?
      - Any specific patterns or conventions to follow?
+     - How to track progress (e.g., mark sub-issues done as you complete them)
      Do NOT remove this comment. -->
 
 ### 4. Ensuring code quality before committing
@@ -234,6 +286,21 @@ removing any temporary code or branches, updating documentation, etc.
 
 | Before... | Verify... |
 |-----------|-----------|
+| Step 2 (Planning) | Spec exists and is clear |
+| Step 3 (Execution) | Plan approved by user, tasks are broken down |
 | `git commit` | `make check`, `make check-strict-all`, `make test-with-coverage`, `make doc` all pass |
 | `git push` | All quality gates pass, branch rebased on base branch |
 | Creating PR | PR description complete with all sections including lessons learned |
+
+---
+
+## Common Mistakes to Avoid
+
+| Mistake | What You Should Do Instead |
+|---------|---------------------------|
+| Skipping to implementation without a plan | Complete step 2, get user approval FIRST |
+| Not breaking down tasks | Each task should be small and self-contained |
+| Structuring as "code, then tests, then docs" | Each task includes its own tests and docs |
+| Implementing entire feature at once | Implement ONE task at a time |
+| Forgetting to re-run quality gates after sub-agents | Run all commands yourself after parallel work |
+| Not running `make test-with-coverage` | Always run with coverage before committing |
