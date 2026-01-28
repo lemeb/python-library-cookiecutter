@@ -178,6 +178,15 @@ of, say, XYZ-999 could be "XYZ-999(1): <short description of task>".
 If you have to add dependencies for a feature, try to make adding them a
 separate task. This will make it easier to review and test.
 
+### Claude-specific note (ignore if Codex or Gemini)
+
+As a general rule, use Plan Mode for this step.
+
+If the implementation plan needs to be written to an external system (e.g. an
+issue tracker), and/or tasks need to be created as sub-issues, make this very
+explicitly part of the plan. (The reason is that if the user approves the plan,
+context might be cleared for a new conversation.)
+
 <!-- Expand here with repo-specific information. For example:
      - Where should plans/tasks be tracked?
      - Are there specific formats for implementation plans?
