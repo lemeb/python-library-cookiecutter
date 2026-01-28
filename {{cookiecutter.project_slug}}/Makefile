@@ -171,12 +171,12 @@ check-strict-file-mypy: check-strict-file-guard $(STRICT_CONFIG) ## Run mypy on 
 	@$(UV) run mypy --strict $(FILE)
 
 check-strict-file: check-strict-file-guard $(STRICT_CONFIG) ## Run strict checks on a single file in parallel
-	@$(MAKE) -k -j3 check-strict-file-ruff check-strict-file-pyright check-strict-file-mypy
+	+@$(MAKE) -k check-strict-file-ruff check-strict-file-pyright check-strict-file-mypy
 	@rm -f $(STRICT_CONFIG)
 
 check-strict-all: ## Run strict checks on all files
 	$(eval FILE := "src/$(SLUG)/ tests/ docs/")
-	@$(MAKE) -j3 -k check-strict-file-ruff FILE=$(FILE) check-strict-file-mypy FILE=$(FILE) check-strict-file-pyright FILE=$(FILE)
+	+@$(MAKE) -k check-strict-file-ruff FILE=$(FILE) check-strict-file-mypy FILE=$(FILE) check-strict-file-pyright FILE=$(FILE)
 	@rm -f $(STRICT_CONFIG)
 
 ###############################################################################
