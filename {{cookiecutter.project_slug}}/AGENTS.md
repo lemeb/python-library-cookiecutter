@@ -60,7 +60,30 @@ Do NOT remove this comment. -->
 | Add dev dependency | `uv add --dev <package>` |
 
 **Before committing**: `make check`, `make check-strict-all`, `make test` (or
-`make test-with-coverage`), and `make doc` must all pass.
+`make test-with-coverage`), and `make doc` must all pass. Or just run `/quality`.
+
+---
+
+## Skills
+
+Skills automate common workflows. Use them instead of running commands manually.
+
+| Skill | When to Use |
+|-------|-------------|
+| `/check` | Runs linting and type-checking, fixes errors |
+| `/test` | Runs tests, writes more if coverage < 100% on new code |
+| `/doc` | Builds docs, fixes spell check, updates nav |
+| `/quality` | Runs all three gates above, reports detailed status |
+| `/go-on` | Assesses workflow state and executes ONE next step |
+
+**Recommended workflow**:
+
+- **Claude**: Spawn sub-agents for `/check`, `/test`, `/doc` in parallel → then
+  `/quality` to verify
+- **Codex/Gemini**: Run `/quality` (does everything sequentially)
+
+For autonomous/loop execution, `/go-on` determines the current workflow step and
+makes incremental progress.
 
 ---
 
@@ -88,7 +111,7 @@ Before starting, classify the request:
 | Type | Examples | Action |
 |------|----------|--------|
 | **Exploration** | "How does X work?", "Where is Y?", "Explain this" | Answer directly |
-| **Quick fix** | "Fix this typo", "Rename this variable" | Fix, run quality gates, commit |
+| **Quick fix** | "Fix this typo", "Rename this variable" | Fix, run `/quality`, commit |
 | **Implementation** | "Add feature X", "Implement Y", "Build Z" | **STOP. Follow workflow from step 1. Do NOT skip to coding.** |
 | **Ambiguous** | "Help me with X", "I need to do Y" | **Ask which type** |
 
@@ -188,7 +211,7 @@ existing codebase for reference. **Load `dev/checking.md`, `dev/testing.md`,
 
 As you implement each task, make sure to (1) write unit tests for that task,
 (2) update `.gitignore` if needed, (3) update documentation (both inline and
-external) as needed. Then run quality gates before moving to the next task.
+external) as needed. Then run `/quality` before moving to the next task.
 
 Note that the implementation should be made in a feature branch, not directly in
 the base branch. Make sure to rebase the feature branch regularly to keep it up
@@ -227,9 +250,15 @@ There are three quality gates that MUST be passed before committing any code:
    `project-words.txt`. Please do NOT use `sort` on `project-words.txt`.
    `make doc` HAS to pass before committing any code.
 
-**Important**: After running quality gates (especially if using parallel
-sub-agents), run all commands again yourself to verify nothing was missed due to
-concurrent edits.
+#### Claude-specific note on quality gates (ignore if Codex or Gemini)
+
+To preserve context window, spawn three sub-agents (using Sonnet 4.5 for cost
+control) to run `/check`, `/test`, and `/doc` in parallel. Each sub-agent will
+run checks and fix issues. Tell each sub-agent they are running in parallel, so
+they shouldn't be alarmed if files change under their feet.
+
+After the sub-agents complete, run `/quality` yourself to verify nothing was
+missed due to concurrent edits.
 
 <!-- Expand here with repo-specific information. For example:
      - Additional quality gates?
@@ -296,7 +325,7 @@ removing any temporary code or branches, updating documentation, etc.
 |-----------|-----------|
 | Step 2 (Planning) | Spec exists and is clear |
 | Step 3 (Execution) | Plan approved by user, tasks are broken down |
-| `git commit` | `make check`, `make check-strict-all`, `make test-with-coverage`, `make doc` all pass |
+| `git commit` | `/quality` passes (or: `make check`, `make check-strict-all`, `make test-with-coverage`, `make doc`) |
 | `git push` | All quality gates pass, branch rebased on base branch |
 | Creating PR | PR description complete with all sections including lessons learned |
 
