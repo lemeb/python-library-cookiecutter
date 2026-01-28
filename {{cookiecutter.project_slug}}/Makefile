@@ -170,13 +170,11 @@ check-strict-file-pyright: check-strict-file-guard $(STRICT_CONFIG) ## Run pyrig
 check-strict-file-mypy: check-strict-file-guard $(STRICT_CONFIG) ## Run mypy on single file
 	@$(UV) run mypy --strict $(FILE)
 
-check-strict-file: check-strict-file-guard $(STRICT_CONFIG) ## Run strict checks on a single file in parallel
-	+@$(MAKE) -k check-strict-file-ruff check-strict-file-pyright check-strict-file-mypy
+check-strict-file: check-strict-file-guard $(STRICT_CONFIG) check-strict-file-ruff check-strict-file-pyright check-strict-file-mypy ## Run strict checks on a single file in parallel
 	@rm -f $(STRICT_CONFIG)
 
-check-strict-all: ## Run strict checks on all files
-	$(eval FILE := "src/$(SLUG)/ tests/ docs/")
-	+@$(MAKE) -k check-strict-file-ruff FILE=$(FILE) check-strict-file-mypy FILE=$(FILE) check-strict-file-pyright FILE=$(FILE)
+check-strict-all: FILE := "src/$(SLUG)/ tests/ docs/"
+check-strict-all: check-strict-file-ruff check-strict-file-mypy check-strict-file-pyright ## Run strict checks on all files
 	@rm -f $(STRICT_CONFIG)
 
 ###############################################################################
