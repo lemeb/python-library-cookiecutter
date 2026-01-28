@@ -12,6 +12,21 @@ it references this very file even if you see it under a different name.
 
 ---
 
+## Orienting Yourself
+
+**A conversation between you and the user can happen at any time during the
+implementation process.** It is your job, before doing anything, to figure out
+at which stage you are, and potentially ask questions. (Figuring this out might
+be very easy if you are, say, a sub-agent assigned to a specific task.)
+
+If you're starting fresh or after a context reset, read this file and determine:
+
+1. What type of request is this? (See "Determining Request Type" below)
+2. If implementation: which step of the workflow are you in?
+3. What files do you need to load for context?
+
+---
+
 ## Quick Reference
 
 | Action | Command |
@@ -21,26 +36,28 @@ it references this very file even if you see it under a different name.
 | Strict checks | `make check-strict-all` |
 | Run tests | `make test` |
 | Tests + coverage | `make test-with-coverage` |
+| All tests (incl. integration) | `make test-all` |
 | Build docs | `make doc` |
+| Serve docs locally | `make doc-serve` |
 | Add dependency | `uv add <package>` |
 | Add dev dependency | `uv add --dev <package>` |
 
-**Before committing**, both `make check` and `make check-strict-all` must pass,
-along with `make test` and `make doc`.
+**Before committing**: `make check`, `make check-strict-all`, `make test` (or
+`make test-with-coverage`), and `make doc` must all pass.
 
 ---
 
 ## Where to Find Information
 
-| Topic | File |
-|-------|------|
-| Commands, tooling, commit format | `DEVELOP.md` |
-| Linting, type-checking, fixing errors | `dev/checking.md` |
-| Testing practices, coverage | `dev/testing.md` |
-| Documentation, docstrings | `dev/documentation.md` |
-| Python coding practices, dependencies | `dev/python.md` |
-| Project structure, usage | `README.md` |
-| Python version, line length, deps | `pyproject.toml` |
+| Topic | File | When to Load |
+|-------|------|--------------|
+| Commands, tooling, commit format | `DEVELOP.md` | Before committing |
+| Linting, type-checking, fixing errors | `dev/checking.md` | Before writing code, when fixing errors |
+| Testing practices, coverage | `dev/testing.md` | Before writing tests |
+| Documentation, docstrings | `dev/documentation.md` | Before writing code, when writing docs |
+| Python coding practices, dependencies | `dev/python.md` | Before writing code |
+| Project structure, usage | `README.md` | When exploring codebase |
+| Python version, line length, deps | `pyproject.toml` | Before writing code |
 
 **For implementation tasks**: Load `dev/checking.md`, `dev/testing.md`,
 `dev/documentation.md`, and `dev/python.md` before writing code.
@@ -62,11 +79,7 @@ Before starting, classify the request:
 
 ## The Anatomy of a Feature Implementation
 
-Implementing a new feature typically involves the following steps. Note that a
-conversation between you and the user can happen at any time during this
-process. It is your job, before doing anything, to figure out at which stage you
-are, and potentially ask questions. (Figuring this out might be very easy if you
-are, say, a sub-agent.)
+Implementing a new feature typically involves the following steps.
 
 ### 1. Fully understanding the feature
 
@@ -111,8 +124,8 @@ separate task. This will make it easier to review and test.
 
 This is the actual coding part. Please follow the best practices and coding
 standards specified in your context window; and don't hesitate to look at the
-existing codebase for reference. Load `dev/checking.md`, `dev/testing.md`,
-`dev/documentation.md`, and `dev/python.md` before writing code.
+existing codebase for reference. **Load `dev/checking.md`, `dev/testing.md`,
+`dev/documentation.md`, and `dev/python.md` before writing code.**
 
 As you implement the feature, make sure to (1) write unit tests for each task,
 (2) update `.gitignore` if needed, (3) update documentation (both inline and
@@ -138,12 +151,12 @@ There are three quality gates that MUST be passed before committing any code:
    Both `make check` and `make check-strict-all` MUST pass before committing any
    code, because CI/CD will run the same commands and will fail the build if any
    of them fail.
-2. _Unit tests_. Run `make test` to ensure that all unit tests pass. If your
-   feature requires internet access or latency (e.g. because it is a LLM call),
-   also run `make test-all` to ensure that all integration tests pass. You
-   should aim for 100% unit test coverage for the new code you write. Use
-   `make test-with-coverage` to track unit test coverage without rerunning
-   integration tests. `make test` HAS to pass before committing any code.
+2. _Unit tests_. Run `make test-with-coverage` to run unit tests and see
+   coverage. You should aim for 100% unit test coverage for the new code you
+   write. If your feature requires internet access or latency (e.g. because it
+   is a LLM call), also run `make test-all` to ensure that all integration tests
+   pass. `make test` (or `make test-with-coverage`) HAS to pass before
+   committing any code.
 3. _Documentation_. If you create a new module, you MUST create a corresponding
    file in `docs/api/` AND update the `nav` section in `mkdocs.yml` to include
    it. Also, if you think documentation would be improved by adding things like
@@ -153,6 +166,10 @@ There are three quality gates that MUST be passed before committing any code:
    builds correctly and that spell check passes. Add any new technical terms to
    `project-words.txt`. Please do NOT use `sort` on `project-words.txt`.
    `make doc` HAS to pass before committing any code.
+
+**Important**: After running quality gates (especially if using parallel
+sub-agents), run all commands again yourself to verify nothing was missed due to
+concurrent edits.
 
 <!-- Expand here with repo-specific information. For example:
      - Additional quality gates?
@@ -168,8 +185,8 @@ your best judgment. The important thing is that each commit should be easy to
 review and understand on its own. And ideally, the quality gates should pass for
 each commit. Check `DEVELOP.md` for more details on how to write commits.
 
-Unless specified otherwise, you should NOT commit directly without asking for
-user review first.
+**Unless the user explicitly says you can commit on your own, do not commit
+without asking for user review first.**
 
 Once commits are done and pushed, you should create a PR. The PR description
 should include the following sections:
@@ -181,9 +198,9 @@ should include the following sections:
 - Checklist of the quality gates passed (linting, type-checking, unit tests,
   documentation).
 - Any additional context or information that reviewers might find useful.
-
-It is preferable to create PRs through the `gh` CLI tool using here-docs to
-avoid issues with markdown formatting.
+- **Lessons learned**: If you discovered things that should be added to
+  `AGENTS.md` or the `dev/*.md` files, note them here so maintainers can
+  incorporate them.
 
 <!-- Expand here with repo-specific information. For example:
      - PR template requirements?
@@ -217,15 +234,6 @@ removing any temporary code or branches, updating documentation, etc.
 
 | Before... | Verify... |
 |-----------|-----------|
-| `git commit` | `make check`, `make check-strict-all`, `make test`, `make doc` all pass |
+| `git commit` | `make check`, `make check-strict-all`, `make test-with-coverage`, `make doc` all pass |
 | `git push` | All quality gates pass, branch rebased on base branch |
-| `gh pr create` | PR description complete with all sections |
-
----
-
-## Recording Lessons Learned
-
-After fixing errors, if you discover something that would have helped you avoid
-the problem, note it in the PR description under a "Lessons Learned" section.
-Maintainers will periodically incorporate useful lessons into the `dev/*.md`
-files.
+| Creating PR | PR description complete with all sections including lessons learned |
