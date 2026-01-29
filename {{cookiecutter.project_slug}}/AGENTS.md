@@ -179,6 +179,11 @@ say, XYZ-999 could be "XYZ-999(1): `<brief task description>`".
 If you have to add dependencies for a feature, try to make adding them a
 separate task. This will make it easier to review and test.
 
+Note that the implementation should be made in a feature branch, not directly in
+the base branch. Make sure to rebase the feature branch regularly to keep it up
+to date with the base branch. (Rebase is the default strategy; but if specified
+otherwise, follow the specified strategy.)
+
 ### Claude-specific note (ignore if Codex or Gemini)
 
 As a general rule, use Plan Mode for this step.
@@ -213,6 +218,7 @@ context might be cleared for a new conversation.)
 - [ ] Tasks are broken down (in your issue tracker or in this conversation)
 - [ ] You are implementing ONE specific task, not the whole feature at once
 - [ ] That task is self-contained (includes its own tests and docs if needed)
+- [ ] You are in the right feature branch
 
 This is the actual coding part. Please follow the best practices and coding
 standards specified in your context window; and don't hesitate to look at the
@@ -222,11 +228,6 @@ existing codebase for reference. **Load `dev/checking.md`, `dev/testing.md`,
 As you implement each task, make sure to (1) write unit tests for that task, (2)
 update `.gitignore` if needed, (3) update documentation (both inline and
 external) as needed. Then run `/quality` before moving to the next task.
-
-Note that the implementation should be made in a feature branch, not directly in
-the base branch. Make sure to rebase the feature branch regularly to keep it up
-to date with the base branch. (Rebase is the default strategy; but if specified
-otherwise, follow the specified strategy.)
 
 <!-- Expand here with repo-specific information. For example:
      - Branch naming conventions?
