@@ -109,6 +109,8 @@ cp .env.example .env
 echo "Setting up symlinks..."
 ln -s AGENTS.md CLAUDE.md
 ln -s AGENTS.md GEMINI.md
+ln -s .claude/skills .gemini/skills
+ln -s .claude/skills .codex/skills
 
 echo ""
 echo "Template generated successfully!"
