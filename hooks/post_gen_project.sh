@@ -3,13 +3,13 @@
 SLUG="{{cookiecutter.project_slug}}"
 
 setup_monorepo_workflows() {
-    local git_root="$1"
-    local rel_path="$2"
+  local git_root="$1"
+  local rel_path="$2"
 
-    mkdir -p "$git_root/.github/workflows"
+  mkdir -p "$git_root/.github/workflows"
 
-    # Process ci.yml for monorepo
-    python3 -c "
+  # Process ci.yml for monorepo
+  python3 -c "
 import sys
 rel_path = sys.argv[1]
 
@@ -29,10 +29,10 @@ defaults_block = f'''defaults:
 content = content.replace('# __MONOREPO_DEFAULTS__\\n', defaults_block)
 
 print(content, end='')
-" "$rel_path" > "$git_root/.github/workflows/${SLUG}-ci.yml"
+" "$rel_path" >"$git_root/.github/workflows/${SLUG}-ci.yml"
 
-    # Process cruft-update.yml for monorepo
-    python3 -c "
+  # Process cruft-update.yml for monorepo
+  python3 -c "
 import sys
 rel_path = sys.argv[1]
 
@@ -49,24 +49,24 @@ content = content.replace('__CRUFT_MAYBE_EXCLUDE_WORKFLOWS__', '')
 content = content.replace('__CRUFT_CD__', f'cd {rel_path}')
 
 print(content, end='')
-" "$rel_path" > "$git_root/.github/workflows/${SLUG}-cruft-update.yml"
+" "$rel_path" >"$git_root/.github/workflows/${SLUG}-cruft-update.yml"
 
-    echo "   Created: $git_root/.github/workflows/${SLUG}-ci.yml"
-    echo "   Created: $git_root/.github/workflows/${SLUG}-cruft-update.yml"
+  echo "   Created: $git_root/.github/workflows/${SLUG}-ci.yml"
+  echo "   Created: $git_root/.github/workflows/${SLUG}-cruft-update.yml"
 
-    rm -rf .github
+  rm -rf .github
 }
 
 setup_standalone_workflows() {
-    # Process ci.yml - just remove markers
-    if [[ "$OSTYPE" == "darwin"* ]]; then
-        sed -i '' '/# __MONOREPO_/d' .github/workflows/ci.yml
-    else
-        sed -i '/# __MONOREPO_/d' .github/workflows/ci.yml
-    fi
+  # Process ci.yml - just remove markers
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    sed -i '' '/# __MONOREPO_/d' .github/workflows/ci.yml
+  else
+    sed -i '/# __MONOREPO_/d' .github/workflows/ci.yml
+  fi
 
-    # Process cruft-update.yml - replace markers with standalone values
-    python3 -c "
+  # Process cruft-update.yml - replace markers with standalone values
+  python3 -c "
 with open('.github/workflows/cruft-update.yml', 'r') as f:
     content = f.read()
 
@@ -82,26 +82,26 @@ with open('.github/workflows/cruft-update.yml', 'w') as f:
 
 # Check if we're inside a git repository
 if git rev-parse --show-toplevel >/dev/null 2>&1; then
-    GIT_ROOT=$(git rev-parse --show-toplevel)
-    PROJECT_DIR=$(pwd)
-    REL_PATH=$(python3 -c "import os; print(os.path.relpath('$PROJECT_DIR', '$GIT_ROOT'))")
+  GIT_ROOT=$(git rev-parse --show-toplevel)
+  PROJECT_DIR=$(pwd)
+  REL_PATH=$(python3 -c "import os; print(os.path.relpath('$PROJECT_DIR', '$GIT_ROOT'))")
 
-    echo ""
-    echo "Detected existing git repository at: $GIT_ROOT"
-    echo "Project will be at: $REL_PATH/"
-    echo ""
-    read -p "Create workflows at \$GIT_ROOT/.github/workflows/${SLUG}-*.yml? [Y/n] " response
+  echo ""
+  echo "Detected existing git repository at: $GIT_ROOT"
+  echo "Project will be at: $REL_PATH/"
+  echo ""
+  read -p "Create workflows at \$GIT_ROOT/.github/workflows/${SLUG}-*.yml? [Y/n] " response
 
-    if [[ ! "$response" =~ ^[Nn]$ ]]; then
-        setup_monorepo_workflows "$GIT_ROOT" "$REL_PATH"
-    else
-        echo "   Skipping workflow creation."
-        rm -rf .github
-    fi
+  if [[ ! "$response" =~ ^[Nn]$ ]]; then
+    setup_monorepo_workflows "$GIT_ROOT" "$REL_PATH"
+  else
+    echo "   Skipping workflow creation."
+    rm -rf .github
+  fi
 else
-    echo "Setting git up..."
-    git init
-    setup_standalone_workflows
+  echo "Setting git up..."
+  git init
+  setup_standalone_workflows
 fi
 
 cp .env.example .env
