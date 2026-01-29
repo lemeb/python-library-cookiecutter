@@ -109,7 +109,9 @@ cp .env.example .env
 echo "Setting up symlinks..."
 ln -s AGENTS.md CLAUDE.md
 ln -s AGENTS.md GEMINI.md
+mkdir .gemini
 ln -s .claude/skills .gemini/skills
+mkdir .codex
 ln -s .claude/skills .codex/skills
 
 echo ""
