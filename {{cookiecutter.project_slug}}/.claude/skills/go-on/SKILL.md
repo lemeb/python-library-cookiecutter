@@ -1,61 +1,107 @@
 ---
 name: go-on
 description:
-  Continue the implementation workflow from wherever it was left off. Executes
-  ONE atomic unit of work, then exits cleanly. Use to make incremental progress
-  on a feature.
+  Assess workflow state, execute ONE step, then exit with a signal. Designed for
+  incremental progress — invoke repeatedly (manually or in a loop) to complete a
+  feature.
 ---
 
 # Workflow Continuation
 
-Load `AGENTS.md` to understand the full workflow and current project
-conventions.
+## Arguments
+
+```
+/go-on [--headless] [ISSUE-REF]
+```
+
+- `--headless`: Running in autonomous loop (no user interaction available)
+- `ISSUE-REF`: Issue reference (e.g., `SUN-199`, `#42`, `specs/feature.md`)
+
+If no argument, infer from conversation context or current git branch.
+
+## Quick Reference
+
+| Signal | Meaning |
+|--------|---------|
+| `<STEP_COMPLETE>` | One unit done, invoke again for next |
+| `<AWAITING_APPROVAL>` | Plan presented, waiting for user (headless only) |
+| `<AWAITING_INPUT reason="...">` | Need clarification (headless only) |
+| `<AWAITING_REVIEW>` | PR submitted, waiting for review |
+| `<FEATURE_COMPLETE>` | All done |
+| `<BLOCKED reason="...">` | Cannot proceed |
 
 ## Procedure
 
-1. **Assess current state** from external sources:
-   - Check for spec (issue tracker, conversation, or docs)
-   - Check for implementation plan and task breakdown
-   - Check git for branch, commits, uncommitted changes
-   - Check filesystem for implementation progress
+1. **Load the active tracker file** (specified in AGENTS.md under "Tracker
+   Configuration") for how to record specs, plans, and track progress
 
-2. **Identify next action** based on state:
+2. **Assess current state** by checking:
+   - Tracker (per active tracker file) for spec and plan status
+   - Git: branch, commits, uncommitted changes, PR status
+   - Filesystem: implementation progress
 
-   | State                               | Action                                                      |
-   | ----------------------------------- | ----------------------------------------------------------- |
-   | No spec exists                      | Write spec, update tracking, EXIT                           |
-   | No plan/tasks                       | Write plan, present to user, wait for approval, EXIT        |
-   | Plan approved but tasks not tracked | Create task entries, EXIT                                   |
-   | Incomplete task exists              | Implement ONE task, run `/quality`, commit, mark done, EXIT |
-   | Task in progress, quality failing   | Fix errors until `/quality` passes, then commit, EXIT       |
-   | Code ready but not committed        | Run `/quality`, commit, mark task done, EXIT                |
-   | All tasks done, no PR               | Create PR, EXIT                                             |
-   | PR exists                           | Report completion, EXIT                                     |
+3. **Determine current step and load its procedure**:
 
-3. **Execute that ONE action** — do NOT ask for permission, just do it
+   | State | Step | File to Load |
+   |-------|------|--------------|
+   | No spec exists | 1 | `dev/workflow/step-1-spec.md` |
+   | Spec exists, no plan | 2 | `dev/workflow/step-2-plan.md` |
+   | Plan not approved | 2 | `dev/workflow/step-2-plan.md` |
+   | Plan approved, tasks remain | 3 | `dev/workflow/step-3-task.md` |
+   | All tasks done, no PR | 4 | `dev/workflow/step-4-ship.md` |
+   | PR exists, has feedback | 5 | `dev/workflow/step-5-feedback.md` |
+   | PR merged | 6 | `dev/workflow/step-6-cleanup.md` |
 
-4. **Update tracking** (issue tracker, git, task list)
+4. **Execute ONE unit of work** per the step file's procedure
+   - Follow the active tracker's conventions for recording state
+   - If `--headless`, output `<AWAITING_*>` signals instead of waiting
 
-5. **Exit with clear status**:
+5. **Output status**:
 
-   ```text
+   ```
    ## /go-on Status
 
-   Previous state: <what was found>
+   Mode: <interactive|headless>
+   Step: <N - name>
+   State before: <what was found>
    Action taken: <what was done>
-   New state: <what changed>
-   Next step: <what should happen next>
+   Result: <outcome>
+
+   <SIGNAL>
+
+   Next: <what happens on next invocation>
    ```
 
 ## Key Principles
 
-- **Stateless**: Determines state fresh each time from files/git/tracking
-- **One atomic unit**: Does ONE thing per invocation
+- **Stateless**: Determine state fresh each invocation from external sources
+- **Atomic**: Do ONE thing, then exit
 - **Idempotent**: Safe if interrupted; next invocation re-assesses
+- **Signal-driven**: Always output exactly one signal for loop detection
+- **Tracker-aware**: Follow the active tracker's conventions
 
-## Exit Conditions
+## Headless Mode
 
-- **Success**: Completed one unit of work
-- **Blocked**: Cannot proceed (waiting for approval, dependency)
-- **Complete**: Feature done, PR created
-- **Error**: Something went wrong, needs human intervention
+When `--headless` is passed:
+- Output `<AWAITING_APPROVAL>` instead of waiting for user response
+- Output `<AWAITING_INPUT>` instead of asking questions
+- Record state to tracker before exiting (so next invocation can continue)
+- When spawning sub-agents, tell them: "Running in headless mode"
+
+## For Autonomous Loops
+
+```bash
+while :; do
+  OUTPUT=$(claude -p "/go-on --headless ISSUE-123" 2>&1)
+  echo "$OUTPUT"
+
+  # Stop on any signal except STEP_COMPLETE
+  grep -q "<FEATURE_COMPLETE>" <<< "$OUTPUT" && exit 0
+  grep -q "<AWAITING_APPROVAL>" <<< "$OUTPUT" && exit 0
+  grep -q "<AWAITING_INPUT" <<< "$OUTPUT" && exit 0
+  grep -q "<AWAITING_REVIEW>" <<< "$OUTPUT" && exit 0
+  grep -q "<BLOCKED" <<< "$OUTPUT" && exit 1
+
+  sleep 2
+done
+```

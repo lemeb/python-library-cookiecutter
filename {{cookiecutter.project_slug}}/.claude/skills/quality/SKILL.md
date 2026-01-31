@@ -52,7 +52,27 @@ description:
    - New modules documented: <list or "none">
 
    ### Overall: PASS/FAIL
+
+   ### Lessons Learned
+   <Patterns discovered while fixing issues that should be documented>
+   <If none, write "None">
    ```
+
+## Lessons Learned
+
+**Always include a "Lessons Learned" section**, even if empty. This is critical
+when running as a sub-agent — the main agent needs this information for the PR
+description.
+
+Examples of lessons learned:
+- "Discovered that `mypy` requires explicit type annotations for class variables"
+- "The spell-checker doesn't recognize 'webhook' — added to project-words.txt"
+- "Tests using `freezegun` must import it before the module under test"
+
+If you fixed issues, ask: "Would knowing this earlier have helped?" Note it in
+the lessons learned output. The main agent will include it in the PR description
+under "Lessons Learned", and the human maintainer will decide whether to update
+`AGENTS.md` or `dev/*.md`.
 
 ## Exit Conditions
 
