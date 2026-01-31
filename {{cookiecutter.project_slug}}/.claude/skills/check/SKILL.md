@@ -17,6 +17,23 @@ Load `dev/checking.md` for detailed guidance on fixing errors.
 4. If errors occur, fix them using guidance from `dev/checking.md`
 5. Repeat until both check commands pass
 
+## Output Format
+
+```text
+## Linting & Type-Checking Results
+
+- `make check`: PASS/FAIL
+- `make check-strict-all`: PASS/FAIL
+- Errors fixed: <count and brief list>
+
+### Lessons Learned
+<Patterns discovered while fixing issues — things future agents should know>
+<If none, write "None">
+```
+
+**Always include Lessons Learned**, even if empty. When running as a sub-agent,
+the main agent needs this for the PR description.
+
 ## Exit Conditions
 
 - **Success**: Both `make check` and `make check-strict-all` pass

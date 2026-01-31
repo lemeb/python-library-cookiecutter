@@ -27,9 +27,27 @@ Load `dev/testing.md` for detailed guidance on writing and fixing tests.
 5. If feature requires internet/latency (e.g., LLM calls), also run
    `make test-all`
 
+## Output Format
+
+```text
+## Test Results
+
+- Tests: <passed>/<total>
+- Coverage (overall): <X>%
+- Coverage (new code): <X>%
+- Uncovered lines (if any): <file:line, file:line, ...>
+
+### Lessons Learned
+<Patterns discovered while writing/fixing tests — things future agents should know>
+<If none, write "None">
+```
+
+**Always include Lessons Learned**, even if empty. When running as a sub-agent,
+the main agent needs this for the PR description.
+
 ## Exit Conditions
 
 - **Success**: Tests pass AND 100% coverage on new code
-- **Partial**: Tests pass but < 100% coverage - report uncovered lines for
+- **Partial**: Tests pass but < 100% coverage — report uncovered lines for
   review
 - **Failure**: Report remaining failures
