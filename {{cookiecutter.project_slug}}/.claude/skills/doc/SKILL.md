@@ -21,6 +21,23 @@ formatting.
 
 4. Repeat until `make doc` passes
 
+## Output Format
+
+```text
+## Documentation Results
+
+- `make doc`: PASS/FAIL
+- New terms added to project-words.txt: <list or "none">
+- New modules documented: <list or "none">
+
+### Lessons Learned
+<Patterns discovered while fixing doc issues — things future agents should know>
+<If none, write "None">
+```
+
+**Always include Lessons Learned**, even if empty. When running as a sub-agent,
+the main agent needs this for the PR description.
+
 ## Exit Conditions
 
 - **Success**: `make doc` passes
