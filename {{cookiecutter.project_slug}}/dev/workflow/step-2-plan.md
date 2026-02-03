@@ -78,6 +78,13 @@ after the plan is approved. This means:
 **Interactive mode**: Wait for user approval, then output `<STEP_COMPLETE>`
 
 **Headless mode**:
-- Record the plan per tracker conventions
+- Record the plan per tracker conventions with `Status: DRAFT`
 - Output `<AWAITING_APPROVAL>`
-- Next invocation will check for approval and proceed
+- User approves by changing status to `Status: APPROVED` (or re-running `/go-on`)
+- Next invocation checks status field to determine if approved
+
+**If plan is rejected**:
+1. Ask user what changes are needed (interactive) or note feedback (headless)
+2. Update the plan in place — do not delete and recreate
+3. Output `<AWAITING_APPROVAL>` again
+4. Repeat until approved

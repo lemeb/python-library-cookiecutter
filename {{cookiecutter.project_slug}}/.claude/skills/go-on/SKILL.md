@@ -46,11 +46,14 @@ If no argument, infer from conversation context or current git branch.
    |-------|------|--------------|
    | No spec exists | 1 | `dev/workflow/step-1-spec.md` |
    | Spec exists, no plan | 2 | `dev/workflow/step-2-plan.md` |
-   | Plan not approved | 2 | `dev/workflow/step-2-plan.md` |
-   | Plan approved, tasks remain | 3 | `dev/workflow/step-3-task.md` |
+   | Plan exists with `Status: DRAFT` | 2 | `dev/workflow/step-2-plan.md` (output `<AWAITING_APPROVAL>`) |
+   | Plan approved (status APPROVED or missing) | 3 | `dev/workflow/step-3-task.md` |
+   | Tasks remain incomplete | 3 | `dev/workflow/step-3-task.md` |
    | All tasks done, no PR | 4 | `dev/workflow/step-4-ship.md` |
-   | PR exists, has feedback | 5 | `dev/workflow/step-5-feedback.md` |
+   | PR open, CI pending | 5 | `dev/workflow/step-5-feedback.md` (output `<AWAITING_REVIEW>`) |
+   | PR open, has feedback | 5 | `dev/workflow/step-5-feedback.md` |
    | PR merged | 6 | `dev/workflow/step-6-cleanup.md` |
+   | PR closed without merge | — | Output `<BLOCKED reason="PR rejected">` |
 
 4. **Execute ONE unit of work** per the step file's procedure
    - Follow the active tracker's conventions for recording state
@@ -79,6 +82,22 @@ If no argument, infer from conversation context or current git branch.
 - **Idempotent**: Safe if interrupted; next invocation re-assesses
 - **Signal-driven**: Always output exactly one signal for loop detection
 - **Tracker-aware**: Follow the active tracker's conventions
+
+## State Authority Order
+
+When determining state, trust sources in this order (higher = more authoritative):
+
+1. **Git** (commits, branches, PR status) — ground truth
+2. **Filesystem** (actual code, test results)
+3. **Tracker files** (IMPLEMENTATION_PLAN.md, specs/)
+
+If sources conflict, update tracker to match Git/filesystem reality.
+
+## Session Cleanup
+
+At the end of each step, ensure state is persisted to the tracker so the next
+session (possibly a different agent) can continue. The tracker IS the session
+handoff mechanism.
 
 ## Headless Mode
 

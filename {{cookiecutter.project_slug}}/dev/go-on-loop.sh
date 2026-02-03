@@ -23,7 +23,9 @@ set -euo pipefail
 ISSUE="${1:-}"
 MAX_ITERATIONS="${2:-50}"
 POST_PR_WAIT="${3:-900}"  # Default: wait 15 minutes after PR for CI/review
+MAX_BLOCKED="${4:-3}"     # Stop after this many BLOCKED signals
 LOG_FILE=".go-on-loop-$(date +%Y%m%d-%H%M%S).log"
+blocked_count=0
 
 if [ -z "$ISSUE" ]; then
   echo "Usage: $0 <issue-id> [max-iterations] [post-pr-wait-seconds]"
@@ -86,11 +88,22 @@ for i in $(seq 1 "$MAX_ITERATIONS"); do
 
   # Blocked
   if echo "$OUTPUT" | grep -q "<BLOCKED"; then
-    echo "Blocked — needs human intervention"
-    echo "Check the output above for the reason"
-    # Future: in "work queue" mode, could pick next unblocked issue here
-    exit 1
+    blocked_count=$((blocked_count + 1))
+    echo "Blocked ($blocked_count/$MAX_BLOCKED) — checking if we should stop"
+
+    if [ "$blocked_count" -ge "$MAX_BLOCKED" ]; then
+      echo "Reached max blocked count ($MAX_BLOCKED). Stopping."
+      echo "Check the log for details: $LOG_FILE"
+      exit 1
+    fi
+
+    echo "Retrying... (sometimes a fresh invocation helps)"
+    sleep 5
+    continue
   fi
+
+  # Reset blocked count on successful progress
+  blocked_count=0
 
   # <STEP_COMPLETE> or unrecognized: continue
   echo "Step complete, continuing..."

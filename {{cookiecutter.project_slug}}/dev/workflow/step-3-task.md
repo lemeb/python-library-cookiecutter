@@ -48,10 +48,21 @@ If not on a feature branch, create one first.
 
 ### 3c. Quality gate
 
-Run `/quality` (or manually: `make check-fix && make check && make check-strict-all && make test-with-coverage && make doc`)
+Run `/quality` (or the manual commands below). ALL must pass before proceeding:
+
+| Gate | Command | Criteria |
+|------|---------|----------|
+| Linting | `make check` | Exit code 0 |
+| Strict checks | `make check-strict-all` | Exit code 0 |
+| Tests | `make test-all` | All tests pass |
+| Coverage | `make test-with-coverage` | 100% on new code |
+| Documentation | `make doc` | No warnings |
+
+Additionally: **All acceptance criteria in the spec must have corresponding tests.**
 
 - **If passing**: Proceed to commit
 - **If failing**: Fix issues and re-run until passing
+- **If stuck after 3 attempts on the same error**: Output `<BLOCKED reason="...">`
 
 ### 3d. Commit
 
@@ -84,8 +95,9 @@ complete, run `/quality` yourself to verify nothing was missed.
 ## Completion Criteria (per task)
 
 - [ ] Code written and follows project patterns
-- [ ] Tests written with good coverage
-- [ ] `/quality` passes
+- [ ] Tests written — 100% coverage on new code
+- [ ] All acceptance criteria have corresponding tests
+- [ ] `/quality` passes (all gates green)
 - [ ] Changes committed
 - [ ] Task marked complete per tracker conventions
 
