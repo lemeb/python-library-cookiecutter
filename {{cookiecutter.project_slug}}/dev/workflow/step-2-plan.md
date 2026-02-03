@@ -3,6 +3,17 @@
 **Goal**: Break down the feature into small, self-contained tasks and get
 approval before coding.
 
+## Iron Laws
+
+1. **NO coding until plan is approved** — Present the plan, wait for explicit
+   approval. Don't start "just the setup" or "obvious parts."
+
+2. **Each task must be self-contained** — Includes code + tests + docs for that
+   piece. Not "implement features" then "write tests" then "update docs."
+
+3. **Tasks form a DAG, not a list** — Note which tasks block which others.
+   Parallel work is possible when dependencies allow.
+
 ## Prerequisites
 
 - [ ] Spec exists and is clear (Step 1 complete)

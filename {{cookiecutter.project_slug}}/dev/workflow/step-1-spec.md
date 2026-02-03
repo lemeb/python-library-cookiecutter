@@ -5,6 +5,17 @@
 The level of detail required depends on the team and codebase. Some teams want
 formal specs; others want a few bullet points.
 
+## Iron Laws
+
+1. **NO coding until spec is recorded** — Even if you "know what to do," write
+   it down first. This catches misunderstandings early.
+
+2. **Acceptance criteria must be testable** — Not "works correctly" but "returns
+   200 OK with JSON body containing `user_id`."
+
+3. **Ask about edge cases the user hasn't considered** — Your job is to surface
+   hidden assumptions while changes are cheap.
+
 ## Prerequisites
 
 - You have a feature request (from user, issue tracker, or conversation)

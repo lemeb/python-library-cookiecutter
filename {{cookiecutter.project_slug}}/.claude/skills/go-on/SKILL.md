@@ -115,6 +115,21 @@ When `--headless` is passed:
 
 ## For Autonomous Loops
 
+**Recommended**: Use the Python wrapper with circuit breaker:
+
+```bash
+# Install dependencies first: uv sync
+python .claude/scripts/go_on_loop.py SUN-199
+python .claude/scripts/go_on_loop.py SUN-199 --auto-approve
+python .claude/scripts/go_on_loop.py SUN-199 --max-no-progress 5
+```
+
+The wrapper tracks loop metadata (iterations, circuit breaker state) and stops
+when progress stalls. Workflow state still lives in tracker/git — the wrapper
+doesn't duplicate it.
+
+**Alternative**: Simple bash loop (no circuit breaker):
+
 ```bash
 while :; do
   OUTPUT=$(claude -p "/go-on --headless ISSUE-123" 2>&1)

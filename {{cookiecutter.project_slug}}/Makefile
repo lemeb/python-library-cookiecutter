@@ -119,6 +119,30 @@ clean: ## Remove generated files
 	wait
 
 #########################################################################
+# GIT UTILITIES
+#########################################################################
+
+.PHONY: git-base git-base-set changed-lines
+BASE_BRANCH ?= $(shell gh pr view --json baseRefName -q .baseRefName 2>/dev/null || \
+	git config branch.$$(git branch --show-current).base 2>/dev/null || \
+	echo "main")
+
+git-base: ## Show the base branch for the current branch (PR > git config > main)
+	@echo $(BASE_BRANCH)
+
+git-base-set: ## Set base branch for current branch (use BASE=branch)
+	@if [ -z "$(BASE)" ]; then \
+		echo "Usage: make git-base-set BASE=<branch>"; \
+		exit 1; \
+	fi
+	@git config branch.$$(git branch --show-current).base $(BASE)
+	@echo "Set base branch to '$(BASE)' for '$$(git branch --show-current)'"
+
+changed-lines: ## Show changed line ranges vs base branch (useful for targeted checks)
+	@git diff --unified=0 $(BASE_BRANCH)...HEAD | \
+		perl -ne 'if(/^diff --git a\/(\S+)/){$$f=$$1} if(/^@@ .*\+(\d+)(?:,(\d+))?/){$$e=$$2//"1"; print "$$f:$$1-".($$1+$$e-1)."\n"}'
+
+#########################################################################
 # BASIC CODE QUALITY CHECKS
 #########################################################################
 
@@ -261,6 +285,20 @@ doc: doc-build ## Build documentation (md-check and spell-check run in parallel 
 
 doc-serve: ## Serve documentation locally
 	@$(UV) run mkdocs serve
+
+#########################################################################
+# WORKFLOW AUTOMATION
+#########################################################################
+
+.PHONY: go-on-loop
+ISSUE ?=
+go-on-loop: ## Run /go-on in autonomous loop (use ISSUE=SUN-199)
+	@if [ -z "$(ISSUE)" ]; then \
+		echo "Usage: make go-on-loop ISSUE=<issue-ref>"; \
+		echo "Example: make go-on-loop ISSUE=SUN-199"; \
+		exit 1; \
+	fi
+	$(UV) run python .claude/scripts/go_on_loop.py $(ISSUE)
 
 #########################################################################
 # ALL TASKS
