@@ -5,6 +5,23 @@
 This step repeats for each task in your plan. Each invocation handles exactly
 one task.
 
+## Iron Laws
+
+These are non-negotiable constraints. Do NOT rationalize exceptions.
+
+1. **NO code changes without running `/quality` afterward** — Every change gets
+   verified before commit. No "I'll run it later" or "this is just a small fix."
+
+2. **NO completion claims without fresh verification evidence** — Before saying
+   "done" or "fixed," execute the command that proves it and show the output.
+
+3. **If 3+ attempts to fix the same error fail, STOP** — Output
+   `<BLOCKED reason="...">` and reconsider the approach. Don't keep trying
+   variations of the same fix.
+
+4. **Each task is self-contained** — Code + tests + docs in one commit. Don't
+   structure as "implement everything, then write all tests, then fix docs."
+
 ## Prerequisites
 
 - [ ] Implementation plan exists and is approved (Step 2 complete)
