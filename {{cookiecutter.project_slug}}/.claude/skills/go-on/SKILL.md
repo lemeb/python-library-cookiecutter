@@ -11,13 +11,19 @@ description:
 ## Arguments
 
 ```
-/go-on [--headless] [ISSUE-REF]
+/go-on [--headless] [--auto-approve] [ISSUE-REF]
 ```
 
 - `--headless`: Running in autonomous loop (no user interaction available)
+- `--auto-approve`: Skip approval gates for spec and plan (use with caution)
 - `ISSUE-REF`: Issue reference (e.g., `SUN-199`, `#42`, `specs/feature.md`)
 
 If no argument, infer from conversation context or current git branch.
+
+**Note on `--auto-approve`**: By default, headless mode stops at plan approval
+(`<AWAITING_APPROVAL>`). With `--auto-approve`, the agent proceeds without
+waiting. Use this only when the issue is well-defined and you trust the agent's
+plan. The agent will still output the plan before proceeding.
 
 ## Quick Reference
 

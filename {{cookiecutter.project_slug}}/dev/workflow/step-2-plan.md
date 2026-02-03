@@ -30,6 +30,22 @@ If prerequisites not met, go back to Step 1.
    Good task example: "Add `/users` endpoint with validation and tests"
    Bad task example: "Implement all endpoints" or "Write tests for feature"
 
+   ### Subtask vs Issue Granularity
+
+   | Level | Purpose | Size | Who reviews |
+   |-------|---------|------|-------------|
+   | **Issue** | Unit of human review | One PR, one code review | Human reviewer |
+   | **Subtask** | Unit of agent work | One focused coding session | Agent self-checks |
+
+   **Issues** are about human cognitive load — a reviewer should be able to
+   understand and review the entire change in one sitting.
+
+   **Subtasks** are about context management — an agent should be able to hold
+   the entire subtask in context and complete it without losing track.
+
+   An issue typically contains 3-8 subtasks. If you have more, consider
+   splitting into multiple issues.
+
 3. **Write the implementation plan**:
    - List tasks with brief descriptions
    - Note dependencies (what blocks what)
@@ -82,6 +98,11 @@ after the plan is approved. This means:
 - Output `<AWAITING_APPROVAL>`
 - User approves by changing status to `Status: APPROVED` (or re-running `/go-on`)
 - Next invocation checks status field to determine if approved
+
+**Headless mode with `--auto-approve`**:
+- Record the plan per tracker conventions (no DRAFT status needed)
+- Output the plan for visibility, then immediately output `<STEP_COMPLETE>`
+- Proceed to Step 3 without waiting
 
 **If plan is rejected**:
 1. Ask user what changes are needed (interactive) or note feedback (headless)

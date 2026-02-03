@@ -94,10 +94,25 @@ Example progress:
 
 ---
 
-## Local Files
+## Local vs Remote: The Hybrid Approach
 
-Even when using GitHub Issues as tracker, you MAY use local files:
-- `specs/` — Optional, for local searchable documentation
-- `IMPLEMENTATION_PLAN.md` — Not used; plan lives in the issue
+**Draft locally, publish when done. Track progress remotely.**
 
-The GitHub Issue is the single source of truth.
+| Artifact | Where to draft | Where to publish | Notes |
+|----------|----------------|------------------|-------|
+| Spec | `.claude/draft-spec.md` | GitHub Issue body | Push when interview/spec complete |
+| Plan | `.claude/draft-plan.md` | GitHub Issue body | Push when plan approved |
+| Task progress | — | GitHub Issue checkboxes | Track ONLY in issue, not locally |
+
+**Why this approach**:
+- Drafting locally allows iteration without spamming issue history
+- Git history on drafts is valuable for complex features
+- Task progress in issue = single source of truth for status
+- Anyone (human or agent) can check issue to see current state
+
+**Workflow**:
+1. Draft spec locally during `/interview` or Step 1
+2. When spec is ready, push to issue body
+3. Draft plan locally during Step 2
+4. When plan is approved, push to issue body
+5. Track task completion ONLY by checking boxes in the issue

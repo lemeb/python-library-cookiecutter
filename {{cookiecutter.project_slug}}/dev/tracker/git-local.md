@@ -129,3 +129,12 @@ Waiting for decision on token expiry time. See PR #42 comment.
 **After merge**:
 - Keep `specs/user-auth.md` as documentation
 - Delete `IMPLEMENTATION_PLAN.md` (it was temporary for this feature)
+
+---
+
+## Draft Files
+
+During `/interview` or Step 1, you may use `.claude/draft-spec.md` for work in
+progress. When ready, move content to `specs/{feature-slug}.md`.
+
+This keeps `specs/` clean (only finished specs) while allowing iteration.

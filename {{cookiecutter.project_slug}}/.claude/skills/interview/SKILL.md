@@ -26,27 +26,32 @@ to change.
 ```
 /interview "feature description"
 /interview "feature description" --context path/to/existing-doc.md
-/interview "feature description" --thorough
+/interview "feature description" --quick
 /interview "feature description" --first-principles
 ```
 
-- `--thorough`: Continue until user explicitly says "done" or "finalize" (never
-  auto-complete)
+- `--quick`: Lighter interview (5-8 questions), end when basics are covered
 - `--first-principles`: Challenge assumptions before detailed spec gathering
 - `--context`: Load existing documentation as starting context
 
 ## Interview Modes
 
-### Default Mode
+### Default Mode (Rigorous)
 
-Ask 8-12 questions across phases. End when completion criteria are met OR user
-seems ready to proceed.
+**Behave like a competent, well-meaning, rigorous staff engineer.**
 
-### Thorough Mode (`--thorough`)
+Ask 10-15 questions across phases. Probe for edge cases, challenge vague answers,
+and ensure acceptance criteria are specific and testable. Continue until user
+explicitly says "done", "finalize", "that's enough", or similar.
 
-**Never finish until user explicitly says "done", "finalize", or similar.**
-After each answer, immediately ask the next question. This mode is for complex
-features where missing requirements is costly.
+Do NOT auto-complete. The user decides when the interview is sufficient.
+
+### Quick Mode (`--quick`)
+
+Lighter interview for well-understood features. Ask 5-8 questions covering the
+basics. End when completion criteria are met OR user seems ready to proceed.
+
+Use this for small features where extensive requirements gathering isn't needed.
 
 ### First-Principles Mode (`--first-principles`)
 
@@ -120,7 +125,12 @@ End the interview when:
 - [ ] Main interface/behavior is mapped
 - [ ] Technical approach is sketched
 - [ ] Major edge cases are identified
-- [ ] User confirms ready to proceed (or says "done" in thorough mode)
+- [ ] Acceptance criteria are specific and testable (not vague)
+- [ ] **User explicitly confirms** — "done", "finalize", "that's enough", etc.
+
+**Important**: In default (rigorous) mode, do NOT end the interview on your own.
+Wait for the user to signal completion. Keep asking probing questions until they
+do. In `--quick` mode, you may suggest wrapping up when basics are covered.
 
 ## Output Format
 
@@ -193,7 +203,11 @@ Once you have a spec:
 1. Save it per tracker conventions (e.g., `specs/auth.md`)
 2. Run `/go-on` to start the implementation workflow
 
-## Maintaining Draft (for long interviews)
+## Maintaining Draft
 
-For thorough mode or complex features, update the draft spec file after every
-2-3 questions. This ensures nothing is lost if the session is interrupted.
+Update `.claude/draft-spec.md` after every 2-3 questions. This ensures nothing
+is lost if the session is interrupted.
+
+When the interview is complete, move the draft to its final location per tracker
+conventions (e.g., `specs/{feature-slug}.md` for git-local, or push to the issue
+for GitHub/Linear).
