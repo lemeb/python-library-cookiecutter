@@ -24,31 +24,41 @@ ISSUE="${1:-}"
 MAX_ITERATIONS="${2:-50}"
 POST_PR_WAIT="${3:-900}"  # Default: wait 15 minutes after PR for CI/review
 MAX_BLOCKED="${4:-3}"     # Stop after this many BLOCKED signals
+AUTO_APPROVE="${5:-}"     # Set to "true" to skip approval gates
 LOG_FILE=".go-on-loop-$(date +%Y%m%d-%H%M%S).log"
 blocked_count=0
 
 if [ -z "$ISSUE" ]; then
-  echo "Usage: $0 <issue-id> [max-iterations] [post-pr-wait-seconds]"
+  echo "Usage: $0 <issue-id> [max-iterations] [post-pr-wait-seconds] [max-blocked] [auto-approve]"
   echo ""
   echo "Examples:"
-  echo "  $0 SUN-199              # Run with defaults"
-  echo "  $0 SUN-199 30           # Max 30 iterations"
-  echo "  $0 SUN-199 50 1800      # Wait 30min after PR submission"
-  echo "  $0 SUN-199 50 0         # Don't wait after PR (for testing)"
+  echo "  $0 SUN-199                    # Run with defaults (stops at approval)"
+  echo "  $0 SUN-199 30                 # Max 30 iterations"
+  echo "  $0 SUN-199 50 1800            # Wait 30min after PR submission"
+  echo "  $0 SUN-199 50 0               # Don't wait after PR (for testing)"
+  echo "  $0 SUN-199 50 900 3 true      # Full autonomy (skip approvals)"
   exit 1
+fi
+
+# Build the flags
+GO_ON_FLAGS="--headless"
+if [ "$AUTO_APPROVE" = "true" ]; then
+  GO_ON_FLAGS="$GO_ON_FLAGS --auto-approve"
 fi
 
 echo "Starting /go-on loop for $ISSUE"
 echo "  Max iterations: $MAX_ITERATIONS"
 echo "  Post-PR wait: ${POST_PR_WAIT}s"
+echo "  Max blocked: $MAX_BLOCKED"
+echo "  Auto-approve: ${AUTO_APPROVE:-false}"
 echo "  Log file: $LOG_FILE"
 echo ""
 
 for i in $(seq 1 "$MAX_ITERATIONS"); do
   echo "=== Iteration $i at $(date) ===" | tee -a "$LOG_FILE"
 
-  # Run /go-on in headless mode and capture output
-  OUTPUT=$(claude -p "/go-on --headless $ISSUE" 2>&1) || true
+  # Run /go-on and capture output
+  OUTPUT=$(claude -p "/go-on $GO_ON_FLAGS $ISSUE" 2>&1) || true
   echo "$OUTPUT" | tee -a "$LOG_FILE"
   echo "" | tee -a "$LOG_FILE"
 
