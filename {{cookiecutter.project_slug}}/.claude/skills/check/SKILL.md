@@ -34,6 +34,11 @@ Load `dev/checking.md` for detailed guidance on fixing errors.
 **Always include Lessons Learned**, even if empty. When running as a sub-agent,
 the main agent needs this for the PR description.
 
+Examples of lessons learned:
+- "Discovered that `Optional[X]` is required for all nullable parameters with --strict"
+- "Class variables need explicit type annotations even when assigned immediately"
+- "Import ordering: stdlib → third-party → local, with blank lines between groups"
+
 ## Exit Conditions
 
 - **Success**: Both `make check` and `make check-strict-all` pass
