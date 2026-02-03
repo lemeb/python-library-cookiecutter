@@ -62,13 +62,13 @@ See sub-issues for task breakdown.
 3. Set Linear's native "Blocked by" relationships between sub-issues
 
 **Approval mechanism**:
-- In interactive mode, user approves verbally
+- In interactive mode, user approves verbally (agent proceeds immediately)
 - In headless mode:
-  1. Create plan and sub-issues with `Status: DRAFT`
+  1. Create plan and sub-issues with `Status: DRAFT` in description
   2. Add comment: "Implementation plan ready for review"
   3. Move parent issue to "Ready for Dev"
   4. Output `<AWAITING_APPROVAL>`
-  5. User approves by moving to "In Progress" or re-running `/go-on`
+  5. User approves by moving to "In Progress" — agent checks issue status on next invocation
 
 ## Step 3: Task
 

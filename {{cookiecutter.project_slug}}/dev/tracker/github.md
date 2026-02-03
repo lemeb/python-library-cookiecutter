@@ -59,12 +59,12 @@ Status: DRAFT
 ```
 
 **Approval mechanism**:
-- In interactive mode, user approves verbally
+- In interactive mode, user approves verbally (agent proceeds immediately)
 - In headless mode:
   1. Update issue with plan, set `Status: DRAFT`
   2. Add comment: "Implementation plan ready for review"
   3. Output `<AWAITING_APPROVAL>`
-  4. User approves by changing to `Status: APPROVED` or re-running `/go-on`
+  4. User approves by changing to `Status: APPROVED` — missing status is treated as DRAFT
 
 ## Step 3: Task
 
