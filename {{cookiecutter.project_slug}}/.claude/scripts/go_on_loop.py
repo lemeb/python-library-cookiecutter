@@ -70,6 +70,7 @@ class LoopState:
 
     iterations: int = 0
     no_progress_count: int = 0
+    blocked_count: int = 0  # Separate counter for BLOCKED signals (allows retries)
     last_signal: str = ""
     errors: list[str] = field(default_factory=list)
 
@@ -144,7 +145,8 @@ def print_status(
     typer.echo(
         f"Loop #{state.iterations} | "
         f"Circuit: {circuit.value} | "
-        f"No-progress: {state.no_progress_count}"
+        f"No-progress: {state.no_progress_count} | "
+        f"Blocked: {state.blocked_count}"
     )
     if signal:
         if signal == STEP_COMPLETE_SIGNAL:
@@ -178,6 +180,14 @@ def loop(
             "--max-no-progress",
             "-m",
             help="Circuit breaker threshold for consecutive no-progress loops",
+        ),
+    ] = 3,
+    max_blocked: Annotated[
+        int,
+        typer.Option(
+            "--max-blocked",
+            "-b",
+            help="Stop after this many consecutive BLOCKED signals (allows retries)",
         ),
     ] = 3,
     delay: Annotated[
@@ -221,7 +231,7 @@ def loop(
             "⚠ Auto-approve enabled — skipping approval gates",
             fg=typer.colors.YELLOW,
         )
-    typer.echo(f"Circuit breaker threshold: {max_no_progress} no-progress loops\n")
+    typer.echo(f"Circuit breaker: {max_no_progress} no-progress, {max_blocked} blocked\n")
 
     while circuit != CircuitState.OPEN:
         state.iterations += 1
@@ -269,32 +279,42 @@ def loop(
             raise typer.Exit(0)
 
         if BLOCKED_SIGNAL_PATTERN.match(signal or ""):
+            state.blocked_count += 1
             typer.secho(
-                f"Blocked: {signal}",
+                f"Blocked ({state.blocked_count}/{max_blocked}): {signal}",
                 fg=typer.colors.RED,
-                bold=True,
             )
-            raise typer.Exit(1)
+            if state.blocked_count >= max_blocked:
+                typer.secho(
+                    f"Reached max blocked count ({max_blocked}). Stopping.",
+                    fg=typer.colors.RED,
+                    bold=True,
+                )
+                raise typer.Exit(1)
+            # Retry — sometimes a fresh invocation helps
+            typer.echo("Retrying... (sometimes a fresh invocation helps)")
+            time.sleep(5)
+            continue
 
-        # Handle errors
+        # Reset blocked count on non-BLOCKED signals
+        state.blocked_count = 0
+
+        # Handle errors (non-zero exit with no signal)
         if exit_code != 0 and not signal:
             state.errors.append(output[:200])
-            state.no_progress_count += 1
             typer.secho(
                 f"Error (exit code {exit_code}), no signal detected",
                 fg=typer.colors.RED,
             )
+            # Fall through to circuit breaker logic (counted as no progress)
 
-        # Circuit breaker logic
+        # Circuit breaker logic — increment once per iteration
         if signal == STEP_COMPLETE_SIGNAL:
             # Progress made — reset counter
             state.no_progress_count = 0
             circuit = CircuitState.CLOSED
-        elif signal:
-            # Got a signal but not STEP_COMPLETE — might be stuck
-            state.no_progress_count += 1
         else:
-            # No signal at all — definitely no progress
+            # No progress: either error, unrecognized signal, or no signal
             state.no_progress_count += 1
 
         # Check circuit breaker thresholds
