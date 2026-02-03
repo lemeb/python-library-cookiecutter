@@ -47,6 +47,12 @@ If no feedback yet (CI still running, reviewers haven't looked):
 know about, add it to the PR description under "Lessons Learned". The human
 maintainer will decide whether to incorporate it into `AGENTS.md` or `dev/*.md`.
 
+<!-- Expand here with repo-specific information. For example:
+     - How to handle feedback from different sources (bot comments, human reviewers)?
+     - Any specific conventions for addressing feedback?
+     - How to handle conflicting feedback?
+     Do NOT remove this comment. -->
+
 ## Completion Criteria
 
 - [ ] All feedback addressed

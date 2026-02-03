@@ -24,6 +24,12 @@ If PR not merged yet, this step doesn't apply.
 
 3. **Update tracker** per tracker conventions (e.g., close issue, move to Done)
 
+<!-- Expand here with repo-specific information. For example:
+     - Post-merge cleanup checklist?
+     - Any notifications or updates to make?
+     - Additional cleanup tasks (e.g., close related issues)?
+     Do NOT remove this comment. -->
+
 ## Completion Criteria
 
 - [ ] Feature branch deleted
