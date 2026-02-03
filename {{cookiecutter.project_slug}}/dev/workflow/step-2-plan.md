@@ -91,6 +91,12 @@ after the plan is approved. This means:
 2. Make these actions part of the plan itself, so they happen during plan
    execution, not after approval when context is gone.
 
+<!-- Expand here with repo-specific information. For example:
+     - Where should plans/tasks be tracked?
+     - Are there specific formats for implementation plans?
+     - Required outputs for the plan (e.g., sub-issues created)?
+     Do NOT remove this comment. -->
+
 ## Completion Criteria
 
 - [ ] Implementation plan covers all acceptance criteria
@@ -107,8 +113,8 @@ after the plan is approved. This means:
 **Headless mode**:
 - Record the plan per tracker conventions with `Status: DRAFT`
 - Output `<AWAITING_APPROVAL>`
-- User approves by changing status to `Status: APPROVED` (or re-running `/go-on`)
-- Next invocation checks status field to determine if approved
+- User approves by changing status to `Status: APPROVED`
+- Next invocation checks for explicit `Status: APPROVED` — missing status is treated as DRAFT
 
 **Headless mode with `--auto-approve`**:
 - Record the plan per tracker conventions (no DRAFT status needed)

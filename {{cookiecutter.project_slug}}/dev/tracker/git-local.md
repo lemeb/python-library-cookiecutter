@@ -72,12 +72,12 @@ Status: DRAFT
 ```
 
 **Approval mechanism**:
-- In interactive mode, user approves verbally
+- In interactive mode, user approves verbally (agent proceeds immediately)
 - In headless mode:
   1. Create file with `Status: DRAFT`
   2. Output `<AWAITING_APPROVAL>`
-  3. User approves by changing to `Status: APPROVED` or re-running `/go-on`
-  4. Agent checks status field — `APPROVED` or missing status on re-run = approved
+  3. User approves by changing to `Status: APPROVED`
+  4. Agent checks for **explicit** `Status: APPROVED` — missing status is treated as DRAFT
 
 ---
 

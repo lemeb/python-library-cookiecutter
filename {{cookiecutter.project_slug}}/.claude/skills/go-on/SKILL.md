@@ -18,7 +18,9 @@ description:
 - `--auto-approve`: Skip approval gates for spec and plan (use with caution)
 - `ISSUE-REF`: Issue reference (e.g., `SUN-199`, `#42`, `specs/feature.md`)
 
-If no argument, infer from conversation context or current git branch.
+**Issue resolution**:
+- **Interactive mode**: If no ISSUE-REF, infer from conversation context or git branch
+- **Headless mode**: ISSUE-REF is **required** — fail fast with `<BLOCKED reason="No ISSUE-REF provided in headless mode">` if missing
 
 **Note on `--auto-approve`**: By default, headless mode stops at plan approval
 (`<AWAITING_APPROVAL>`). With `--auto-approve`, the agent proceeds without
@@ -52,8 +54,9 @@ plan. The agent will still output the plan before proceeding.
    |-------|------|--------------|
    | No spec exists | 1 | `dev/workflow/step-1-spec.md` |
    | Spec exists, no plan | 2 | `dev/workflow/step-2-plan.md` |
+   | Plan exists, no `Status:` field | 2 | `dev/workflow/step-2-plan.md` (treat as DRAFT, output `<AWAITING_APPROVAL>`) |
    | Plan exists with `Status: DRAFT` | 2 | `dev/workflow/step-2-plan.md` (output `<AWAITING_APPROVAL>`) |
-   | Plan approved (status APPROVED or missing) | 3 | `dev/workflow/step-3-task.md` |
+   | Plan exists with `Status: APPROVED` | 3 | `dev/workflow/step-3-task.md` |
    | Tasks remain incomplete | 3 | `dev/workflow/step-3-task.md` |
    | All tasks done, no PR | 4 | `dev/workflow/step-4-ship.md` |
    | PR open, CI pending | 5 | `dev/workflow/step-5-feedback.md` (output `<AWAITING_REVIEW>`) |
