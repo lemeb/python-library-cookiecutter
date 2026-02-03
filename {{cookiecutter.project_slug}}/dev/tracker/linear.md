@@ -6,38 +6,84 @@ This tracker uses Linear for specs, task tracking, and collaboration.
 
 **Where to record**: Linear issue description
 
-Update the issue with:
-- Problem statement
-- Proposed solution
-- Acceptance criteria
+Example issue `SUN-42: User Authentication`:
+
+```markdown
+## Problem
+
+Users cannot log in to the application. We need a secure authentication system.
+
+## Proposed Solution
+
+Implement JWT-based authentication with email/password login.
+
+## Acceptance Criteria
+
+- [ ] User can register with email and password
+- [ ] User can log in and receive a JWT token
+- [ ] Protected routes reject requests without valid token
+- [ ] Passwords are hashed with bcrypt
+
+## Non-Goals
+
+- Social login (OAuth) — future work
+- Password reset — future work
+```
 
 ## Step 2: Plan
 
 **Where to record**: Linear issue description + sub-issues
 
-1. Update the parent issue description with the implementation plan
-2. Create sub-issues for each task:
-   - Title: `PARENT-ID(N): Task description`
-   - Set dependencies between sub-issues (Linear supports this)
-3. Order sub-issues by priority
+1. Update the parent issue description with the implementation plan:
 
-**Approval**: In interactive mode, user approves verbally. In headless mode:
-- Update the issue with the plan
-- Create sub-issues
-- Add a comment: "Implementation plan ready for review"
-- Move issue to "Ready for Dev" (or equivalent status)
-- Output `<AWAITING_APPROVAL>`
+```markdown
+---
 
-User approves by moving to "In Progress" or re-running `/go-on`.
+## Implementation Plan
+
+Status: DRAFT
+
+See sub-issues for task breakdown.
+
+### Notes
+
+- Using PyJWT for tokens
+- Token expiry: 24 hours
+```
+
+2. Create sub-issues with dependencies:
+   - `SUN-42(1): Add User model and migrations`
+   - `SUN-42(2): Add password hashing utilities` — blocked by (1)
+   - `SUN-42(3): Add /register endpoint` — blocked by (1), (2)
+   - `SUN-42(4): Add /login endpoint with JWT` — blocked by (1), (2)
+   - `SUN-42(5): Add auth middleware` — blocked by (4)
+   - `SUN-42(6): Protect routes with middleware` — blocked by (5)
+
+3. Set Linear's native "Blocked by" relationships between sub-issues
+
+**Approval mechanism**:
+- In interactive mode, user approves verbally
+- In headless mode:
+  1. Create plan and sub-issues with `Status: DRAFT`
+  2. Add comment: "Implementation plan ready for review"
+  3. Move parent issue to "Ready for Dev"
+  4. Output `<AWAITING_APPROVAL>`
+  5. User approves by moving to "In Progress" or re-running `/go-on`
 
 ## Step 3: Task
 
-**Identifying next task**: Find the first sub-issue in "Todo" status.
+**Identifying next task**: Find the first sub-issue in "Todo" status with no
+blocking dependencies.
 
 **Tracking progress**:
 - Move sub-issue to "In Progress" when starting
 - Move to "Done" when complete
 - Add commit hash as a comment
+
+Example sub-issue status flow:
+- `SUN-42(1)`: Todo → In Progress → Done (commit abc123)
+- `SUN-42(2)`: Blocked → Todo → In Progress → Done (commit def456)
+- `SUN-42(3)`: Blocked → Todo ← current
 
 ## Step 4: Ship
 
@@ -57,3 +103,13 @@ User approves by moving to "In Progress" or re-running `/go-on`.
 **After merge**:
 - Move parent issue to "Done"
 - Sub-issues should already be "Done"
+
+---
+
+## Local Files
+
+Even when using Linear as tracker, you MAY use local files:
+- `specs/` — Optional, for local searchable documentation
+- `IMPLEMENTATION_PLAN.md` — Not used; plan lives in Linear
+
+The Linear issue is the single source of truth.

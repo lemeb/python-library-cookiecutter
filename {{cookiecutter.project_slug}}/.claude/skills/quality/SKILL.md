@@ -9,10 +9,18 @@ description:
 
 ## When to Use
 
-- **After parallel sub-agents**: Run this to verify nothing was missed due to
-  concurrent edits
-- **As all-in-one check**: If not using parallel sub-agents, this runs
-  everything
+This skill serves TWO purposes:
+
+1. **All-in-one check** (Codex, Gemini, or simple tasks): Run all quality gates
+   sequentially in a single invocation.
+
+2. **Final verification** (Claude with parallel agents): After spawning
+   `/check`, `/test`, `/doc` in parallel, run `/quality` to verify nothing was
+   missed due to concurrent edits.
+
+**Either approach works.** Don't do both — that's redundant. For Claude on
+complex tasks: spawn parallel sub-agents → then `/quality` as final check. For
+simpler tasks or other agents: just run `/quality` directly.
 
 ## Procedure
 
@@ -64,10 +72,10 @@ description:
 when running as a sub-agent — the main agent needs this information for the PR
 description.
 
-Examples of lessons learned:
+Examples of lessons learned (things that should go in AGENTS.md or dev/*.md):
 - "Discovered that `mypy` requires explicit type annotations for class variables"
-- "The spell-checker doesn't recognize 'webhook' — added to project-words.txt"
 - "Tests using `freezegun` must import it before the module under test"
+- "The `--strict` flag requires `Optional[]` for all nullable parameters"
 
 If you fixed issues, ask: "Would knowing this earlier have helped?" Note it in
 the lessons learned output. The main agent will include it in the PR description

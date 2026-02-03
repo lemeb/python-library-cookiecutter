@@ -54,6 +54,7 @@ Example:
 # Implementation Plan: User Authentication
 
 Spec: specs/user-auth.md
+Status: DRAFT
 
 ## Tasks
 
@@ -70,9 +71,13 @@ Spec: specs/user-auth.md
 - Token expiry: 24 hours
 ```
 
-**Approval**: In interactive mode, user approves verbally. In headless mode,
-create the file and output `<AWAITING_APPROVAL>`. User approves by running
-`/go-on` again (presence of file = approval).
+**Approval mechanism**:
+- In interactive mode, user approves verbally
+- In headless mode:
+  1. Create file with `Status: DRAFT`
+  2. Output `<AWAITING_APPROVAL>`
+  3. User approves by changing to `Status: APPROVED` or re-running `/go-on`
+  4. Agent checks status field — `APPROVED` or missing status on re-run = approved
 
 ---
 
