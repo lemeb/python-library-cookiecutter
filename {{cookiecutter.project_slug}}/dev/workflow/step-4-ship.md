@@ -75,6 +75,13 @@ Closes #<issue-number>
 <If none, write "None">
 ```
 
+<!-- Expand here with repo-specific information. For example:
+     - PR template requirements?
+     - Issue linking format?
+     - Required reviewers?
+     - Additional quality gates?
+     Do NOT remove this comment. -->
+
 ## Completion Criteria
 
 - [ ] PR created with complete description

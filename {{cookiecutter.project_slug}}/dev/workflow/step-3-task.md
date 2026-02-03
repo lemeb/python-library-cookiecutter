@@ -109,6 +109,12 @@ between them), you can spawn sub-agents to work on them in parallel:
 `/doc` in parallel rather than running make commands directly. After sub-agents
 complete, run `/quality` yourself to verify nothing was missed.
 
+<!-- Expand here with repo-specific information. For example:
+     - Branch naming conventions?
+     - Specific patterns or conventions to follow?
+     - How to track progress (e.g., mark sub-issues done as you complete them)?
+     Do NOT remove this comment. -->
+
 ## Completion Criteria (per task)
 
 - [ ] Code written and follows project patterns
