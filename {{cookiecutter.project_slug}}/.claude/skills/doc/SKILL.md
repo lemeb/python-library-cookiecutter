@@ -38,6 +38,11 @@ formatting.
 **Always include Lessons Learned**, even if empty. When running as a sub-agent,
 the main agent needs this for the PR description.
 
+Examples of lessons learned:
+- "The spell-checker doesn't recognize 'webhook' — added to project-words.txt"
+- "New modules need BOTH docs/api/<module>.md AND an entry in mkdocs.yml nav"
+- "Use `mkdocstrings` syntax `::: module.path` to auto-generate from docstrings"
+
 ## Exit Conditions
 
 - **Success**: `make doc` passes

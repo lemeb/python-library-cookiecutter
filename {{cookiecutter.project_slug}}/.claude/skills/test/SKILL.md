@@ -45,6 +45,11 @@ Load `dev/testing.md` for detailed guidance on writing and fixing tests.
 **Always include Lessons Learned**, even if empty. When running as a sub-agent,
 the main agent needs this for the PR description.
 
+Examples of lessons learned:
+- "Tests using `freezegun` must import it before the module under test"
+- "Async fixtures need `pytest-asyncio` and `@pytest.fixture` with `scope='function'`"
+- "Mock `datetime.now()` via dependency injection, not direct patching"
+
 ## Exit Conditions
 
 - **Success**: Tests pass AND 100% coverage on new code
