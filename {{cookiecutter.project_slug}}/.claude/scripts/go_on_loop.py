@@ -17,7 +17,6 @@ from __future__ import annotations
 
 import re
 import subprocess
-import sys
 import time
 from dataclasses import dataclass, field
 from enum import Enum
@@ -161,7 +160,7 @@ def print_status(
 
 
 @app.command()
-def loop(
+def loop(  # noqa: PLR0912, PLR0913, PLR0915 (CLI entry point)
     issue_ref: Annotated[
         str,
         typer.Argument(help="Issue reference (e.g., SUN-199, #42)"),
@@ -231,7 +230,9 @@ def loop(
             "⚠ Auto-approve enabled — skipping approval gates",
             fg=typer.colors.YELLOW,
         )
-    typer.echo(f"Circuit breaker: {max_no_progress} no-progress, {max_blocked} blocked\n")
+    typer.echo(
+        f"Circuit breaker: {max_no_progress} no-progress, {max_blocked} blocked\n"
+    )
 
     while circuit != CircuitState.OPEN:
         state.iterations += 1
