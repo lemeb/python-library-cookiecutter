@@ -1,0 +1,9 @@
+#!/bin/bash
+# Pre-commit hook for markdown linting
+
+cd "{{cookiecutter.project_slug}}" 2>/dev/null || exit 0
+
+# Only check if markdown files are staged
+if git diff --cached --name-only | grep -q '\.md$'; then
+    make prettier-md-check markdownlint-md
+fi
