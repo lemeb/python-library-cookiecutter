@@ -96,33 +96,11 @@ means:
 2. Make these actions part of the plan itself, so they happen during plan
    execution, not after approval when context is gone.
 
-### Linear Integration (repo-specific)
-
-Your plan MUST include these Linear actions as explicit final steps:
-
-1. **Update parent issue**: Copy the full implementation plan to the Linear
-   issue description using `mcp__linear__update_issue`
-
-2. **Create sub-issues**: For each task, create a Linear sub-issue using
-   `mcp__linear__create_issue` with `parentId` set to the parent issue ID
-
-3. **Set dependencies**: Use `blockedBy` parameter when creating sub-issues to
-   set Linear's native blocking relationships
-
-Example plan ending:
-```
-## Linear Tasks (execute after plan approval)
-
-1. Update PROJ-123 description with this implementation plan
-2. Create sub-issues:
-   - PROJ-123(1): Create UserSession model (no blockers)
-   - PROJ-123(2): Create SessionService (blocked by 1)
-   ...
-3. Verify all sub-issues created with correct dependencies
-```
-
-<!-- Do NOT remove this comment. Expand above with additional repo-specific
-     conventions as needed. -->
+<!-- Expand here with repo-specific information. For example:
+     - Where should plans/tasks be tracked?
+     - Are there specific formats for implementation plans?
+     - Required outputs for the plan (e.g., sub-issues created)?
+     Do NOT remove this comment. -->
 
 ## Completion Criteria
 
