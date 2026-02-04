@@ -70,7 +70,7 @@ If prerequisites not met, go back to Step 1.
 
 4. **Present the plan to the user** and wait for approval
 
-5. **After approval**, record tasks per the active tracker's conventions
+5. **After approval**, record tasks per the tracker file in `dev/tracker/`
 
 ## Task Naming Convention
 
@@ -89,12 +89,12 @@ Example for issue XYZ-99:
 **Plan Mode behavior**: Context is cleared after the plan is approved. This
 means:
 
-1. The plan MUST include explicit instructions to:
-   - Record the implementation plan per tracker conventions
-   - Create task entries if the tracker uses them
+1. Read the tracker file (`dev/tracker/*.md`) for specific recording instructions
 
-2. Make these actions part of the plan itself, so they happen during plan
-   execution, not after approval when context is gone.
+2. The plan MUST include explicit final steps to:
+   - Record the implementation plan per the tracker file
+   - Create task entries (e.g., sub-issues) per the tracker file
+   - These actions happen during plan execution, not after approval
 
 <!-- Expand here with repo-specific information. For example:
      - Where should plans/tasks be tracked?
