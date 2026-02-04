@@ -194,10 +194,6 @@ next.
 
 ### Claude-specific Notes (ignore if Codex or Gemini)
 
-**After Plan Mode approval**: Context is cleared. User should run `/go-on` to
-continue to Step 3. Step 3a will create tracker entries (e.g., Linear
-sub-issues) from the approved plan.
-
 **Task tracking** (Step 3): Use `TaskCreate`/`TaskUpdate` to track progress
 through tasks. This allows hand-off if a session ends mid-implementation.
 
