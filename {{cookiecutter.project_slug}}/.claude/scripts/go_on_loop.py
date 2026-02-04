@@ -117,21 +117,22 @@ def run_go_on(
     args = ["claude", "-p", prompt]
 
     try:
-        result = subprocess.run(
+        result = subprocess.run(  # noqa: S603 (trusted input: claude CLI)
             args,
             capture_output=True,
             text=True,
             timeout=600,  # 10 minute timeout per invocation
             check=False,
         )
-        output = result.stdout
-        if result.stderr:
-            output += "\n" + result.stderr
-        return output, result.returncode
     except subprocess.TimeoutExpired:
         return "ERROR: Claude invocation timed out after 10 minutes", 1
     except FileNotFoundError:
         return "ERROR: 'claude' command not found. Is Claude Code installed?", 1
+    else:
+        output = result.stdout
+        if result.stderr:
+            output += "\n" + result.stderr
+        return output, result.returncode
 
 
 def print_status(
@@ -160,12 +161,12 @@ def print_status(
 
 
 @app.command()
-def loop(  # noqa: PLR0912, PLR0913, PLR0915 (CLI entry point)
+def loop(  # noqa: C901, PLR0912, PLR0913, PLR0915 (CLI entry point)
     issue_ref: Annotated[
         str,
         typer.Argument(help="Issue reference (e.g., SUN-199, #42)"),
     ],
-    auto_approve: Annotated[
+    auto_approve: Annotated[  # noqa: FBT002 (typer bool option)
         bool,
         typer.Option(
             "--auto-approve",
@@ -186,7 +187,7 @@ def loop(  # noqa: PLR0912, PLR0913, PLR0915 (CLI entry point)
         typer.Option(
             "--max-blocked",
             "-b",
-            help="Stop after this many consecutive BLOCKED signals (allows retries)",
+            help="Max consecutive BLOCKED signals before stopping",
         ),
     ] = 3,
     delay: Annotated[
@@ -197,7 +198,7 @@ def loop(  # noqa: PLR0912, PLR0913, PLR0915 (CLI entry point)
             help="Delay in seconds between iterations",
         ),
     ] = 2.0,
-    verbose: Annotated[
+    verbose: Annotated[  # noqa: FBT002 (typer bool option)
         bool,
         typer.Option(
             "--verbose",
@@ -230,9 +231,8 @@ def loop(  # noqa: PLR0912, PLR0913, PLR0915 (CLI entry point)
             "⚠ Auto-approve enabled — skipping approval gates",
             fg=typer.colors.YELLOW,
         )
-    typer.echo(
-        f"Circuit breaker: {max_no_progress} no-progress, {max_blocked} blocked\n"
-    )
+    typer.echo(f"Circuit breaker: {max_no_progress} no-progress, {max_blocked} blocked")
+    typer.echo()
 
     while circuit != CircuitState.OPEN:
         state.iterations += 1
@@ -356,7 +356,7 @@ def single(
         str,
         typer.Argument(help="Issue reference (e.g., SUN-199, #42)"),
     ],
-    auto_approve: Annotated[
+    auto_approve: Annotated[  # noqa: FBT002 (typer bool option)
         bool,
         typer.Option(
             "--auto-approve",
