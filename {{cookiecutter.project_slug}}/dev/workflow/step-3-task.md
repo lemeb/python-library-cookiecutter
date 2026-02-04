@@ -29,20 +29,29 @@ These are non-negotiable constraints. Do NOT rationalize exceptions.
 - [ ] You are on a feature branch (not main/master/base branch)
 - [ ] Previous task (if any) is committed
 
-**If the plan or tasks are not recorded** in the tracker yet (e.g., Plan Mode
-cleared context), record them now before proceeding.
-
 If not on a feature branch, create one first.
 
 ## Procedure
 
-### 3a. Pick the next task
+### 3a. Ensure tasks are recorded in tracker
+
+**BEFORE picking a task**, verify tasks exist in the tracker. If not (e.g., Plan
+Mode cleared context):
+
+1. Read the tracker file (`dev/tracker/*.md`) for recording instructions
+2. Read the approved plan (local file or issue description)
+3. Create task entries per the tracker file (e.g., Linear sub-issues with
+   dependencies)
+
+Only proceed once tasks are recorded in the tracker.
+
+### 3b. Pick the next task
 
 1. **Identify the next incomplete task** from your plan/tracker
 2. **Verify it's unblocked** (dependencies completed)
 3. **Mark it as in-progress** per tracker conventions
 
-### 3b. Implement
+### 3c. Implement
 
 1. **Load coding guidance** before writing code:
    - `dev/checking.md` — linting & type-checking
@@ -63,7 +72,7 @@ If not on a feature branch, create one first.
    - Update docs/ if user-facing
    - Add terms to `project-words.txt`
 
-### 3c. Quality gate
+### 3d. Quality gate
 
 Run `/quality` (or the manual commands below). ALL must pass before proceeding:
 
@@ -83,7 +92,7 @@ tests.**
 - **If stuck after 3 attempts on the same error**: Output
   `<BLOCKED reason="...">`
 
-### 3d. Commit
+### 3e. Commit
 
 1. **Stage the changes** for this task
 2. **Write a commit message** following the project's conventions:
