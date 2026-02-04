@@ -11,12 +11,14 @@ If PR not merged yet, this step doesn't apply.
 ## Procedure
 
 1. **Update local repository**:
+
    ```bash
    git checkout <base-branch>
    git pull
    ```
 
 2. **Delete the feature branch** (local and remote):
+
    ```bash
    git branch -d <feature-branch>
    git push origin --delete <feature-branch>
@@ -38,6 +40,7 @@ If PR not merged yet, this step doesn't apply.
 ## Exit
 
 After cleanup:
+
 - Output: `<FEATURE_COMPLETE>`
 
 This is the final step. The feature is done.

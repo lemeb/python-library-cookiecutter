@@ -1,10 +1,11 @@
 # Tracker: Git-Local (Default)
 
-This tracker uses git-tracked files for all state. No external services required.
+This tracker uses git-tracked files for all state. No external services
+required.
 
 ## File Structure
 
-```
+```text
 specs/                        # Feature specifications
 ├── {feature-slug}.md        # One file per feature
 IMPLEMENTATION_PLAN.md        # Task list for current feature (temporary)
@@ -53,8 +54,7 @@ Example:
 ```markdown
 # Implementation Plan: User Authentication
 
-Spec: specs/user-auth.md
-Status: DRAFT
+Spec: specs/user-auth.md Status: DRAFT
 
 ## Tasks
 
@@ -72,12 +72,14 @@ Status: DRAFT
 ```
 
 **Approval mechanism**:
+
 - In interactive mode, user approves verbally (agent proceeds immediately)
 - In headless mode:
   1. Create file with `Status: DRAFT`
   2. Output `<AWAITING_APPROVAL>`
   3. User approves by changing to `Status: APPROVED`
-  4. Agent checks for **explicit** `Status: APPROVED` — missing status is treated as DRAFT
+  4. Agent checks for **explicit** `Status: APPROVED` — missing status is
+     treated as DRAFT
 
 ---
 
@@ -90,7 +92,7 @@ Status: DRAFT
 
 - [x] 1. Add User model and migrations ✓ (commit abc123)
 - [x] 2. Add password hashing utilities ✓ (commit def456)
-- [ ] 3. Add /register endpoint  ← IN PROGRESS
+- [ ] 3. Add /register endpoint ← IN PROGRESS
 - [ ] 4. Add /login endpoint with JWT
 - [ ] 5. Add auth middleware
 - [ ] 6. Protect routes with middleware
@@ -127,6 +129,7 @@ Waiting for decision on token expiry time. See PR #42 comment.
 ## Step 6: Cleanup
 
 **After merge**:
+
 - Keep `specs/user-auth.md` as documentation
 - Delete `IMPLEMENTATION_PLAN.md` (it was temporary for this feature)
 

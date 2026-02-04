@@ -38,15 +38,15 @@ If prerequisites not met, go back to Step 1.
    Tasks form a **DAG** (directed acyclic graph) — dependencies can be multiple,
    not just linear. Note which tasks block which others.
 
-   Good task example: "Add `/users` endpoint with validation and tests"
-   Bad task example: "Implement all endpoints" or "Write tests for feature"
+   Good task example: "Add `/users` endpoint with validation and tests" Bad task
+   example: "Implement all endpoints" or "Write tests for feature"
 
    ### Subtask vs Issue Granularity
 
-   | Level | Purpose | Size | Who reviews |
-   |-------|---------|------|-------------|
-   | **Issue** | Unit of human review | One PR, one code review | Human reviewer |
-   | **Subtask** | Unit of agent work | One focused coding session | Agent self-checks |
+   | Level       | Purpose              | Size                       | Who reviews       |
+   | ----------- | -------------------- | -------------------------- | ----------------- |
+   | **Issue**   | Unit of human review | One PR, one code review    | Human reviewer    |
+   | **Subtask** | Unit of agent work   | One focused coding session | Agent self-checks |
 
    **Issues** are about human cognitive load — a reviewer should be able to
    understand and review the entire change in one sitting.
@@ -74,6 +74,7 @@ If tasks are tracked externally (e.g., as sub-issues), use a consistent naming
 pattern: `ISSUE-ID(N): Brief description`
 
 Example for issue XYZ-99:
+
 - XYZ-99(1): Add user model and migrations
 - XYZ-99(2): Add /users endpoint with validation (depends on 1)
 - XYZ-99(3): Add authentication middleware (depends on 1)
@@ -111,17 +112,21 @@ after the plan is approved. This means:
 **Interactive mode**: Wait for user approval, then output `<STEP_COMPLETE>`
 
 **Headless mode**:
+
 - Record the plan per tracker conventions with `Status: DRAFT`
 - Output `<AWAITING_APPROVAL>`
 - User approves by changing status to `Status: APPROVED`
-- Next invocation checks for explicit `Status: APPROVED` — missing status is treated as DRAFT
+- Next invocation checks for explicit `Status: APPROVED` — missing status is
+  treated as DRAFT
 
 **Headless mode with `--auto-approve`**:
+
 - Record the plan per tracker conventions (no DRAFT status needed)
 - Output the plan for visibility, then immediately output `<STEP_COMPLETE>`
 - Proceed to Step 3 without waiting
 
 **If plan is rejected**:
+
 1. Ask user what changes are needed (interactive) or note feedback (headless)
 2. Update the plan in place — do not delete and recreate
 3. Output `<AWAITING_APPROVAL>` again

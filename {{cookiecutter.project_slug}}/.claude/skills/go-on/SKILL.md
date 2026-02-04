@@ -10,7 +10,7 @@ description:
 
 ## Arguments
 
-```
+```text
 /go-on [--headless] [--auto-approve] [ISSUE-REF]
 ```
 
@@ -19,8 +19,11 @@ description:
 - `ISSUE-REF`: Issue reference (e.g., `SUN-199`, `#42`, `specs/feature.md`)
 
 **Issue resolution**:
-- **Interactive mode**: If no ISSUE-REF, infer from conversation context or git branch
-- **Headless mode**: ISSUE-REF is **required** — fail fast with `<BLOCKED reason="No ISSUE-REF provided in headless mode">` if missing
+
+- **Interactive mode**: If no ISSUE-REF, infer from conversation context or git
+  branch
+- **Headless mode**: ISSUE-REF is **required** — fail fast with
+  `<BLOCKED reason="No ISSUE-REF provided in headless mode">` if missing
 
 **Note on `--auto-approve`**: By default, headless mode stops at plan approval
 (`<AWAITING_APPROVAL>`). With `--auto-approve`, the agent proceeds without
@@ -29,14 +32,14 @@ plan. The agent will still output the plan before proceeding.
 
 ## Quick Reference
 
-| Signal | Meaning |
-|--------|---------|
-| `<STEP_COMPLETE>` | One unit done, invoke again for next |
-| `<AWAITING_APPROVAL>` | Plan presented, waiting for user (headless only) |
-| `<AWAITING_INPUT reason="...">` | Need clarification (headless only) |
-| `<AWAITING_REVIEW>` | PR submitted, waiting for review |
-| `<FEATURE_COMPLETE>` | All done |
-| `<BLOCKED reason="...">` | Cannot proceed |
+| Signal                          | Meaning                                          |
+| ------------------------------- | ------------------------------------------------ |
+| `<STEP_COMPLETE>`               | One unit done, invoke again for next             |
+| `<AWAITING_APPROVAL>`           | Plan presented, waiting for user (headless only) |
+| `<AWAITING_INPUT reason="...">` | Need clarification (headless only)               |
+| `<AWAITING_REVIEW>`             | PR submitted, waiting for review                 |
+| `<FEATURE_COMPLETE>`            | All done                                         |
+| `<BLOCKED reason="...">`        | Cannot proceed                                   |
 
 ## Procedure
 
@@ -50,19 +53,19 @@ plan. The agent will still output the plan before proceeding.
 
 3. **Determine current step and load its procedure**:
 
-   | State | Step | File to Load |
-   |-------|------|--------------|
-   | No spec exists | 1 | `dev/workflow/step-1-spec.md` |
-   | Spec exists, no plan | 2 | `dev/workflow/step-2-plan.md` |
-   | Plan exists, no `Status:` field | 2 | `dev/workflow/step-2-plan.md` (treat as DRAFT, output `<AWAITING_APPROVAL>`) |
-   | Plan exists with `Status: DRAFT` | 2 | `dev/workflow/step-2-plan.md` (output `<AWAITING_APPROVAL>`) |
-   | Plan exists with `Status: APPROVED` | 3 | `dev/workflow/step-3-task.md` |
-   | Tasks remain incomplete | 3 | `dev/workflow/step-3-task.md` |
-   | All tasks done, no PR | 4 | `dev/workflow/step-4-ship.md` |
-   | PR open, CI pending | 5 | `dev/workflow/step-5-feedback.md` (output `<AWAITING_REVIEW>`) |
-   | PR open, has feedback | 5 | `dev/workflow/step-5-feedback.md` |
-   | PR merged | 6 | `dev/workflow/step-6-cleanup.md` |
-   | PR closed without merge | — | Output `<BLOCKED reason="PR rejected">` |
+   | State                               | Step | File to Load                                                                 |
+   | ----------------------------------- | ---- | ---------------------------------------------------------------------------- |
+   | No spec exists                      | 1    | `dev/workflow/step-1-spec.md`                                                |
+   | Spec exists, no plan                | 2    | `dev/workflow/step-2-plan.md`                                                |
+   | Plan exists, no `Status:` field     | 2    | `dev/workflow/step-2-plan.md` (treat as DRAFT, output `<AWAITING_APPROVAL>`) |
+   | Plan exists with `Status: DRAFT`    | 2    | `dev/workflow/step-2-plan.md` (output `<AWAITING_APPROVAL>`)                 |
+   | Plan exists with `Status: APPROVED` | 3    | `dev/workflow/step-3-task.md`                                                |
+   | Tasks remain incomplete             | 3    | `dev/workflow/step-3-task.md`                                                |
+   | All tasks done, no PR               | 4    | `dev/workflow/step-4-ship.md`                                                |
+   | PR open, CI pending                 | 5    | `dev/workflow/step-5-feedback.md` (output `<AWAITING_REVIEW>`)               |
+   | PR open, has feedback               | 5    | `dev/workflow/step-5-feedback.md`                                            |
+   | PR merged                           | 6    | `dev/workflow/step-6-cleanup.md`                                             |
+   | PR closed without merge             | —    | Output `<BLOCKED reason="PR rejected">`                                      |
 
 4. **Execute ONE unit of work** per the step file's procedure
    - Follow the active tracker's conventions for recording state
@@ -70,7 +73,7 @@ plan. The agent will still output the plan before proceeding.
 
 5. **Output status**:
 
-   ```
+   ```text
    ## /go-on Status
 
    Mode: <interactive|headless>
@@ -94,7 +97,8 @@ plan. The agent will still output the plan before proceeding.
 
 ## State Authority Order
 
-When determining state, trust sources in this order (higher = more authoritative):
+When determining state, trust sources in this order (higher = more
+authoritative):
 
 1. **Git** (commits, branches, PR status) — ground truth
 2. **Filesystem** (actual code, test results)
@@ -111,6 +115,7 @@ handoff mechanism.
 ## Headless Mode
 
 When `--headless` is passed:
+
 - Output `<AWAITING_APPROVAL>` instead of waiting for user response
 - Output `<AWAITING_INPUT>` instead of asking questions
 - Record state to tracker before exiting (so next invocation can continue)
