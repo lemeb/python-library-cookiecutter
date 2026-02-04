@@ -82,8 +82,11 @@ Example for issue XYZ-99:
 
 ## Claude-specific Notes (ignore if Codex or Gemini)
 
-**Plan Mode behavior**: When using Claude Code's Plan Mode, context is cleared
-after the plan is approved. This means:
+**Enter Plan Mode**: Use the `EnterPlanMode` tool at the start of Step 2. This
+provides a structured planning flow with user approval built in.
+
+**Plan Mode behavior**: Context is cleared after the plan is approved. This
+means:
 
 1. The plan MUST include explicit instructions to:
    - Record the implementation plan per tracker conventions
