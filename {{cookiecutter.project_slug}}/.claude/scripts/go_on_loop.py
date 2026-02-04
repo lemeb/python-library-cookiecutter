@@ -69,7 +69,8 @@ class LoopState:
 
     iterations: int = 0
     no_progress_count: int = 0
-    blocked_count: int = 0  # Separate counter for BLOCKED signals (allows retries)
+    # Separate counter for BLOCKED signals (allows retries)
+    blocked_count: int = 0
     last_signal: str = ""
     errors: list[str] = field(default_factory=list)
 
@@ -231,7 +232,10 @@ def loop(  # noqa: C901, PLR0912, PLR0913, PLR0915 (CLI entry point)
             "⚠ Auto-approve enabled — skipping approval gates",
             fg=typer.colors.YELLOW,
         )
-    typer.echo(f"Circuit breaker: {max_no_progress} no-progress, {max_blocked} blocked")
+    typer.echo(
+        f"Circuit breaker: {max_no_progress} no-progress, "
+        f"{max_blocked} blocked"
+    )
     typer.echo()
 
     while circuit != CircuitState.OPEN:
