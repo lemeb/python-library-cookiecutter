@@ -35,9 +35,13 @@ Load `dev/checking.md` for detailed guidance on fixing errors.
 the main agent needs this for the PR description.
 
 Examples of lessons learned:
-- "Discovered that `Optional[X]` is required for all nullable parameters with --strict"
-- "Class variables need explicit type annotations even when assigned immediately"
-- "Import ordering: stdlib → third-party → local, with blank lines between groups"
+
+- "Discovered that `Optional[X]` is required for all nullable parameters with
+  --strict"
+- "Class variables need explicit type annotations even when assigned
+  immediately"
+- "Import ordering: stdlib → third-party → local, with blank lines between
+  groups"
 
 ## Exit Conditions
 

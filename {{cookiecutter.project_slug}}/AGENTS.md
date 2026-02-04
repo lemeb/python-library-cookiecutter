@@ -2,8 +2,8 @@
 
 _NOTE_: This file normally resides at `AGENTS.md` but should be symlinked at
 `GEMINI.md` and `CLAUDE.md`. If you see a reference to `AGENTS.md` in this file,
-or in any other file, it references this very file even if you see it under
-a different name.
+or in any other file, it references this very file even if you see it under a
+different name.
 
 <!-- You can fill in repository-specific information in tags like this.
      This includes information such as issue tracker details, team conventions,
@@ -70,13 +70,13 @@ Do NOT remove this comment. -->
 
 Skills automate common workflows. Use them instead of running commands manually.
 
-| Skill      | When to Use                                             |
-| ---------- | ------------------------------------------------------- |
-| `/check`   | Runs linting and type-checking, fixes errors            |
-| `/test`    | Runs tests, writes more if coverage < 100% on new code  |
-| `/doc`     | Builds docs, fixes spell check, updates nav             |
-| `/quality` | Runs all three gates above, reports detailed status     |
-| `/go-on`   | Assesses state, executes ONE step, outputs signal       |
+| Skill      | When to Use                                            |
+| ---------- | ------------------------------------------------------ |
+| `/check`   | Runs linting and type-checking, fixes errors           |
+| `/test`    | Runs tests, writes more if coverage < 100% on new code |
+| `/doc`     | Builds docs, fixes spell check, updates nav            |
+| `/quality` | Runs all three gates above, reports detailed status    |
+| `/go-on`   | Assesses state, executes ONE step, outputs signal      |
 
 **Recommended workflow**:
 
@@ -99,9 +99,9 @@ Invoke repeatedly — manually or in a bash loop — to complete a feature.
 
 **Active tracker**: `dev/tracker/git-local.md`
 
-Load this file to understand how to record specs, plans, and track progress.
-All workflow steps (`/go-on`, `dev/workflow/step-*.md`) follow the active
-tracker's conventions.
+Load this file to understand how to record specs, plans, and track progress. All
+workflow steps (`/go-on`, `dev/workflow/step-*.md`) follow the active tracker's
+conventions.
 
 ---
 
@@ -152,14 +152,14 @@ met.
 
 ### Step Overview
 
-| Step | Goal | Details |
-|------|------|---------|
-| 1. Spec | Understand the feature, write spec | `dev/workflow/step-1-spec.md` |
-| 2. Plan | Break down into tasks, get approval | `dev/workflow/step-2-plan.md` |
-| 3. Task | Implement ONE task (code + test + quality + commit) | `dev/workflow/step-3-task.md` |
-| 4. Ship | Create PR | `dev/workflow/step-4-ship.md` |
-| 5. Feedback | Address review comments | `dev/workflow/step-5-feedback.md` |
-| 6. Cleanup | Post-merge cleanup | `dev/workflow/step-6-cleanup.md` |
+| Step        | Goal                                                | Details                           |
+| ----------- | --------------------------------------------------- | --------------------------------- |
+| 1. Spec     | Understand the feature, write spec                  | `dev/workflow/step-1-spec.md`     |
+| 2. Plan     | Break down into tasks, get approval                 | `dev/workflow/step-2-plan.md`     |
+| 3. Task     | Implement ONE task (code + test + quality + commit) | `dev/workflow/step-3-task.md`     |
+| 4. Ship     | Create PR                                           | `dev/workflow/step-4-ship.md`     |
+| 5. Feedback | Address review comments                             | `dev/workflow/step-5-feedback.md` |
+| 6. Cleanup  | Post-merge cleanup                                  | `dev/workflow/step-6-cleanup.md`  |
 
 **Step 3 is the inner loop**: Repeat for each task in the plan. Each iteration
 does ONE task completely (code → tests → quality → commit) before moving to the
@@ -208,26 +208,26 @@ over raw commands.
 
 ## Checkpoints
 
-| Before...           | Verify...                                                                                            |
-| ------------------- | ---------------------------------------------------------------------------------------------------- |
-| Step 2 (Plan)       | Spec exists and is clear                                                                             |
-| Step 3 (Task)       | Plan approved by user, tasks are broken down                                                         |
-| Each `git commit`   | `/quality` passes (or: `make check`, `make check-strict-all`, `make test-with-coverage`, `make doc`) |
-| Step 4 (Ship)       | All tasks complete, branch rebased on base branch                                                    |
-| Creating PR         | PR description complete with all sections including lessons learned                                  |
+| Before...         | Verify...                                                                                            |
+| ----------------- | ---------------------------------------------------------------------------------------------------- |
+| Step 2 (Plan)     | Spec exists and is clear                                                                             |
+| Step 3 (Task)     | Plan approved by user, tasks are broken down                                                         |
+| Each `git commit` | `/quality` passes (or: `make check`, `make check-strict-all`, `make test-with-coverage`, `make doc`) |
+| Step 4 (Ship)     | All tasks complete, branch rebased on base branch                                                    |
+| Creating PR       | PR description complete with all sections including lessons learned                                  |
 
 ---
 
 ## Common Mistakes to Avoid
 
-| Mistake                                             | What You Should Do Instead                              |
-| --------------------------------------------------- | ------------------------------------------------------- |
-| Skipping to implementation without a plan           | Complete Step 2, get user approval FIRST                |
-| Not breaking down tasks                             | Each task should be small and self-contained            |
-| Structuring as "code, then tests, then docs"        | Each task includes its own tests and docs               |
-| Implementing entire feature at once                 | Step 3 does ONE task per invocation                     |
-| Forgetting to re-run quality gates after sub-agents | Run `/quality` yourself after parallel work             |
-| Not running `make test-with-coverage`               | Always run with coverage before committing              |
-| Using raw commands (npx, pytest, ruff) naively      | Prefer `make` targets; raw OK sparingly                 |
-| Committing all uncommitted code as one big commit   | One task = one commit (roughly)                         |
-| Not outputting signals in `/go-on`                  | Always end with `<STEP_COMPLETE>`, `<BLOCKED>`, etc.    |
+| Mistake                                             | What You Should Do Instead                           |
+| --------------------------------------------------- | ---------------------------------------------------- |
+| Skipping to implementation without a plan           | Complete Step 2, get user approval FIRST             |
+| Not breaking down tasks                             | Each task should be small and self-contained         |
+| Structuring as "code, then tests, then docs"        | Each task includes its own tests and docs            |
+| Implementing entire feature at once                 | Step 3 does ONE task per invocation                  |
+| Forgetting to re-run quality gates after sub-agents | Run `/quality` yourself after parallel work          |
+| Not running `make test-with-coverage`               | Always run with coverage before committing           |
+| Using raw commands (npx, pytest, ruff) naively      | Prefer `make` targets; raw OK sparingly              |
+| Committing all uncommitted code as one big commit   | One task = one commit (roughly)                      |
+| Not outputting signals in `/go-on`                  | Always end with `<STEP_COMPLETE>`, `<BLOCKED>`, etc. |

@@ -72,8 +72,10 @@ simpler tasks or other agents: just run `/quality` directly.
 when running as a sub-agent — the main agent needs this information for the PR
 description.
 
-Examples of lessons learned (things that should go in AGENTS.md or dev/*.md):
-- "Discovered that `mypy` requires explicit type annotations for class variables"
+Examples of lessons learned (things that should go in AGENTS.md or dev/\*.md):
+
+- "Discovered that `mypy` requires explicit type annotations for class
+  variables"
 - "Tests using `freezegun` must import it before the module under test"
 - "The `--strict` flag requires `Optional[]` for all nullable parameters"
 

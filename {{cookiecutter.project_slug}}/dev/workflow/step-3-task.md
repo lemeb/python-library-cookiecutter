@@ -67,19 +67,21 @@ If not on a feature branch, create one first.
 
 Run `/quality` (or the manual commands below). ALL must pass before proceeding:
 
-| Gate | Command | Criteria |
-|------|---------|----------|
-| Linting | `make check` | Exit code 0 |
-| Strict checks | `make check-strict-all` | Exit code 0 |
-| Tests | `make test-all` | All tests pass |
-| Coverage | `make test-with-coverage` | 100% on new code |
-| Documentation | `make doc` | No warnings |
+| Gate          | Command                   | Criteria         |
+| ------------- | ------------------------- | ---------------- |
+| Linting       | `make check`              | Exit code 0      |
+| Strict checks | `make check-strict-all`   | Exit code 0      |
+| Tests         | `make test-all`           | All tests pass   |
+| Coverage      | `make test-with-coverage` | 100% on new code |
+| Documentation | `make doc`                | No warnings      |
 
-Additionally: **All acceptance criteria in the spec must have corresponding tests.**
+Additionally: **All acceptance criteria in the spec must have corresponding
+tests.**
 
 - **If passing**: Proceed to commit
 - **If failing**: Fix issues and re-run until passing
-- **If stuck after 3 attempts on the same error**: Output `<BLOCKED reason="...">`
+- **If stuck after 3 attempts on the same error**: Output
+  `<BLOCKED reason="...">`
 
 ### 3d. Commit
 
@@ -92,8 +94,9 @@ Additionally: **All acceptance criteria in the spec must have corresponding test
 
 ## Claude-specific Notes (ignore if Codex or Gemini)
 
-**Task tracking**: Use `TaskCreate`/`TaskUpdate` to track progress through
-tasks within a session:
+**Task tracking**: Use `TaskCreate`/`TaskUpdate` to track progress through tasks
+within a session:
+
 - Create tasks with clear subjects and descriptions
 - Use `addBlockedBy` to represent the DAG of dependencies from your plan
 - Mark tasks `in_progress` when starting, `completed` when done
@@ -101,6 +104,7 @@ tasks within a session:
 
 **Parallel execution**: If multiple tasks are independent (no dependencies
 between them), you can spawn sub-agents to work on them in parallel:
+
 - Keep it reasonable (2-3 parallel tasks max)
 - Each sub-agent handles a complete task including tests and quality
 - Tell sub-agents: "Running in headless mode" if applicable
@@ -127,9 +131,11 @@ complete, run `/quality` yourself to verify nothing was missed.
 ## Exit
 
 After completing ONE task:
+
 - Output: `<STEP_COMPLETE>`
 - If more tasks remain: Next invocation continues with next task
 - If all tasks done: Next step is Step 4 (Ship)
 
 If blocked (e.g., need clarification, dependency not ready):
+
 - Output: `<BLOCKED reason="...">`

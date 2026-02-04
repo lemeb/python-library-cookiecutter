@@ -65,9 +65,11 @@ formal specs; others want a few bullet points.
 ## Exit
 
 When spec is complete and recorded:
+
 - Output: `<STEP_COMPLETE>`
 - Next: Step 2 (Planning)
 
 If waiting for user input on critical questions:
+
 - **Interactive mode**: Wait for user response
 - **Headless mode**: Record state, output `<AWAITING_INPUT reason="...">`

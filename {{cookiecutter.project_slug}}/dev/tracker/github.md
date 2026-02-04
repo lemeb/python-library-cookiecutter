@@ -59,18 +59,21 @@ Status: DRAFT
 ```
 
 **Approval mechanism**:
+
 - In interactive mode, user approves verbally (agent proceeds immediately)
 - In headless mode:
   1. Update issue with plan, set `Status: DRAFT`
   2. Add comment: "Implementation plan ready for review"
   3. Output `<AWAITING_APPROVAL>`
-  4. User approves by changing to `Status: APPROVED` — missing status is treated as DRAFT
+  4. User approves by changing to `Status: APPROVED` — missing status is treated
+     as DRAFT
 
 ## Step 3: Task
 
 **Tracking progress**: Check off tasks in the issue as you complete them.
 
 Example progress:
+
 ```markdown
 - [x] 1. Add User model and migrations
 - [x] 2. Add password hashing utilities
@@ -85,6 +88,7 @@ Example progress:
 ## Step 5: Feedback
 
 **On BLOCKED**:
+
 - Add a comment explaining the blocker
 - Add `blocked` label if available
 
@@ -98,19 +102,21 @@ Example progress:
 
 **Draft locally, publish when done. Track progress remotely.**
 
-| Artifact | Where to draft | Where to publish | Notes |
-|----------|----------------|------------------|-------|
-| Spec | `.claude/draft-spec.md` | GitHub Issue body | Push when interview/spec complete |
-| Plan | `.claude/draft-plan.md` | GitHub Issue body | Push when plan approved |
-| Task progress | — | GitHub Issue checkboxes | Track ONLY in issue, not locally |
+| Artifact      | Where to draft          | Where to publish        | Notes                             |
+| ------------- | ----------------------- | ----------------------- | --------------------------------- |
+| Spec          | `.claude/draft-spec.md` | GitHub Issue body       | Push when interview/spec complete |
+| Plan          | `.claude/draft-plan.md` | GitHub Issue body       | Push when plan approved           |
+| Task progress | —                       | GitHub Issue checkboxes | Track ONLY in issue, not locally  |
 
 **Why this approach**:
+
 - Drafting locally allows iteration without spamming issue history
 - Git history on drafts is valuable for complex features
 - Task progress in issue = single source of truth for status
 - Anyone (human or agent) can check issue to see current state
 
 **Workflow**:
+
 1. Draft spec locally during `/interview` or Step 1
 2. When spec is ready, push to issue body
 3. Draft plan locally during Step 2

@@ -46,8 +46,10 @@ Load `dev/testing.md` for detailed guidance on writing and fixing tests.
 the main agent needs this for the PR description.
 
 Examples of lessons learned:
+
 - "Tests using `freezegun` must import it before the module under test"
-- "Async fixtures need `pytest-asyncio` and `@pytest.fixture` with `scope='function'`"
+- "Async fixtures need `pytest-asyncio` and `@pytest.fixture` with
+  `scope='function'`"
 - "Mock `datetime.now()` via dependency injection, not direct patching"
 
 ## Exit Conditions

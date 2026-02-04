@@ -8,6 +8,7 @@
 - [ ] Feedback has been received (comments, review requests, CI results)
 
 If no feedback yet (CI still running, reviewers haven't looked):
+
 - Output: `<AWAITING_REVIEW>`
 - In autonomous loops, this is a natural pause point
 
@@ -20,13 +21,12 @@ If no feedback yet (CI still running, reviewers haven't looked):
 
 2. **For each piece of feedback**:
 
-   a. **Understand** what's being asked
-   b. **Implement** the fix or improvement
-   c. **Run `/quality`** to verify
-   d. **Commit** the fix (small, focused commits)
-   e. **Reply** to the comment explaining what was done
+   a. **Understand** what's being asked b. **Implement** the fix or improvement
+   c. **Run `/quality`** to verify d. **Commit** the fix (small, focused
+   commits) e. **Reply** to the comment explaining what was done
 
 3. **Push the updates**:
+
    ```bash
    git push
    ```
@@ -35,13 +35,13 @@ If no feedback yet (CI still running, reviewers haven't looked):
 
 ## Handling Different Feedback Types
 
-| Feedback Type | Action |
-|---------------|--------|
-| Bug/error found | Fix it, add test to prevent regression |
-| Style/convention | Fix it; note in PR if it's a pattern worth documenting |
-| Architecture concern | Discuss with reviewer, may need larger changes |
-| Documentation gap | Add the missing docs |
-| Test coverage | Add the missing tests |
+| Feedback Type        | Action                                                 |
+| -------------------- | ------------------------------------------------------ |
+| Bug/error found      | Fix it, add test to prevent regression                 |
+| Style/convention     | Fix it; note in PR if it's a pattern worth documenting |
+| Architecture concern | Discuss with reviewer, may need larger changes         |
+| Documentation gap    | Add the missing docs                                   |
+| Test coverage        | Add the missing tests                                  |
 
 **Lessons learned**: If feedback reveals a pattern that future agents should
 know about, add it to the PR description under "Lessons Learned". The human
@@ -65,12 +65,15 @@ addressed, not when the PR is merged.
 ## Exit
 
 After addressing all current feedback:
+
 - Output: `<STEP_COMPLETE>`
 - The human will decide when to merge
 - If more feedback comes later: Re-run this step
 
 If waiting for initial review (no feedback yet):
+
 - Output: `<AWAITING_REVIEW>`
 
 If blocked (e.g., disagreement with reviewer, architectural decision needed):
+
 - Output: `<BLOCKED reason="...">`

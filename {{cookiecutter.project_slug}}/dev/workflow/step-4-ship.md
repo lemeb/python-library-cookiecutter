@@ -18,6 +18,7 @@ If tasks remain, go back to Step 3.
    - Branch is up to date with base branch (rebase if needed)
 
 2. **Push the branch** if not already pushed:
+
    ```bash
    git push -u origin <branch-name>
    ```
@@ -38,7 +39,7 @@ If tasks remain, go back to Step 3.
    - **Testing**: How to verify the changes work
    - **Checklist**: Quality gates passed
    - **References**: Link to issue/spec
-   - **Lessons learned**: Anything to add to AGENTS.md or dev/*.md
+   - **Lessons learned**: Anything to add to AGENTS.md or dev/\*.md
 
 5. **Link the PR** per tracker conventions
 
@@ -71,8 +72,8 @@ Closes #<issue-number>
 
 ## Lessons Learned
 
-<Any discoveries that should be added to AGENTS.md or dev/*.md>
-<If none, write "None">
+<Any discoveries that should be added to AGENTS.md or dev/\*.md> <If none, write
+"None">
 ```
 
 <!-- Expand here with repo-specific information. For example:
@@ -91,9 +92,11 @@ Closes #<issue-number>
 ## Exit
 
 After PR is created:
+
 - Output: `<STEP_COMPLETE>`
 - Report the PR URL
 - Next: Wait for CI and review (Step 5 handles feedback)
 
 If PR creation blocked (e.g., CI failing, merge conflicts):
+
 - Output: `<BLOCKED reason="...">`
