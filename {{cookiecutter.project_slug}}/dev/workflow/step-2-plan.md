@@ -23,6 +23,10 @@ If prerequisites not met, go back to Step 1.
 
 ## Procedure
 
+0. **[Claude only] Enter Plan Mode**: Use the `EnterPlanMode` tool NOW, before
+   doing anything else. Do not explore, do not design — enter plan mode first.
+   Skip this step if using Codex or Gemini.
+
 1. **Design the approach**:
    - Identify architectural patterns to use
    - Consider dependencies and integration points
@@ -81,9 +85,6 @@ Example for issue XYZ-99:
 - XYZ-99(4): Add protected routes (depends on 2 and 3)
 
 ## Claude-specific Notes (ignore if Codex or Gemini)
-
-**Enter Plan Mode**: Use the `EnterPlanMode` tool at the start of Step 2. This
-provides a structured planning flow with user approval built in.
 
 **Plan Mode behavior**: Context is cleared after the plan is approved. This
 means:
