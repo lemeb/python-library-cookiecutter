@@ -180,3 +180,18 @@ Add `reportPrivateUsage=false` if tests need to access private module state, and
 <!-- This section should be updated over time with quirks discovered during
      development. After fixing linting errors, consider whether the fix reveals
      something that should be documented here for future reference. -->
+
+- **Prettier before markdownlint**: Run `prettier-md` (format/fix) before
+  `markdownlint` — it fixes table alignment that otherwise triggers false
+  positives. `make doc` does this automatically.
+- **Pyright vs Ruff string concatenation**: Pyright's
+  `reportImplicitStringConcatenation` forbids implicit concatenation; Ruff's
+  ISC003 forbids explicit `+`. Use implicit concatenation with
+  `# pyright: ignore[reportImplicitStringConcatenation]` inline.
+- **DOC502 and delegated exceptions**: This strict ruff preview rule flags
+  `Raises` sections when the exception is raised by a called service, not
+  explicitly in the function body. For thin route handlers that delegate to
+  services, omit `Raises` from docstrings.
+- **Pydantic schemas in tests**: Avoid `**dict` unpacking from
+  `dict[str, object]` — mypy flags `arg-type` mismatches. Use explicit keyword
+  arguments instead.

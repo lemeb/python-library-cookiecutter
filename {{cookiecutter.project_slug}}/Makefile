@@ -278,7 +278,9 @@ md-check: prettier-md-check markdownlint-md ## Check markdown formatting and lin
 #########################################################################
 
 .PHONY: doc doc-serve doc-build
-doc-build: md-check spell-check ## Run all doc checks then build
+doc-build: ## Format markdown, run doc checks, then build
+	@$(MAKE) prettier-md
+	@$(MAKE) md-check spell-check
 	$(UV) run mkdocs build
 
 doc: doc-build ## Build documentation (md-check and spell-check run in parallel first)
