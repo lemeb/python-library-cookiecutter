@@ -33,25 +33,39 @@ If not on a feature branch, create one first.
 
 ## Procedure
 
-### 3a. Ensure tasks are recorded in tracker
+### 3a. Verify feature branch
 
-**BEFORE picking a task**, verify tasks exist in the tracker. If not (e.g., Plan
-Mode cleared context):
+**BEFORE doing anything else**, verify you are on the correct feature branch:
+
+1. Run `git branch --show-current`
+2. If on `main`/`master`/base branch, create and checkout a feature branch
+3. Branch name should match the issue (e.g., `feat/PROJ-123-user-auth`)
+
+Do NOT proceed on the base branch.
+
+### 3b. Ensure tasks are recorded in tracker
+
+Verify you are on the feature branch (step 3a), then verify tasks exist in the
+tracker. If not (e.g., Plan Mode cleared context):
 
 1. Read the tracker file (`dev/tracker/*.md`) for recording instructions
 2. Read the approved plan (local file or issue description)
 3. Create task entries per the tracker file (e.g., Linear sub-issues with
    dependencies)
+4. **[Claude only]** Create Task entries for ALL tasks using `TaskCreate`. Set up
+   the full dependency graph using `addBlockedBy`. This mirrors the tracker and
+   provides visibility for the entire implementation.
 
 Only proceed once tasks are recorded in the tracker.
 
-### 3b. Pick the next task
+### 3c. Pick the next task
 
 1. **Identify the next incomplete task** from your plan/tracker
 2. **Verify it's unblocked** (dependencies completed)
 3. **Mark it as in-progress** per tracker conventions
+4. **[Claude only]** Mark the Task as `in_progress` with `TaskUpdate`
 
-### 3c. Implement
+### 3d. Implement
 
 1. **Load coding guidance** before writing code:
    - `dev/checking.md` — linting & type-checking
@@ -72,7 +86,7 @@ Only proceed once tasks are recorded in the tracker.
    - Update docs/ if user-facing
    - Add terms to `project-words.txt`
 
-### 3d. Quality gate
+### 3e. Quality gate
 
 Run `/quality` (or the manual commands below). ALL must pass before proceeding:
 
@@ -92,7 +106,7 @@ tests.**
 - **If stuck after 3 attempts on the same error**: Output
   `<BLOCKED reason="...">`
 
-### 3e. Commit
+### 3f. Commit
 
 1. **Stage the changes** for this task
 2. **Write a commit message** following the project's conventions:
@@ -100,6 +114,7 @@ tests.**
    - Look at recent commits (`git log -5`) for style reference
 3. **Commit** (unless user asked to review first)
 4. **Mark task complete** per tracker conventions
+5. **[Claude only]** Mark the Task complete with `TaskUpdate`
 
 ## Claude-specific Notes (ignore if Codex or Gemini)
 

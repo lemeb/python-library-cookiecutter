@@ -194,9 +194,10 @@ next.
 
 ### Claude-specific Notes (ignore if Codex or Gemini)
 
-**After Plan Mode approval**: Context is cleared. If you detect that a plan was
-just approved (e.g., plan file exists but no tracker entries yet), run `/go-on`
-as your first action. This continues the workflow into Step 3.
+**After context reset**: Context is cleared after Plan Mode approval or
+conversation compaction. If you detect you're mid-workflow (e.g., plan file
+exists, tracker has tasks in progress), run `/go-on` as your first action to
+re-orient and continue.
 
 **Task tracking** (Step 3): Use `TaskCreate`/`TaskUpdate` to track progress
 through tasks. This allows hand-off if a session ends mid-implementation.

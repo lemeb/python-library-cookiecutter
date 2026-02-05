@@ -172,7 +172,7 @@ check: ruff-check ruff-format-check mypy-check ## Run code quality checks in par
 .PHONY: check-strict-file-guard
 .PHONY: check-strict-file-ruff check-strict-file-pyright check-strict-file-mypy
 .PHONY: check-strict-file check-strict-all
-STRICT_CONFIG := scratch/pyproject.toml
+STRICT_CONFIG := scratch/tmp_ignored_pyproject.toml
 FILES ?= $(FILE)
 
 check-strict-file-guard: ## Ensure FILE is provided for strict checks
