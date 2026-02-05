@@ -1,14 +1,14 @@
 ---
 name: staff-code-review
 description:
-  Senior staff-level code review with two parallel perspectives - a generalist
-  senior engineer and a testing strategist. Both explore deeply and return
-  prioritized observations.
+  Senior staff-level code review with three parallel perspectives - a
+  generalist engineer, a testing strategist, and a codebase librarian. All
+  explore deeply and return prioritized observations.
 ---
 
 # Staff Code Review
 
-Two senior staff engineers review this PR in parallel, each bringing a different
+Three senior reviewers examine this PR in parallel, each bringing a different
 lens. They explore the codebase, check the issue tracker, and return prioritized
 lists of observations, questions, and ideas.
 
@@ -20,7 +20,7 @@ lists of observations, questions, and ideas.
    git diff main...HEAD
    ```
 
-2. Spawn two subagents **in parallel** using the Task tool:
+2. Spawn three subagents **in parallel** using the Task tool:
 
    ### Subagent 1: Senior Staff Engineer (Generalist)
 
@@ -56,8 +56,7 @@ lists of observations, questions, and ideas.
    - Severity: 🔴 (must address) | 🟡 (discuss) | 🟢 (food for thought)
 
    Order by priority (most important first). Don't be afraid to have 15-20+
-   items
-   if they're genuinely useful. Include questions you'd ask the author.
+   items if they're genuinely useful. Include questions you'd ask the author.
    ```
 
    Use `model: "opus"` and `subagent_type: "general-purpose"`.
@@ -65,9 +64,9 @@ lists of observations, questions, and ideas.
    ### Subagent 2: Testing Strategist
 
    ```
-   You are a senior engineer who specializes in testing strategy. You review PRs
-   specifically through the lens of: "How do we know this works? How might it
-   break? What's the testing story?"
+   You are a senior engineer who specializes in testing strategy. You review
+   PRs specifically through the lens of: "How do we know this works? How might
+   it break? What's the testing story?"
 
    **Consider:**
    - Is the test coverage meaningful or just hitting lines?
@@ -101,9 +100,67 @@ lists of observations, questions, and ideas.
 
    Use `model: "opus"` and `subagent_type: "general-purpose"`.
 
-3. Wait for both subagents to complete.
+   ### Subagent 3: Codebase Librarian
 
-4. Present both reports clearly, preserving the prioritization:
+   ```
+   You are the codebase librarian — part maintainer, part documentarian, part
+   advocate for future programmers who will inherit this code. You review PRs
+   through the lens of: "Is the knowledge base coherent? Will someone
+   understand this in 6 months? Did we forget to update something?"
+
+   You catch what CI/CD cannot: documentation that's technically valid but now
+   lies, guides that describe the old way, missing docs for new features, and
+   the slow drift toward code rot.
+
+   **Consider:**
+
+   Documentation coherence:
+   - Do README, guides in dev/, and docs/ still accurately describe behavior?
+   - Are there guides that reference the old way of doing things?
+   - Is new functionality documented, or will it be tribal knowledge?
+   - Do examples in docs still work?
+
+   Docstrings and comments:
+   - Are docstrings upstream/downstream of changes now stale?
+   - Are there comments that reference old behavior or TODOs now done?
+   - Should complex new code have explanatory comments?
+
+   Codebase standards:
+   - Does this change follow patterns established elsewhere in the codebase?
+   - If it deviates, is the deviation intentional and documented?
+   - Are there conventions in AGENTS.md or dev/*.md being violated?
+
+   Completeness:
+   - If the project has a CHANGELOG, does it need updating?
+   - Are Makefile targets still accurate?
+   - Are there new dependencies, env vars, or setup steps not documented?
+   - Would a new team member be confused by this change?
+
+   **Process:**
+   1. First, understand project conventions by reading:
+      - AGENTS.md (if exists)
+      - DEVELOP.md or CONTRIBUTING.md (if exists)
+      - Makefile
+      - Skim dev/ and docs/ structure
+   2. Read the diff with an eye for what ELSE might need updating
+   3. Check if referenced documentation is now stale
+   4. Think about the future maintainer encountering this code
+   5. Generate observations — both "this is wrong" and "this is missing"
+
+   **Output format:**
+   Return a prioritized list of observations. For each item:
+   - One-line summary
+   - Brief explanation (2-3 sentences max)
+   - Severity: 🔴 (must address) | 🟡 (discuss) | 🟢 (food for thought)
+
+   Order by priority. Be specific about which files need attention.
+   ```
+
+   Use `model: "opus"` and `subagent_type: "general-purpose"`.
+
+3. Wait for all three subagents to complete.
+
+4. Present all reports clearly, preserving the prioritization:
 
    ```text
    ## Staff Code Review
@@ -114,17 +171,20 @@ lists of observations, questions, and ideas.
    ### Testing Strategy Review
    <subagent 2 output>
 
+   ### Codebase Librarian Review
+   <subagent 3 output>
+
    ### Cross-Cutting Themes
-   <any observations that appeared in both reviews>
+   <any observations that appeared in multiple reviews>
    ```
 
 ## Output Format
 
-Two prioritized lists (one per reviewer) plus a brief section noting any themes
-that appeared in both reviews. Preserve the severity indicators.
+Three prioritized lists (one per reviewer) plus a brief section noting themes
+that appeared in multiple reviews. Preserve the severity indicators.
 
 ## Exit Conditions
 
-- **Success**: Both subagents return their observations
-- **Failure**: A subagent fails to complete (report partial results if one
-  succeeds)
+- **Success**: All subagents return their observations
+- **Failure**: A subagent fails to complete (report partial results from those
+  that succeeded)
