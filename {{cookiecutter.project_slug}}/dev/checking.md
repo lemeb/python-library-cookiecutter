@@ -73,7 +73,7 @@ library (such as `print` or `Console`).
 
 ### Scratch Directory
 
-Don't bother modifying `scratch/tmp_ignored_pyproject.toml` - it's not tracked
+Don't bother modifying `scratch/tmp-file-ignore-them/pyproject.toml` - it's not tracked
 by git and exists only for local experimentation. The linter might complain
 about it but you can ignore those complaints.
 

@@ -172,7 +172,7 @@ check: ruff-check ruff-format-check mypy-check ## Run code quality checks in par
 .PHONY: check-strict-file-guard
 .PHONY: check-strict-file-ruff check-strict-file-pyright check-strict-file-mypy
 .PHONY: check-strict-file check-strict-all
-STRICT_CONFIG := scratch/tmp_ignored_pyproject.toml
+STRICT_CONFIG := scratch/tmp-file-ignore-them/pyproject.toml
 FILES ?= $(FILE)
 
 check-strict-file-guard: ## Ensure FILE is provided for strict checks
@@ -182,7 +182,7 @@ check-strict-file-guard: ## Ensure FILE is provided for strict checks
 	fi
 
 $(STRICT_CONFIG): pyproject.toml ruff-strict.toml
-	@mkdir -p scratch
+	@mkdir -p scratch/tmp-file-ignore-them
 	@cp pyproject.toml $(STRICT_CONFIG)
 	@cat ruff-strict.toml >> $(STRICT_CONFIG)
 
