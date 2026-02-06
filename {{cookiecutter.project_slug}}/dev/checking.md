@@ -195,3 +195,17 @@ Add `reportPrivateUsage=false` if tests need to access private module state, and
 - **Pydantic schemas in tests**: Avoid `**dict` unpacking from
   `dict[str, object]` — mypy flags `arg-type` mismatches. Use explicit keyword
   arguments instead.
+- **TD002/TD003 TODO format**: Ruff's flake8-todos rules require a specific
+  format. Create an issue first, then reference it:
+
+  ```python
+  # TODO(author): description of what needs to be done
+  # XXX-123
+  ```
+
+  Existing non-compliant TODOs pass CI because pre-commit only checks changed
+  files.
+- **Mypy strictness with StrEnum**: Pydantic coerces strings to `StrEnum` at
+  runtime, but mypy flags `Model(field="value")` as a type error. Use the enum
+  value directly (e.g., `MyEnum.VALUE`) or `model_validate({"field": "..."})` for
+  tests that intentionally pass raw strings.
