@@ -89,7 +89,8 @@ Example for issue XYZ-99:
 **Plan Mode behavior**: Context is cleared after the plan is approved. This
 means:
 
-1. Read the tracker file (`dev/tracker/*.md`) for specific recording instructions
+1. Read the tracker file (`dev/tracker/*.md`) for specific recording
+   instructions
 
 2. The plan MUST include explicit final steps to:
    - Record the implementation plan per the tracker file

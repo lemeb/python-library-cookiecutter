@@ -73,9 +73,9 @@ library (such as `print` or `Console`).
 
 ### Scratch Directory
 
-Don't bother modifying `scratch/tmp-file-ignore-them/pyproject.toml` - it's not tracked
-by git and exists only for local experimentation. The linter might complain
-about it but you can ignore those complaints.
+Don't bother modifying `scratch/tmp-file-ignore-them/pyproject.toml` - it's not
+tracked by git and exists only for local experimentation. The linter might
+complain about it but you can ignore those complaints.
 
 ---
 
@@ -205,7 +205,8 @@ Add `reportPrivateUsage=false` if tests need to access private module state, and
 
   Existing non-compliant TODOs pass CI because pre-commit only checks changed
   files.
+
 - **Mypy strictness with StrEnum**: Pydantic coerces strings to `StrEnum` at
   runtime, but mypy flags `Model(field="value")` as a type error. Use the enum
-  value directly (e.g., `MyEnum.VALUE`) or `model_validate({"field": "..."})` for
-  tests that intentionally pass raw strings.
+  value directly (e.g., `MyEnum.VALUE`) or `model_validate({"field": "..."})`
+  for tests that intentionally pass raw strings.

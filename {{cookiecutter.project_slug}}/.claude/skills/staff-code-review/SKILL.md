@@ -1,9 +1,9 @@
 ---
 name: staff-code-review
 description:
-  Senior staff-level code review with three parallel perspectives - a
-  generalist engineer, a testing strategist, and a codebase librarian. All
-  explore deeply and return prioritized observations.
+  Senior staff-level code review with three parallel perspectives - a generalist
+  engineer, a testing strategist, and a codebase librarian. All explore deeply
+  and return prioritized observations.
 ---
 
 # Staff Code Review
@@ -24,7 +24,7 @@ lists of observations, questions, and ideas.
 
    ### Subagent 1: Senior Staff Engineer (Generalist)
 
-   ```
+   ```text
    You are a senior staff engineer reviewing a PR. You've seen a lot of code
    over the years and have strong opinions loosely held. Your job is to think
    deeply about this change and surface observations, questions, and ideas.
@@ -63,7 +63,7 @@ lists of observations, questions, and ideas.
 
    ### Subagent 2: Testing Strategist
 
-   ```
+   ```text
    You are a senior engineer who specializes in testing strategy. You review
    PRs specifically through the lens of: "How do we know this works? How might
    it break? What's the testing story?"

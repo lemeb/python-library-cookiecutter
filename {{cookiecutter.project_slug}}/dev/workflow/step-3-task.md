@@ -52,9 +52,9 @@ tracker. If not (e.g., Plan Mode cleared context):
 2. Read the approved plan (local file or issue description)
 3. Create task entries per the tracker file (e.g., Linear sub-issues with
    dependencies)
-4. **[Claude only]** Create Task entries for ALL tasks using `TaskCreate`. Set up
-   the full dependency graph using `addBlockedBy`. This mirrors the tracker and
-   provides visibility for the entire implementation.
+4. **[Claude only]** Create Task entries for ALL tasks using `TaskCreate`. Set
+   up the full dependency graph using `addBlockedBy`. This mirrors the tracker
+   and provides visibility for the entire implementation.
 
 Only proceed once tasks are recorded in the tracker.
 
